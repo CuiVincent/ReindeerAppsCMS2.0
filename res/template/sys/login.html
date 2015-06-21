@@ -38,22 +38,27 @@
 <body>
 <div class="container">
 
-    <form id="loginform" class="form-signin" action="login" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+    <form id="loginform" class="form-login" action="login" method="post">
+        <h3 class="form-login-heading"><img src="{{ static_url('sys/image/logo.png') }}" alt="ReindeerApps"/></h3>
         {% raw xsrf_form_html() %}
-        <label for="user_code" class="sr-only">Email address</label>
-        <input class="form-control" type="text" id="user_code" name="user_code"
-               validate="{required:true,messages:{required:'请输入用户名'}}" placeholder="请输入用户名">
-        <label for="pass_wd" class="sr-only">Password</label>
-        <input class="form-control" type="password" id="pass_wd" name="pass_wd"
-               validate="{required:true,messages:{required:'请输入密码'}}" placeholder="请输入密码">
-
+        <div class="form-group">
+            <span class="form-label bg_reindeer_red glyphicon glyphicon-user" aria-hidden="true"></span>
+            <label for="user_code" class="sr-only">Email address</label>
+            <input class="form-control pull-right" type="text" id="user_code" name="user_code"
+                   validate="{required:true,messages:{required:'请输入用户名'}}" placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+            <span class="form-label bg_reindeer_red glyphicon glyphicon-lock" aria-hidden="true"></span>
+            <label for="pass_wd" class="sr-only">Password</label>
+            <input class="form-control pull-right" type="password" id="pass_wd" name="pass_wd"
+                   validate="{required:true,messages:{required:'请输入密码'}}" placeholder="请输入密码">
+        </div>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me">记住我
             </label>
         </div>
-        <a class="btn btn-lg btn-primary btn-block" onclick="doLogin();">登录</a>
+        <a class="btn btn-default btn-block" onclick="doLogin();">登录</a>
     </form>
 
 </div>
