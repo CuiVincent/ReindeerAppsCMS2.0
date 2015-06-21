@@ -45,7 +45,7 @@ class UserEditHandler(reindeer.sys.base_handler.BaseHandler):
         if SysUser.update(uid, name, status):
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(1153)
+            raise BusinessRuleException(1053)
 
 
 class UserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
@@ -59,4 +59,4 @@ class UserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
         if success:
             return self.write(json_encode({'success': success}))
         else:
-            raise BusinessRuleException(1152)
+            raise BusinessRuleException(1052)

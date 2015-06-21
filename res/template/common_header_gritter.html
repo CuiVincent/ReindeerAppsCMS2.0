@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="{{ static_url('jquery/css/jquery.gritter.css') }}"/>
+<script src="{{ static_url('jquery/js/jquery.gritter.min.js') }}"></script>
+<script src="{{ static_url('common/js/ajax_commit.js') }}"></script>
+<script src="{{ static_url('common/js/common_util.js') }}"></script>
+<script>
+    function ajaxCommitWithGritter(url, param, succcess) {
+        if (null == param || undefined == param) {
+            param = [];
+        }
+        param.push({name: "_xsrf", value: getCookie("_xsrf")});
+        doAjaxCommit(url, param, succcess, function (result) {
+            showAjaxErrorGritter(result);
+        });
+    }
+    function ajaxCommitFormWithGritter(form, succcess, param) {
+        var url = $(form).attr("action");
+        doAjaxCommitForm(url, form, succcess, function (result) {
+            showAjaxErrorGritter(result);
+        }, param);
+    }
+    function showAjaxErrorGritter(result) {
+        var title = result.msg;
+        var info = result.info;
+        showGritter("error", title, info);
+    }
+    function showGritter(type, title, msg) {
+        var icon = 'icon_w_info.png';
+        var classname = 'gritter-green';
+        if (type == "error") {
+            icon = 'icon_w_error.png';
+            classname = '';
+        }
+        if (type == "msg") {
+            icon = 'icon_w_msg.png';
+            classname = 'gritter-orange';
+        }
+        if (type == "letter") {
+            icon = 'icon_w_letter.png';
+            classname = 'gritter-orange';
+        }
+
+        try {
+            parent.$.gritter.add({
+                title: title,
+                text: msg,
+                image: "{{ static_url('common/image/icon/') }}" + icon,
+                sticky: false,
+                class_name: classname
+            });
+        } catch (e) {
+            $.gritter.add({
+                title: title,
+                text: msg,
+                image: "{{ static_url('common/image/icon/') }}" + icon,
+                sticky: false,
+                class_name: classname
+            });
+        }
+    }
+</script>

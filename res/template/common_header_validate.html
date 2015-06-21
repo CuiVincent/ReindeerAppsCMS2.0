@@ -1,0 +1,36 @@
+<script src="{{ static_url('jquery/js/jquery.validate.js') }}"></script>
+<script src="{{ static_url('jquery/js/jquery.metadata.js') }}"></script>
+<script>
+    function initValidate(form) {
+        $.metadata.setType("attr", "validate");
+        form.validate({
+            errorClass: "help-inline-error",
+            errorElement: "span",
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass('success');
+                $(element).addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('error');
+                $(element).addClass('success');
+            }
+        });
+    }
+
+    function validate(form) {
+        $.metadata.setType("attr", "validate");
+        return form.validate({
+            errorClass: "help-inline-error",
+            errorElement: "span",
+            highlight: function (element, errorClass, validClass) {
+                $(element).removeClass('success');
+                $(element).addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('error');
+                $(element).addClass('success');
+            }
+        }).form();
+    }
+</script>
+

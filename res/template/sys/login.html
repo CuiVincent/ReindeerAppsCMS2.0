@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    {% include '../common_header_base.html' %}
+    {% include '../common_header_validate.html' %}
+    {% include '../common_header_gritter.html' %}
+    <link rel="stylesheet" href="{{ static_url('sys/css/login.css') }}"/>
+    <title>登录RACMS</title>
+    <script>
+        //$(function () {
+        //    initValidate($("#recoverform"));//被动校验，submit时触发校验，不适用于ajax
+        //});
+
+        /*
+         登录
+         */
+        function doLogin() {
+            //$("#loginform").submit();
+            if (validate($("#loginform")))//主动校验
+                ajaxCommitFormWithGritter($("#loginform"), function () {
+                    location.href = "/";
+                });
+        }
+        /*
+         显示错误信息
+         */
+        function doShowErrMsg(errmsg) {
+            if (null != errmsg && 'null' != errmsg) {
+                showGritter('error', '登录失败', errmsg);
+            }
+        }
+        function doGetPasswd() {
+            showGritter('info', 'e-mail已发送!', " ");
+            ajaxCommitFormWithGritter($("#recoverform"));
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+
+    <form id="loginform" class="form-signin" action="login" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        {% raw xsrf_form_html() %}
+        <label for="user_code" class="sr-only">Email address</label>
+        <input class="form-control" type="text" id="user_code" name="user_code"
+               validate="{required:true,messages:{required:'请输入用户名'}}" placeholder="请输入用户名">
+        <label for="pass_wd" class="sr-only">Password</label>
+        <input class="form-control" type="password" id="pass_wd" name="pass_wd"
+               validate="{required:true,messages:{required:'请输入密码'}}" placeholder="请输入密码">
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me">记住我
+            </label>
+        </div>
+        <a class="btn btn-lg btn-primary btn-block" onclick="doLogin();">登录</a>
+    </form>
+
+</div>
+</body>
+</html>
