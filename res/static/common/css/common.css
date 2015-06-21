@@ -58,6 +58,18 @@ body {
     font-size: 13px;
 }
 
+.btn-reindeer {
+  color: #fff;
+  background-color: #b63141;
+  border-color: #b63141;
+}
+
+.btn-reindeer.active, .btn-reindeer.focus, .btn-reindeer:hover, .open>.dropdown-toggle.btn-reindeer {
+  background-color: #bd2e36;
+  border-color: #b63141;
+}
+
+
 .help-block-error, .help-inline-error {
     color: #b63141;
 }

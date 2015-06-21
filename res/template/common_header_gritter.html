@@ -24,18 +24,18 @@
         showGritter("error", title, info);
     }
     function showGritter(type, title, msg) {
-        var icon = 'icon_w_info.png';
+        var icon = 'glyphicon glyphicon-info-sign';
         var classname = 'gritter-green';
         if (type == "error") {
-            icon = 'icon_w_error.png';
+            icon = 'glyphicon glyphicon-exclamation-sign';
             classname = '';
         }
         if (type == "msg") {
-            icon = 'icon_w_msg.png';
+            icon = 'glyphicon glyphicon-comment';
             classname = 'gritter-orange';
         }
         if (type == "letter") {
-            icon = 'icon_w_letter.png';
+            icon = 'glyphicon glyphicon-envelope';
             classname = 'gritter-orange';
         }
 
@@ -43,7 +43,7 @@
             parent.$.gritter.add({
                 title: title,
                 text: msg,
-                image: "{{ static_url('common/image/icon/') }}" + icon,
+                image: icon,
                 sticky: false,
                 class_name: classname
             });
@@ -51,7 +51,7 @@
             $.gritter.add({
                 title: title,
                 text: msg,
-                image: "{{ static_url('common/image/icon/') }}" + icon,
+                image: icon,
                 sticky: false,
                 class_name: classname
             });
