@@ -59,16 +59,15 @@ body {
 }
 
 .btn-reindeer {
-  color: #fff;
-  background-color: #b63141;
-  border-color: #b63141;
+    color: #fff;
+    background-color: #b63141;
+    border-color: #b63141;
 }
 
-.btn-reindeer.active, .btn-reindeer.focus, .btn-reindeer:hover, .open>.dropdown-toggle.btn-reindeer {
-  background-color: #bd2e36;
-  border-color: #b63141;
+.btn-reindeer.active, .btn-reindeer.focus, .btn-reindeer:hover, .open > .dropdown-toggle.btn-reindeer {
+    background-color: #bd2e36;
+    border-color: #b63141;
 }
-
 
 .help-block-error, .help-inline-error {
     color: #b63141;
@@ -116,4 +115,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     color: #555;
     vertical-align: middle;
     font-size: 14px;
+}
+
+.dropdown-menu .glyphicon {
+    position: relative;
+    top: 2.5px;
 }
