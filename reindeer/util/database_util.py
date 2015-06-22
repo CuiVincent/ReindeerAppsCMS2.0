@@ -87,21 +87,28 @@ class DatabaseUtil:
         group_id = SysGroup.add('admin', '系统管理组').ID
         SysGroupUser.add(group_id, user_id)
         sys_action_id = SysAction.add(name='系统管理', url='sys_manager', parent=constants.action_root_main_parent,
-                                      sort=1, icon='icon-folder-close').ID
+                                      sort=1, icon='glyphicon-cog').ID
         sys_action_group_id = SysAction.add(name='用户组管理', url='group_list', parent=sys_action_id, sort=1,
-                                            icon='icon-user').ID
+                                            icon='glyphicon-user').ID
         sys_action_user_id = SysAction.add(name='用户管理', url='user_list', parent=sys_action_id, sort=2,
-                                           icon='icon-user').ID
+                                           icon='glyphicon-user').ID
         sys_action_action_id = SysAction.add(name='操作权限管理', url='action_list', parent=sys_action_id, sort=3,
-                                             icon='icon-folder-close').ID
+                                             icon='glyphicon-eye-close').ID
         app_action_id = SysAction.add(name='App管理', url='app_manager', parent=constants.action_root_main_parent,
-                                      sort=2, icon='icon-folder-close').ID
+                                      sort=2, icon='glyphicon-phone').ID
         app_action_platform_id = SysAction.add(name='平台管理', url='12', parent=app_action_id, sort=1,
-                                               icon='icon-folder-close').ID
+                                               icon='glyphicon-list-alt').ID
+        test_app_action_platform_android_id = SysAction.add(name='Android for test', url='22',
+                                                            parent=app_action_platform_id, sort=1,
+                                                            icon='glyphicon-phone').ID
+        test_app_action_platform_sony_id = SysAction.add(name='SONY for test', url='23',
+                                                         parent=test_app_action_platform_android_id, sort=1,
+                                                         icon='glyphicon-phone').ID
         SysGroupAction.add(group_id, [sys_action_id, sys_action_group_id, sys_action_user_id, sys_action_action_id])
-        SysGroupAction.add(group_id, [app_action_id, app_action_platform_id])
+        SysGroupAction.add(group_id, [app_action_id, app_action_platform_id, test_app_action_platform_android_id,
+                                      test_app_action_platform_sony_id])
 
-        DatabaseUtil.initTestData()
+        DatabaseUtil.init_test_data()
 
     @staticmethod
     def init(db_instance):
@@ -111,7 +118,7 @@ class DatabaseUtil:
 
     # 以下制造测试数据
     @staticmethod
-    def initTestData():
+    def init_test_data():
         for x in ["AAA", "BBB", "CCC", "DDD", "EEE", "FFF"]:
             for i in range(100, 200):
-                SysUser.add('TEST-CODE-'+x+str(i),'TEST-NAME-'+x+str(i), '111', 1).ID
+                SysUser.add('TEST-CODE-' + x + str(i), 'TEST-NAME-' + x + str(i), '111', 1).ID

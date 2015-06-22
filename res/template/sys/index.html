@@ -16,6 +16,37 @@
         function doLogout() {
             toPage("/{{logout_url}}");
         }
+
+        var contentUrl = '';
+
+        function setContent(aid, url) {
+            if (null != url && "/" != url && "" != url && "null" != url && undefined != url && contentUrl != url) {
+                contentUrl = url;
+                $('#navbar_menu li').removeClass("active");
+                var ae = $("#" + aid);
+                ae.closest('li').addClass("active");
+                $("#iframe").attr("height", 0);
+                $("#iframe").attr("src", '/content/' + url);
+            }
+        }
+
+        function initIFrameHeight() {
+            var ifm = document.getElementById("iframe");
+            var subWeb = document.frames ? document.frames["iframe"].document : ifm.contentDocument;
+            if (ifm != null && subWeb != null) {
+                ifm.height = subWeb.body.scrollHeight;
+            }
+        }
+
+        function toHome() {
+            setContent('ae_home', '{{main_page}}');
+        }
+
+        $(function () {
+            toHome();
+        });
+
+
     </script>
     <title>RACMS</title>
 </head>
@@ -27,43 +58,19 @@
             <a class="btn btn-reindeer navbar-toggle" data-toggle="collapse"
                data-target="#navbar"
                aria-expanded="true">
-                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
             </a>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="#" onclick="toHome();">
                 <img alt="RACMS" src="{{ static_url('sys/image/logo.png') }}">
             </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
+            <ul id="navbar_menu" class="nav navbar-nav navbar-left">
+                <li id="ae_home"><a href="#" onclick="toHome();"><span class="glyphicon glyphicon-home"
+                                                                       aria-hidden="true"></span>首页</a>
                 </li>
-            </ul>
-
-
-            <ul class="nav navbar-nav ">
-                <li>
-                    <form class="navbar-form search-form" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="搜索">
-
-                            <a class="btn btn-reindeer"> <span class="glyphicon glyphicon-search"
-                                                               aria-hidden="true"></span></a></div>
-                    </form>
-                </li>
+                {% module NavbarMenu(main_menu,0) %}
+                <li><a href="#">其他</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -82,26 +89,36 @@
                     </ul>
                 </li>
             </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form search-form" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="搜索">
+
+                            <a class="btn btn-reindeer"> <span class="glyphicon glyphicon-search"
+                                                               aria-hidden="true"></span></a></div>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
-<div class="container">
-
-    <div class="page-header">
-        <h1>Non-responsive Bootstrap</h1>
-
-        <p class="lead">Disable the responsiveness of Bootstrap by fixing the width of the container and using the first
-            grid system tier. <a href="http://getbootstrap.com/getting-started/#disable-responsive">Read the
-                documentation</a> for more information.</p>
+<div id="content" class="container">
+    <div id="content-header">
     </div>
-
-    <h3>What changes</h3>
-
-    <p>Note the lack of the <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>,
-        which disables the zooming aspect of sites in mobile devices. In addition, we reset our container's width and
-        changed the navbar to prevent collapsing, and are basically good to go.</p>
-
+    <iframe src="#" id="iframe" width="100%" onreadystatechange="iFrameHeight()" onLoad="initIFrameHeight()"
+            runat="server"
+            frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"
+            allowtransparency="yes" class="content-iframe"></iframe>
 </div>
+
+<footer class="footer footer-default">
+    <div class="container">
+        <span class="footer-text">2014 &copy; ReindeerApps. 版权所有 <a href="/">www.reindeerapps.cn</a></span>
+    </div>
+</footer>
 </body>
 </html>

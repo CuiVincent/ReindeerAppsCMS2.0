@@ -1,0 +1,34 @@
+{% for menu in menu_list %}
+    {% if menu %}
+        {% set v_onclick = "setContent('menu_"+menu['v_id']+"','"+menu['url']+"');" %}
+        {% if level == 0 %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="menu"aria-expanded="false">
+        {% else %}
+        <li id="menu_{{menu['v_id']}}" >
+            <a href="#" onclick="{{v_onclick}}">
+        {% end %}
+        {% if menu['icon'] %}
+            {% if '1' == menu['icon_type'] %}
+                <span class="glyphicon {{menu['icon']}}" aria-hidden="true"></span>
+            {% elif '2' == menu['icon_type'] %}
+
+            {% end %}
+        {% else %}
+                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+        {% end %}
+        {% if level > 0 %}
+            &nbsp;
+        {% end %}
+        {{menu['name']}}
+            </a>
+        {% if level == 0 %}
+            <ul class="dropdown-menu" role="menu">
+        {% else %}
+            <ul>
+        {% end %}
+        {% module NavbarMenu(menu['children'],level+1) %}
+            </ul>
+        </li>
+    {% end %}
+{% end %}

@@ -2,42 +2,39 @@
 <html>
 <head lang="zh-cmn-Hans">
     {% include '../common_header_base.html' %}
+    <link rel="stylesheet" href="{{ static_url('sys/css/error.css') }}"/>
     <title>RACMS</title>
 </head>
-    <script>
-        function back(){
-            history.back();
+<script>
+    function back() {
+        history.back();
+    }
+    function toPage(url) {
+        try {
+            parent.toPage(url);
+        } catch (e) {
+            location.href = url;
         }
-        function toPage(url) {
-            try {
-                parent.toPage(url);
-            } catch (e) {
-                location.href = url;
-            }
-        }
-    </script>
+    }
+</script>
 </head>
-<body  class="container-fluid">
-<!--Action boxes-->
-<div class="row-fluid">
-    <div class="span12">
-        <div class="widget-box">
-            <div class="widget-title"><span class="icon"> <i class="icon-info-sign"></i> </span>
-                <h5>系统错误</h5>
-            </div>
-            <div class="widget-content">
-                <div class="error_ex">
-                    <h1>{{err_title}}</h1>
+<body>
+<div class="in_page">
+    <div class="in_page_title">
+        <h4>系统错误</h4>
+    </div>
+    <hr>
+    <div class="in_page_body">
+        <div class="error_ex">
+            <h1>{{err_title}}</h1>
 
-                    <h3>{{msg}}</h3>
+            <h3>{{msg}}</h3>
 
-                    <p>{{info}}</p>
+            <p>{{info}}</p>
 
-                    <a class="btn btn-warning btn-big" onclick="{{func}}">{{func_text}}</a></div>
-            </div>
+            <a class="btn btn-warning btn-big" onclick="{{func}}">{{func_text}}</a>
         </div>
     </div>
 </div>
-
 </body>
 </html>
