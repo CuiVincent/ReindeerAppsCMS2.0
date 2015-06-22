@@ -1,0 +1,83 @@
+{% include './common_header_gritter.html' %}
+<link rel="stylesheet" href="{{ static_url('common/css/datatable.css') }}"/>
+<script src="{{ static_url('jquery/js/jquery.dataTables.min.js') }}"></script>
+<script>
+    function initDataTable(table, url, columns, serverSide, defSort) {
+        if (null == serverSide || undefined == serverSide) {
+            serverSide = false;
+        }
+        if (null == defSort || undefined == defSort) {
+            defSort = [
+                [0, 'asc']
+            ];
+        }
+        return table.dataTable({
+            "bJQueryUI": false,
+            "sPaginationType": "full_numbers",
+            "sDom": '<"datatable-top-bar"f>tr<"datatable-bottom-bar"lp>',
+            "bStateSave": true, //保存状态到cookie
+            "bInfo": true,//页脚信息
+            "bLengthChange": true, //改变每页显示数据数量
+            "aLengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "全部"]
+            ],
+            "bAutoWidth": true,
+            "bSort": true,
+            "aaSorting": defSort,
+            "oLanguage": {
+                "sProcessing": "正在加载",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "未找到相关记录",
+                "sEmptyTable": "无记录",
+                "sInfo": "从 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoFiltered": "共 _MAX_ 条记录",
+                "sSearch": "检索",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            },
+            "sAjaxSource": url,
+            "bServerSide": serverSide, //是否启用服务器逻辑过滤数据
+            "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+                oSettings.jqXHR = ajaxCommitWithGritter(url, aoData, fnCallback);
+            },
+            "aoColumns": columns,
+            "fnDrawCallback": function (oSettings) {
+                try {
+                    parent.initIFrameHeight();
+                } catch (e) {
+                }
+                initTableCheckBox();
+            }, "fnInitComplete": function (oSettings, json) {
+            }
+        });
+    }
+    function initTableCheckBox() {
+        $("span.icon input:checkbox, th input:checkbox").click(function () {
+            var checkedStatus = this.checked;
+            var checkbox = $(this).parents('.dataTables_wrapper').find('tr td:first-child input:checkbox');
+            checkbox.each(function () {
+                this.checked = checkedStatus;
+                if (checkedStatus == this.checked) {
+                    $(this).closest('.checker > span').removeClass('checked');
+                }
+                if (this.checked) {
+                    $(this).closest('.checker > span').addClass('checked');
+                }
+            });
+        });
+    }
+    function getTableCheckBoxChecked() {
+        var checkeds = new Array();
+        var checkBoxs = $('input.table_checkbox[type=checkbox]');
+        for (var i = 0; i < checkBoxs.length; i++) {
+            if (checkBoxs[i].checked == true && null != $(checkBoxs[i]).attr('id') && '' != $(checkBoxs[i]).attr('id'))
+                checkeds.push($(checkBoxs[i]).attr('id'));
+        }
+        return checkeds;
+    }
+</script>

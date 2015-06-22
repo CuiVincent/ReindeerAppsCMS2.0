@@ -10,7 +10,7 @@ from reindeer.sys.exceptions import BusinessRuleException
 
 class UserListHandler(reindeer.sys.base_handler.BaseHandler):
     def get(self):
-        self.render('sys/user/user_list.html')
+        self.render('sys/page/user/user_list.html')
 
     def post(self):
         r_echo = self.get_argument('sEcho')

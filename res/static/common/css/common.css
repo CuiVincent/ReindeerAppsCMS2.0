@@ -9,8 +9,23 @@ hr {
     border-top-color: #dadada;
 }
 
+a:hover, a:focus {
+    text-decoration: none;
+}
+
 .in_page {
     padding: 15px 25px 40px;
+}
+
+.in_page_title h4 {
+    display: inline;
+}
+
+.in_page_title_button {
+    padding: 0px 30px;
+    float: right;
+    top: -7px;
+    position: relative;
 }
 
 .bg_reindeer_red {
@@ -76,8 +91,9 @@ hr {
 }
 
 .btn-reindeer.active, .btn-reindeer.focus, .btn-reindeer:hover, .open > .dropdown-toggle.btn-reindeer {
-    background-color: #bd2e36;
-    border-color: #b63141;
+    color: #fff;
+    background-color: #942d3c;
+    border-color: #942d3c;
 }
 
 .help-block-error, .help-inline-error {
@@ -194,4 +210,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .dropdown-menu .glyphicon {
     position: relative;
     top: 2.5px;
+}
+
+.btn .glyphicon {
+    position: relative;
+    top: 2px;
 }
