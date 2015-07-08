@@ -1,6 +1,8 @@
 body {
-    padding-top: 70px;
-    padding-bottom: 30px;
+    padding-top: 60px;
+    padding-bottom: 0px;
+    line-height: 0;
+    background-color: #2E363F;
 }
 
 .navbar-default {
@@ -119,5 +121,13 @@ body {
 }
 
 .footer-default a {
-    color: #b63141;;
+    color: #b63141;
+}
+
+.content-iframe {
+    min-height: 600px;
+}
+
+.content {
+    padding: 0;
 }
