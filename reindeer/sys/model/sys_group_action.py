@@ -1,14 +1,14 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-from sqlalchemy import Column, String
-from reindeer.sys.base_db_model import NormalTableModel
+from sqlalchemy import Column, String, ForeignKey
+from reindeer.sys.base_db_model import InfoTableModel
 
 
-class SysGroupAction(NormalTableModel):
+class SysGroupAction(InfoTableModel):
     __tablename__ = 'RA_SYS_GROUP_ACTION'
-    GROUP = Column(String(50), primary_key=True)
-    ACTION = Column(String(50), primary_key=True)
+    GROUP = Column(String(50), ForeignKey('RA_SYS_GROUP.ID', ondelete='CASCADE', onupdate='CASCADE'))
+    ACTION = Column(String(50), ForeignKey('RA_SYS_ACTION.ID', ondelete='CASCADE', onupdate='CASCADE'))
 
     @classmethod
     def add(cls, group, action):

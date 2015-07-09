@@ -22,6 +22,7 @@ sys_urls = [
     (r'/group_add', group.GroupAddHandler),
     (r'/group_delete', group.GroupDeleteHandler),
     (r'/group_edit', group.GroupEditHandler),
+    (r'/group_user_add', group.GroupUserAddHandler),
     (r'/action_list', action.ActionListHandler)
 
 ]

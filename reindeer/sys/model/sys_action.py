@@ -3,10 +3,10 @@ __author__ = 'CuiVincent'
 
 from sqlalchemy import Column, String, Integer
 from reindeer.sys.base_db_model import InfoTableModel
-from reindeer.sys.exceptions import BusinessRuleException
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys import constants
 from reindeer.sys.model.sys_group_user import SysGroupUser
+from sqlalchemy.orm import relationship
 import uuid
 
 
@@ -21,7 +21,7 @@ class SysAction(InfoTableModel):
     SORT = Column(Integer)
     ICON_TYPE = Column(String(1), default='1')
     ICON = Column(String(200))
-
+    groups = relationship('SysGroup', secondary='RA_SYS_GROUP_ACTION')
 
     @classmethod
     def add(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None, icon=None):
@@ -41,6 +41,23 @@ class SysAction(InfoTableModel):
         else:
             return 1
 
+    @classmethod
+    def add_and_get(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None, icon=None):
+        action = SysAction(NAME=name, TYPE=type, URL=url, DES=des, PARENT=parent, LOG=log, SORT=sort,
+                           ICON_TYPE=icon_type,
+                           ICON=icon)
+        if not str(action.PARENT).startswith(constants.action_root_prefix):
+            if not cls.get_by_id(action.PARENT):
+                return None
+        cls.db_session.add(action)
+        try:
+            cls.db_session.commit()
+        except:
+            cls.db_session.rollback()
+        if (action.ID):
+            return action
+        else:
+            return None
 
     @classmethod
     def get_by_id(cls, id):

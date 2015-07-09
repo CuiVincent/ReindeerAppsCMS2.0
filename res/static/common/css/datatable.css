@@ -1,20 +1,31 @@
-.table td.edit {
+.data-table th {
     text-align: center;
 }
 
-.table th {
+@media (max-width: 767px) {
+    .data-table-operation .btn {;
+        display: block;
+    }
+}
+
+.data-table-operation {
     text-align: center;
 }
 
-table.table thead .sorting {
+.data-table-operation .btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.data-table thead .sorting {
     background: url('../image/sort_both.png') #efefef no-repeat center right;
 }
 
-table.table thead .sorting_asc {
+.data-table thead .sorting_asc {
     background: url('../image/sort_asc.png') #efefef no-repeat center right;
 }
 
-table.table thead .sorting_desc {
+.data-table thead .sorting_desc {
     background: url('../image/sort_desc.png') #efefef no-repeat center right;
 }
 
@@ -81,15 +92,4 @@ table.table thead .sorting_desc {
     text-align: left;
     font-size: 12px;
     float: right;
-}
-
-@media (max-width: 767px) {
-    .data-table-operation > .btn {;
-        display: block;
-    }
-}
-
-.data-table-operation > .btn {
-    margin-left: 5px;
-    margin-right: 5px;
 }

@@ -1,3 +1,5 @@
+from reindeer.sys.model.sys_group_user import SysGroupUser
+
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
@@ -49,6 +51,17 @@ class GroupEditHandler(reindeer.sys.base_handler.BaseHandler):
         name = self.get_argument('name')
         des = self.get_argument('des')
         err_code = SysGroup.update(gid, name, des)
+        if err_code == 0:
+            return self.write(json_encode({'success': True}))
+        else:
+            raise BusinessRuleException(err_code)
+
+
+class GroupUserAddHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        uid = self.get_argument('uid')
+        gid = self.get_argument('gid')
+        err_code = SysGroupUser.add(gid, uid)
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

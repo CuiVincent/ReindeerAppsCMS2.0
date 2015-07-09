@@ -1,15 +1,18 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
+import json
 from sqlalchemy import Column, String
 from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder
-import json
+from sqlalchemy.orm import relationship
 
 
 class SysGroup(InfoTableModel):
     __tablename__ = 'RA_SYS_GROUP'
     NAME = Column(String(100))
     DES = Column(String(1000))
+    users = relationship('SysUser', secondary='RA_SYS_GROUP_USER')
+    actions = relationship('SysAction', secondary='RA_SYS_GROUP_ACTION')
 
     @classmethod
     def add(cls, name, des, c_user=None):
@@ -25,6 +28,21 @@ class SysGroup(InfoTableModel):
             return 0
         else:
             return 1
+
+    @classmethod
+    def add_and_get(cls, name, des, c_user=None):
+        group = SysGroup(NAME=name, DES=des)
+        if c_user:
+            group.set_c_user(c_user)
+        cls.db_session.add(group)
+        try:
+            cls.db_session.commit()
+        except:
+            cls.db_session.rollback()
+        if (group.ID):
+            return group
+        else:
+            return None
 
     @classmethod
     def delete(cls, id):
