@@ -19,10 +19,10 @@ class SysGroupUser(NormalTableModel):
                 cls.db_session.add(group_user)
         try:
             cls.db_session.commit()
-            return True
+            return 0
         except:
             cls.db_session.rollback()
-            return False
+            return 1
 
     def get(self):
         item = self.db_session.query(SysGroupUser).filter(

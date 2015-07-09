@@ -82,3 +82,14 @@ table.table thead .sorting_desc {
     font-size: 12px;
     float: right;
 }
+
+@media (max-width: 767px) {
+    .data-table-operation > .btn {;
+        display: block;
+    }
+}
+
+.data-table-operation > .btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}

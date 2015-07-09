@@ -30,16 +30,16 @@ class SysAction(InfoTableModel):
                            ICON=icon)
         if not str(action.PARENT).startswith(constants.action_root_prefix):
             if not cls.get_by_id(action.PARENT):
-                raise BusinessRuleException(1101)
+                return 1151
         cls.db_session.add(action)
         try:
             cls.db_session.commit()
         except:
             cls.db_session.rollback()
         if (action.ID):
-            return action
+            return 0
         else:
-            return None
+            return 1
 
 
     @classmethod

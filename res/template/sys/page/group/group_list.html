@@ -7,32 +7,23 @@
     <title></title>
     <script>
         function initTable() {
-            initDataTable($('#table'), "user_list", [
+            initDataTable($('#table'), "group_list", [
                 { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "edit",
                     "mRender": function (data, type, full) {
                         return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
                     }},
-                { "mDataProp": "CODE"},
-                { "mDataProp": "NAME" },
-                { "mDataProp": "STATUS",
-                    "mRender": function (data, type, full) {
-                        if (data == '1') {
-                            return '正常';
-                        }
-                        else if (data == '3') {
-                            return '已删除';
-                        }
-                        return '已禁用';
-                    }},
-                { "mDataProp": "C_USER"  },
+                { "mDataProp": "NAME", "sWidth": "25%" },
+                { "mDataProp": "DES", "sWidth": "25%" },
+                { "mDataProp": "C_USER" },
                 { "mDataProp": "C_DATE" },
                 { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "edit",
                     "mRender": function (data, type, full) {
-                        return  '<div class="data-table-operation" ><button class="btn btn-primary  btn-xs"  onclick="doEdit(\'' + data + '\',\'' + full.CODE + '\',\'' + full.NAME + '\',\'' + full.STATUS + '\');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>' +
+                        return  '<div class="data-table-operation" ><button class="btn btn-primary  btn-xs"  onclick="doEdit(\'' + data + '\',\'' + full.NAME + '\',\'' + full.DES + '\');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>' +
+                                '<button class="btn btn-reindeer btn-xs"  onclick="doDelete(\'' + data + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'+
                                 '<button class="btn btn-reindeer btn-xs"  onclick="doDelete(\'' + data + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>';
                     }}
-            ], true, [
-                [ 4, "desc" ]
+            ], false, [
+                [ 5, "desc" ]
             ]);
         }
         $(document).ready(function () {
@@ -42,7 +33,7 @@
 </head>
 <body class="container content-body">
 <div class="content-body-title">
-    <h4>用户管理</h4>
+    <h4>用户组管理</h4>
 
     <div class="content-body-title-button">
         <button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
@@ -62,9 +53,8 @@
         <thead>
         <tr>
             <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-            <th>用户名</th>
-            <th>昵称</th>
-            <th>状态</th>
+            <th>群组名</th>
+            <th>描述</th>
             <th>创建人</th>
             <th>创建时间</th>
             <th>操作</th>
@@ -74,9 +64,9 @@
         </tbody>
     </table>
 </div>
-{% include 'user_add.html' %}
-{% include 'user_edit.html' %}
-{% include 'user_delete.html' %}
+{% include 'group_add.html' %}
+{% include 'group_edit.html' %}
+{% include 'group_delete.html' %}
 </body>
 </html>
 

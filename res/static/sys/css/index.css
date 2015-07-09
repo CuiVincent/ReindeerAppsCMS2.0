@@ -1,7 +1,6 @@
 body {
     padding-top: 60px;
     padding-bottom: 0px;
-    line-height: 0;
     background-color: #2E363F;
 }
 
@@ -125,7 +124,7 @@ body {
 }
 
 .content-iframe {
-    min-height: 600px;
+    min-height: 550px;
 }
 
 .content {

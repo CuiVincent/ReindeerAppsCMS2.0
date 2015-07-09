@@ -18,8 +18,8 @@ class SysUser(InfoTableModel):
     STATUS = Column(String(1), default=constants.user_status_normal)
 
     @classmethod
-    def add(cls, user_code, user_name, pass_wd, status=constants.user_status_normal, c_user=None):
-        user = SysUser(CODE=user_code, NAME=user_name, PASSWORD=to_md5(pass_wd) if pass_wd else '', STATUS=status)
+    def add(cls, code, name, pass_wd, status=constants.user_status_normal, c_user=None):
+        user = SysUser(CODE=code, NAME=name, PASSWORD=to_md5(pass_wd) if pass_wd else '', STATUS=status)
         if c_user:
             user.set_c_user(c_user)
         cls.db_session.add(user)
@@ -27,44 +27,44 @@ class SysUser(InfoTableModel):
             cls.db_session.commit()
         except IntegrityError:
             cls.db_session.rollback()
-            raise BusinessRuleException(1051)
+            return 1051
             # 先回滚再抛出异常，否则回滚不会执行
         except:
             cls.db_session.rollback()
         if (user.ID):
-            return user
+            return 0
         else:
-            return None
+            return 1
 
     @classmethod
-    def delete(cls, user_ID):
-        items = cls.db_session.query(SysUser).filter(SysUser.ID == user_ID)
+    def delete(cls, id):
+        items = cls.db_session.query(SysUser).filter(SysUser.ID == id)
         if items.count() < 1:
-            return False
+            return 1052
         items.delete()
         try:
             cls.db_session.commit()
-            return True
+            return 0
         except:
             cls.db_session.rollback()
-            return False
+            return 1
 
     @classmethod
-    def update(cls, user_ID, user_name, user_status):
-        items = cls.db_session.query(SysUser).filter(SysUser.ID == user_ID)
+    def update(cls, id, name, status):
+        items = cls.db_session.query(SysUser).filter(SysUser.ID == id)
         if items.count() < 1:
-            return False
+            return 1053
         update = {
-            SysUser.NAME: user_name,
-            SysUser.STATUS: user_status,
+            SysUser.NAME: name,
+            SysUser.STATUS: status,
         }
         items.update(update)
         try:
             cls.db_session.commit()
-            return True
+            return 0
         except:
             cls.db_session.rollback()
-            return False
+            return 1
 
     @classmethod
     def get_by_code(cls, user_code):
@@ -72,8 +72,8 @@ class SysUser(InfoTableModel):
         return item
 
     @classmethod
-    def get_by_id(cls, user_ID):
-        item = cls.db_session.query(SysUser).filter(SysUser.ID == user_ID).first()
+    def get_by_id(cls, id):
+        item = cls.db_session.query(SysUser).filter(SysUser.ID == id).first()
         return item
 
     @classmethod

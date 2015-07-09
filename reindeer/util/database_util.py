@@ -89,7 +89,7 @@ class DatabaseUtil:
         sys_action_id = SysAction.add(name='系统管理', url='sys_manager', parent=constants.action_root_main_parent,
                                       sort=1, icon='glyphicon-cog').ID
         sys_action_group_id = SysAction.add(name='用户组管理', url='group_list', parent=sys_action_id, sort=1,
-                                            icon='glyphicon-user').ID
+                                            icon='glyphicon-flag').ID
         sys_action_user_id = SysAction.add(name='用户管理', url='user_list', parent=sys_action_id, sort=2,
                                            icon='glyphicon-user').ID
         sys_action_action_id = SysAction.add(name='操作权限管理', url='action_list', parent=sys_action_id, sort=3,

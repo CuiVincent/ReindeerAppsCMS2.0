@@ -13,21 +13,6 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
-.in_page {
-    padding: 15px 25px 40px;
-}
-
-.in_page_title h4 {
-    display: inline;
-}
-
-.in_page_title_button {
-    padding: 0px 30px;
-    float: right;
-    top: -7px;
-    position: relative;
-}
-
 .bg_reindeer_red {
     background: #b63141;
 }
@@ -223,10 +208,21 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .content-body {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+}
+
+.content-body-title h4 {
+    display: inline;
+}
+
+.content-body-title-button {
+    padding: 0px 30px;
+    float: right;
+    top: -7px;
+    position: relative;
 }
 
 .modal-content {

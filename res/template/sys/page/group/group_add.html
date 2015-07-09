@@ -16,7 +16,7 @@
                 $('#alert_add').modal('hide');
                 doRefresh();
             }, [
-                {name: "status", value: getAddStatusValue()}
+                {name: "user_status", value: getAddStatusValue()}
             ]);
     }
 
@@ -30,27 +30,20 @@
                 <h4 class="modal-title">新建</h4>
             </div>
 
-            <form id="form_add" action="user_add" method="post" class="form-horizontal">
+            <form id="form_add" action="group_add" method="post" class="form-horizontal">
                 {% raw xsrf_form_html() %}
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-label">用户名</label>
-                        <input class="form-control" type="text" name="code"
-                               validate="{required:true,messages:{required:'请输入用户名'}}"
-                               placeholder="请输入用户名"/>
+                        <label class="form-label">用户组名</label>
+                        <input class="form-control" type="text" name="name"
+                               validate="{required:true,messages:{required:'请输入用户组名'}}"
+                               placeholder="请输入用户组名"/>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">昵称</label>
-                        <input class="form-control " type="text" name="name" placeholder="请输入昵称"/>
+                        <label class="form-label">描述</label>
+                        <input class="form-control " type="text" name="des" placeholder="请输入描述"/>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">状态</label>
 
-                        <div id="add_status_group" data-toggle="buttons" class="btn-group btn-group-xs">
-                            <label class="btn btn-primary active"><input type="radio">启用</label>
-                            <label class="btn btn-primary "> <input type="radio">禁用</label>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-reindeer btn-sm" onclick="doAddOk();">保存</a>
