@@ -65,14 +65,15 @@
             </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul id="navbar_menu" class="nav navbar-nav navbar-left">
-                <li id="ae_home"><a href="#" onclick="toHome();"><span class="glyphicon glyphicon-home"
-                                                                       aria-hidden="true"></span>&nbsp;首页</a>
+            <ul class="nav navbar-nav navbar-left navbar-menu">
+                <li><a href="#" onclick="toHome();"><span class="glyphicon glyphicon-home"
+                                                          aria-hidden="true"></span><span
+                        class="menu-text"> 首页</span></a>
                 </li>
                 {% module NavbarMenu(main_menu,0) %}
-                <li><a href="#">其他</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-folder-close"
+                                      aria-hidden="true"></span><span class="menu-text"> 其他</span></a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="navbar-user dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                        aria-expanded="false">
@@ -89,8 +90,6 @@
                     </ul>
                 </li>
             </ul>
-
-
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form search-form" role="search">

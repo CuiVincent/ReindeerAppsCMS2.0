@@ -1,3 +1,7 @@
+.data-table {
+    width: 100% !important;
+}
+
 .data-table th {
     text-align: center;
 }

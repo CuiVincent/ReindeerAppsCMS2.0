@@ -52,6 +52,16 @@ body {
     }
 }
 
+@media (max-width: 992px ) and  (min-width: 768px) {
+    .navbar-menu > li > a > .menu-text {
+        display: none;
+    }
+
+    .search-form .form-control {
+        width: 140px;
+    }
+}
+
 .navbar-brand {
     padding: 5px;
 }
@@ -101,7 +111,7 @@ body {
 
     .search-form input {
         display: inline;
-        width: 80%;
+        width: 60%;
     }
 
     .navbar-form {
