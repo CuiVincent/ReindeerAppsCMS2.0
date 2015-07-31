@@ -1,0 +1,110 @@
+<script>
+    var aeg_uid;
+    function doEditGroup(id) {
+        aeg_uid = id;
+        initGroupTable(id);
+        $('#alert_edit_group').modal('show');
+    }
+
+    function doAddGroupOk() {
+        var ids = getTableCheckBoxChecked('table_group_unjoined');
+        if (ids.length < 1) {
+            showGritter("error", "未勾选内容", "请至少勾选一项");
+            return;
+        }
+        ajaxCommitWithGritter('groups_user_add', [
+            {name: 'uid', value: aeg_uid},
+            {name: 'gid', value: ids}
+        ], function () {
+            initGroupTable(aeg_uid);
+        });
+    }
+    function doRemoveGroupOk() {
+        var ids = getTableCheckBoxChecked('table_group_joined');
+        if (ids.length < 1) {
+            showGritter("error", "未勾选内容", "请至少勾选一项");
+            return;
+        }
+        ajaxCommitWithGritter('groups_user_delete', [
+            {name: 'uid', value: aeg_uid},
+            {name: 'gid', value: ids}
+        ], function () {
+            initGroupTable(aeg_uid);
+        });
+
+    }
+
+    function initGroupTable(uid) {
+        initDataTable($('#table_group_unjoined'), "group_unjoined_list", [
+            { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
+                "mRender": function (data, type, full) {
+                    return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
+                }},
+            { "mDataProp": "NAME", "sWidth": "20%" }
+        ], false, null, true, [
+            {name: "uid", value: aeg_uid}
+        ]);
+        initDataTable($('#table_group_joined'), "group_joined_list", [
+            { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
+                "mRender": function (data, type, full) {
+                    return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
+                }},
+            { "mDataProp": "NAME", "sWidth": "20%" }
+        ], false, null, true, [
+            {name: "uid", value: aeg_uid}
+        ]);
+
+    }
+
+</script>
+<div id="alert_edit_group" class="modal fade">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">配置用户组</h4>
+            </div>
+            <div class="modal-body">
+                <table class="data-table-box">
+                    <tr>
+                        <td class="data-table-left">
+                            <table id="table_group_unjoined" class="table data-table">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="data-table-title-checkbox"/></th>
+                                    <th>用户组名</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td class="data-table-middle">
+                            <button class="btn btn-primary btn-sm" onclick="doAddGroupOk();"><span
+                                    class="glyphicon glyphicon-arrow-right"
+                                    aria-hidden="true"></span>&nbsp;配置
+                            </button>
+                            <button class="btn btn-reindeer btn-sm" onclick="doRemoveGroupOk();"><span
+                                    class="glyphicon glyphicon-arrow-left"
+                                    aria-hidden="true"></span>&nbsp;移出
+                            </button>
+                        </td>
+                        <td class="data-table-right">
+                            <table id="table_group_joined" class="table data-table">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="data-table-title-checkbox"/></th>
+                                    <th>用户组名</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

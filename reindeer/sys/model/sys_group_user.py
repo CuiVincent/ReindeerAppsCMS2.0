@@ -13,10 +13,28 @@ class SysGroupUser(InfoTableModel):
     @classmethod
     def add(cls, group, user):
         user = not isinstance(user, list) and [user] or user
+        group = not isinstance(group, list) and [group] or group
         for u in user:
-            group_user = SysGroupUser(USER=u, GROUP=group)
-            if not group_user.get():
-                cls.db_session.add(group_user)
+            for g in group:
+                group_user = SysGroupUser(USER=u, GROUP=g)
+                if not group_user.get():
+                    cls.db_session.add(group_user)
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
+    def delete(cls, group, user):
+        user = not isinstance(user, list) and [user] or user
+        group = not isinstance(group, list) and [group] or group
+        for u in user:
+            for g in group:
+                items = cls.db_session.query(SysGroupUser).filter(SysGroupUser.GROUP == g, SysGroupUser.USER == u)
+                if items:
+                    items.delete()
         try:
             cls.db_session.commit()
             return 0
@@ -27,6 +45,11 @@ class SysGroupUser(InfoTableModel):
     def get(self):
         item = self.db_session.query(SysGroupUser).filter(
             SysGroupUser.GROUP == self.GROUP, SysGroupUser.USER == self.USER).first()
+        return item
+
+    def get_all(self):
+        item = self.db_session.query(SysGroupUser).filter(
+            SysGroupUser.GROUP == self.GROUP, SysGroupUser.USER == self.USER).all()
         return item
 
     @classmethod

@@ -2,9 +2,10 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 import json
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, or_
 from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder
 from sqlalchemy.orm import relationship
+from reindeer.sys.model.sys_group_user import SysGroupUser
 
 
 class SysGroup(InfoTableModel):
@@ -47,7 +48,7 @@ class SysGroup(InfoTableModel):
     @classmethod
     def delete(cls, id):
         items = cls.db_session.query(SysGroup).filter(SysGroup.ID == id)
-        if items.count() < 1:
+        if not items:
             return 1101
         items.delete()
         try:
@@ -76,13 +77,26 @@ class SysGroup(InfoTableModel):
 
     @classmethod
     def get_all(cls):
-        item = cls.db_session.query(SysGroup).all()
-        return item
+        return cls.db_session.query(SysGroup).all()
 
     @classmethod
-    def get_all_json(cls):
+    def to_json(cls, items):
         r_json = []
-        items = SysGroup.get_all()
         for item in items:
             r_json.append(item)
         return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
+
+    @classmethod
+    def get_all_json(cls):
+        return SysGroup.to_json(SysGroup.get_all())
+
+    @classmethod
+    def get_json_by_joined_uid(cls, uid):
+        items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(SysGroupUser.USER == uid).all()
+        return SysGroup.to_json(items)
+
+    @classmethod
+    def get_json_by_unjoined_uid(cls, uid):
+        items = cls.db_session.query(SysGroup).outerjoin(SysGroupUser).filter(or_(
+            SysGroupUser.USER == None, SysGroupUser.USER != uid)).all()
+        return SysGroup.to_json(items)

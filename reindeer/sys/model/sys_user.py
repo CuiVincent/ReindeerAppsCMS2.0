@@ -59,7 +59,7 @@ class SysUser(InfoTableModel):
     @classmethod
     def delete(cls, id):
         items = cls.db_session.query(SysUser).filter(SysUser.ID == id)
-        if items.count() < 1:
+        if not items.count():
             return 1052
         items.delete()
         try:

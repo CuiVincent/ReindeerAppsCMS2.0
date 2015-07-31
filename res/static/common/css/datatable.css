@@ -4,6 +4,16 @@
 
 .data-table th {
     text-align: center;
+
+}
+
+.data-table > tbody > tr > td, .data-table > tbody > tr > th, .data-table > tfoot > tr > td, .data-table > tfoot > tr > th, .data-table > thead > tr > td, .data-table > thead > tr > th {
+    vertical-align: middle;
+}
+
+.data-table th:focus {
+    outline-width: 0px;
+!important;
 }
 
 @media (max-width: 767px) {
@@ -22,21 +32,20 @@
 }
 
 .data-table thead .sorting {
-    background: url('../image/sort_both.png') #efefef no-repeat center right;
+    background: url('../image/sort_both.png') no-repeat center right;
 }
 
 .data-table thead .sorting_asc {
-    background: url('../image/sort_asc.png') #efefef no-repeat center right;
+    background: url('../image/sort_asc.png') no-repeat center right;
 }
 
 .data-table thead .sorting_desc {
-    background: url('../image/sort_desc.png') #efefef no-repeat center right;
+    background: url('../image/sort_desc.png') no-repeat center right;
 }
 
 .paging_full_numbers {
     padding: 0px 30px;
     border-right: medium none;
-    background: #efefef;
     height: 36px;
     line-height: 16px;
     text-align: right;
@@ -96,4 +105,39 @@
     text-align: left;
     font-size: 12px;
     float: right;
+}
+
+.data-table-box {
+    min-height: 440px;
+}
+
+.data-table-box .data-table-left, .data-table-box .data-table-right {
+    width: 50%;
+    vertical-align: top;
+}
+
+.data-table-box .data-table-middle {
+    text-align: center;
+}
+
+.data-table-box .data-table-middle .btn {
+    margin: 5px;
+}
+
+.data-table-box .dataTables_filter {
+    padding: 0px;
+    display: block;
+    text-align: center;
+    float: none;
+}
+
+.data-table-box .paging_full_numbers {
+    padding: 0px;
+    display: block;
+    text-align: center;
+}
+
+.data-table-box .data-table > tbody > tr > td, .data-table-box .data-table > tbody > tr > th, .data-table-box .data-table > tfoot > tr > td, .data-table-box .data-table > tfoot > tr > th, .data-table-box .data-table > thead > tr > td, .data-table-box .data-table > thead > tr > th {
+    padding: 6px;
+    vertical-align: middle;
 }

@@ -20,9 +20,9 @@
         var contentUrl = '';
 
         function setContent(aid, url) {
-            if (null != url && "/" != url && "" != url && "null" != url && undefined != url && contentUrl != url) {
+            if (null != url && "/" != url && "" != url && "null" != url && contentUrl != url) {
                 contentUrl = url;
-                $('#navbar_menu li').removeClass("active");
+                $('.navbar-menu li').removeClass("active");
                 var ae = $("#" + aid);
                 ae.closest('li').addClass("active");
                 $("#iframe").attr("height", 0);

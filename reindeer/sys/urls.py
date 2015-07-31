@@ -19,10 +19,13 @@ sys_urls = [
     (r'/user_edit', user.UserEditHandler),
     (r'/user_delete', user.UserDeleteHandler),
     (r'/group_list', group.GroupListHandler),
+    (r'/group_joined_list', group.GroupJoinedListHandler),
+    (r'/group_unjoined_list', group.GroupUnjoinedListHandler),
     (r'/group_add', group.GroupAddHandler),
     (r'/group_delete', group.GroupDeleteHandler),
     (r'/group_edit', group.GroupEditHandler),
-    (r'/group_user_add', group.GroupUserAddHandler),
+    (r'/groups_user_add', group.GroupsUserAddHandler),
+    (r'/groups_user_delete', group.GroupsUserDeleteHandler),
     (r'/action_list', action.ActionListHandler)
 
 ]

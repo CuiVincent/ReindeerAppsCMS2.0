@@ -23,7 +23,7 @@ function doAjaxCommit( url, param, onSuccess,onError) {
 
 function doAjaxCommitForm( url, form, onSuccess,onError,p_param){
     var param = getFormParam(form[0]);
-    if(null!=p_param && undefined!=p_param){
+    if (null != p_param) {
         param = param.concat(p_param);
     }
     doAjaxCommit( url, param, onSuccess,onError);

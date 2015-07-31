@@ -20,6 +20,24 @@ class GroupListHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
+class GroupJoinedListHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        uid = self.get_argument('uid')
+        json = SysGroup.get_json_by_joined_uid(uid)
+        r_json = '{"success": true, "aaData":' + json + '}'
+        print(r_json)
+        return self.write(r_json)
+
+
+class GroupUnjoinedListHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        uid = self.get_argument('uid')
+        json = SysGroup.get_json_by_unjoined_uid(uid)
+        r_json = '{"success": true, "aaData":' + json + '}'
+        print(r_json)
+        return self.write(r_json)
+
+
 class GroupAddHandler(reindeer.sys.base_handler.BaseHandler):
     def post(self):
         name = self.get_argument('name')
@@ -57,11 +75,22 @@ class GroupEditHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupUserAddHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupsUserAddHandler(reindeer.sys.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
-        gid = self.get_argument('gid')
+        gid = str(self.get_argument('gid')).split(',')
         err_code = SysGroupUser.add(gid, uid)
+        if err_code == 0:
+            return self.write(json_encode({'success': True}))
+        else:
+            raise BusinessRuleException(err_code)
+
+
+class GroupsUserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        uid = self.get_argument('uid')
+        gid = str(self.get_argument('gid')).split(',')
+        err_code = SysGroupUser.delete(gid, uid)
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

@@ -5,7 +5,7 @@
         $('#alert_delete').modal('show');
     }
     function doBatchDelete() {
-        var ids = getTableCheckBoxChecked()
+        var ids = getTableCheckBoxChecked('table')
         if (ids.length < 1) {
             showGritter("error", "未勾选内容", "请至少勾选一项");
             return;
