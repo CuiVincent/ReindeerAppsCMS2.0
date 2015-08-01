@@ -29,6 +29,24 @@ class UserListHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
+class UserListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        gid = self.get_argument('gid')
+        json = SysUser.get_slice_json_by_joined_groupid(gid)
+        r_json = '{"success": true, "aaData":' + json + '}'
+        print(r_json)
+        return self.write(r_json)
+
+
+class UserListGroupUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        gid = self.get_argument('gid')
+        json = SysUser.get_slice_json_by_unjoined_groupid(gid)
+        r_json = '{"success": true, "aaData":' + json + '}'
+        print(r_json)
+        return self.write(r_json)
+
+
 class UserAddHandler(reindeer.sys.base_handler.BaseHandler):
     def post(self):
         code = self.get_argument('code')
@@ -65,3 +83,5 @@ class UserEditHandler(reindeer.sys.base_handler.BaseHandler):
             return self.write(json_encode({'success': True}))
         else:
             raise BusinessRuleException(err_code)
+
+

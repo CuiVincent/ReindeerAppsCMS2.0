@@ -97,16 +97,20 @@ class SysUser(InfoTableModel):
         return item
 
     @classmethod
+    def to_json(cls, items):
+        r_json = []
+        for item in items:
+            r_json.append(item)
+        return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
+
+    @classmethod
     def get_all(cls):
         return cls.db_session.query(SysUser).all()
 
     @classmethod
     def get_all_json(cls):
-        r_json = []
         items = SysUser.get_all()
-        for item in items:
-            r_json.append(item)
-        return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
+        return SysUser.to_json(items)
 
     @classmethod
     def get_all_count(cls):
@@ -121,7 +125,9 @@ class SysUser(InfoTableModel):
             u'4': SysUser.C_USER,
             u'5': SysUser.C_DATE
         }
-        order_by = -sort_cols[sort_col] if sort_dir == 'desc' else sort_cols[sort_col]
+        order_by = None
+        if not sort_col == '0':
+            order_by = -sort_cols[sort_col] if sort_dir == 'desc' else sort_cols[sort_col]
         item = cls.db_session.query(SysUser).filter(
             or_(SysUser.CODE.like("%" + like + "%"), SysUser.NAME.like("%" + like + "%"),
                 SysUser.C_USER.like("%" + like + "%")))
@@ -133,14 +139,21 @@ class SysUser(InfoTableModel):
 
     @classmethod
     def get_slice_json(cls, like, start, stop, sort_col, sort_dir):
-        r_json = []
-        items = SysUser.get_slice(like, start, stop, sort_col, sort_dir)
-        for item in items:
-            r_json.append(item)
-        return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
+        return SysUser.to_json(SysUser.get_slice(like, start, stop, sort_col, sort_dir))
 
     @classmethod
     def get_slice_count(cls, like):
         return cls.db_session.query(SysUser).filter(
             or_(SysUser.CODE.like("%" + like + "%"), SysUser.NAME.like("%" + like + "%"),
                 SysUser.C_USER.like("%" + like + "%"))).count()
+
+    @classmethod
+    def get_slice_json_by_joined_groupid(cls, gid):
+        item = cls.db_session.query(SysUser).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).all()
+        return SysUser.to_json(item)
+
+    @classmethod
+    def get_slice_json_by_unjoined_groupid(cls, gid):
+        sub = cls.db_session.query(SysUser.ID).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).subquery()
+        item = cls.db_session.query(SysUser).filter(~SysUser.ID.in_(sub)).all()
+        return SysUser.to_json(item)

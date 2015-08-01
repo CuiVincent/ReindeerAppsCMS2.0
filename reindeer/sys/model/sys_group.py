@@ -1,3 +1,5 @@
+from reindeer.sys.model.sys_user import SysUser
+
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
@@ -91,12 +93,14 @@ class SysGroup(InfoTableModel):
         return SysGroup.to_json(SysGroup.get_all())
 
     @classmethod
-    def get_json_by_joined_uid(cls, uid):
-        items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(SysGroupUser.USER == uid).all()
+    def get_json_by_joined_userid(cls, uid):
+        items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(
+            SysGroupUser.USER == uid).all()
         return SysGroup.to_json(items)
 
     @classmethod
-    def get_json_by_unjoined_uid(cls, uid):
-        items = cls.db_session.query(SysGroup).outerjoin(SysGroupUser).filter(or_(
-            SysGroupUser.USER == None, SysGroupUser.USER != uid)).all()
+    def get_json_by_unjoined_userid(cls, uid):
+        sub = cls.db_session.query(SysGroup.ID).join(SysGroupUser).filter(
+            SysGroupUser.USER == uid).subquery()
+        items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
         return SysGroup.to_json(items)
