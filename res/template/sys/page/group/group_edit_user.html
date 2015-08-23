@@ -12,7 +12,7 @@
             showGritter("error", "未勾选内容", "请至少勾选一项");
             return;
         }
-        ajaxCommitWithGritter('group_user_add', [
+        ajaxCommitWithGritter('POST', 'group_user_add', [
             {name: 'gid', value: geu_gid},
             {name: 'uid', value: ids}
         ], function () {
@@ -25,7 +25,7 @@
             showGritter("error", "未勾选内容", "请至少勾选一项");
             return;
         }
-        ajaxCommitWithGritter('group_user_delete', [
+        ajaxCommitWithGritter('POST', 'group_user_delete', [
             {name: 'gid', value: geu_gid},
             {name: 'uid', value: ids}
         ], function () {

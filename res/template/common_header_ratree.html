@@ -1,4 +1,4 @@
-{% include './common_header_gritter.html' %}
+{% include './common_header_ajax.html' %}
 <link rel="stylesheet" href="{{ static_url('common/css/ratree.css') }}"/>
 <script>
     function initTree(tree_id) {
@@ -22,7 +22,11 @@
 
     function getTreeCheckBoxChecked(tree_id) {
         var checkeds = new Array();
-
+        var checkBoxs = $('#' + tree_id + ' input.tree-checkbox[type=checkbox]');
+        for (var i = 0; i < checkBoxs.length; i++) {
+            if (checkBoxs[i].checked == true && null != $(checkBoxs[i]).attr('id') && '' != $(checkBoxs[i]).attr('id'))
+                checkeds.push($(checkBoxs[i]).attr('id'));
+        }
         return checkeds;
     }
 </script>

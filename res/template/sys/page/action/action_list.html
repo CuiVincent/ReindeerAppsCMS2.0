@@ -16,7 +16,7 @@
     <h4>操作权限管理</h4>
 
     <div class="content-body-title-button">
-        <button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
+        <button class="btn btn-primary btn-sm" onclick="doAddByCheck();"><span class="glyphicon glyphicon-plus-sign"
                                                                         aria-hidden="true"></span>&nbsp;新建
         </button>
         <button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
@@ -35,6 +35,7 @@
         </ul>
     </div>
 </div>
+{% include 'action_add.html' %}
 </body>
 </html>
 

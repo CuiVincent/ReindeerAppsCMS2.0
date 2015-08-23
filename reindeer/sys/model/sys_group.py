@@ -1,11 +1,8 @@
-from reindeer.sys.model.sys_user import SysUser
-
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-import json
 from sqlalchemy import Column, String, or_
-from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder
+from reindeer.sys.base_db_model import InfoTableModel, to_json
 from sqlalchemy.orm import relationship
 from reindeer.sys.model.sys_group_user import SysGroupUser
 
@@ -82,25 +79,18 @@ class SysGroup(InfoTableModel):
         return cls.db_session.query(SysGroup).all()
 
     @classmethod
-    def to_json(cls, items):
-        r_json = []
-        for item in items:
-            r_json.append(item)
-        return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
-
-    @classmethod
     def get_all_json(cls):
-        return SysGroup.to_json(SysGroup.get_all())
+        return to_json(SysGroup.get_all())
 
     @classmethod
     def get_json_by_joined_userid(cls, uid):
         items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(
             SysGroupUser.USER == uid).all()
-        return SysGroup.to_json(items)
+        return to_json(items)
 
     @classmethod
     def get_json_by_unjoined_userid(cls, uid):
         sub = cls.db_session.query(SysGroup.ID).join(SysGroupUser).filter(
             SysGroupUser.USER == uid).subquery()
         items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
-        return SysGroup.to_json(items)
+        return to_json(items)

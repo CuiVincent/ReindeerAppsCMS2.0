@@ -1,4 +1,4 @@
-{% include './common_header_gritter.html' %}
+{% include './common_header_ajax.html' %}
 <link rel="stylesheet" href="{{ static_url('common/css/datatable.css') }}"/>
 <script src="{{ static_url('jquery/js/jquery.dataTables.js') }}"></script>
 <script>
@@ -47,7 +47,7 @@
                         aoData = oParam;
                     }
                 }
-                oSettings.jqXHR = ajaxCommitWithGritter(url, aoData, fnCallback);
+                oSettings.jqXHR = ajaxCommitWithGritter("POST", url, aoData, fnCallback);
             },
             "aoColumns": columns,
             "fnDrawCallback": function (oSettings) {

@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 from sqlalchemy import Column, String, Integer
-from reindeer.sys.base_db_model import InfoTableModel
+from reindeer.sys.base_db_model import InfoTableModel, to_json
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group import SysGroup
@@ -67,9 +67,14 @@ class SysAction(InfoTableModel):
         return item
 
     @classmethod
+    def get_json_by_id(cls, id):
+        return to_json(SysAction.get_by_id(id))
+
+    @classmethod
     def get_tree_by_user_and_parent(cls, user_id, parent, type):
         items = cls.db_session.query(SysAction).join(SysGroupAction).join(SysGroup).join(SysGroupUser).filter(
-            SysGroupUser.USER == user_id, SysAction.PARENT == parent, SysAction.TYPE == type).all()
+            SysGroupUser.USER == user_id, SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+            SysAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(
@@ -80,7 +85,8 @@ class SysAction(InfoTableModel):
 
     @classmethod
     def get_tree_by_parent(cls, parent, type):
-        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).all()
+        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+            SysAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(

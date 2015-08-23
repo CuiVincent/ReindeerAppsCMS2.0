@@ -5,7 +5,7 @@ import json
 from sqlalchemy import Column, String, Integer, or_
 from sqlalchemy.exc import IntegrityError
 from reindeer.util.common_util import to_md5
-from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder
+from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder, to_json
 from reindeer.sys import constants
 from sqlalchemy.orm import relationship
 from reindeer.sys.model.sys_group_user import SysGroupUser
@@ -97,20 +97,13 @@ class SysUser(InfoTableModel):
         return item
 
     @classmethod
-    def to_json(cls, items):
-        r_json = []
-        for item in items:
-            r_json.append(item)
-        return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
-
-    @classmethod
     def get_all(cls):
         return cls.db_session.query(SysUser).all()
 
     @classmethod
     def get_all_json(cls):
         items = SysUser.get_all()
-        return SysUser.to_json(items)
+        return to_json(items)
 
     @classmethod
     def get_all_count(cls):
@@ -139,7 +132,7 @@ class SysUser(InfoTableModel):
 
     @classmethod
     def get_slice_json(cls, like, start, stop, sort_col, sort_dir):
-        return SysUser.to_json(SysUser.get_slice(like, start, stop, sort_col, sort_dir))
+        return to_json(SysUser.get_slice(like, start, stop, sort_col, sort_dir))
 
     @classmethod
     def get_slice_count(cls, like):
@@ -150,10 +143,10 @@ class SysUser(InfoTableModel):
     @classmethod
     def get_slice_json_by_joined_groupid(cls, gid):
         item = cls.db_session.query(SysUser).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).all()
-        return SysUser.to_json(item)
+        return to_json(item)
 
     @classmethod
     def get_slice_json_by_unjoined_groupid(cls, gid):
         sub = cls.db_session.query(SysUser.ID).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).subquery()
         item = cls.db_session.query(SysUser).filter(~SysUser.ID.in_(sub)).all()
-        return SysUser.to_json(item)
+        return to_json(item)

@@ -29,8 +29,8 @@ sys_urls = [
     (r'/group_edit', group.GroupEditHandler),
     (r'/group_user_add', group.GroupUserAddHandler),
     (r'/group_user_delete', group.GroupUserDeleteHandler),
-    (r'/action_list', action.ActionListHandler)
-
+    (r'/action_list', action.ActionListHandler),
+    (r'/action_add', action.ActionAddHandler)
 ]
 
 sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule, 'ActionList': action_list.ActionListModule}

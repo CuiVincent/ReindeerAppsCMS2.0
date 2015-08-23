@@ -67,3 +67,11 @@ def new_alchemy_encoder():
             return json.JSONEncoder.default(self, obj)
 
     return AlchemyEncoder
+
+
+def to_json(items):
+    items = not isinstance(items, list) and [items] or items
+    r_json = []
+    for item in items:
+        r_json.append(item)
+    return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)

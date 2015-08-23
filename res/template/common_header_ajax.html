@@ -2,12 +2,12 @@
 <script src="{{ static_url('jquery/js/jquery.gritter.min.js') }}"></script>
 <script src="{{ static_url('common/js/ajax_commit.js') }}"></script>
 <script>
-    function ajaxCommitWithGritter(url, param, succcess) {
+    function ajaxCommitWithGritter(type, url, param, succcess) {
         if (null == param || undefined == param) {
             param = [];
         }
         param.push({name: "_xsrf", value: getCookie("_xsrf")});
-        doAjaxCommit(url, param, succcess, function (result) {
+        doAjaxCommit(type, url, param, succcess, function (result) {
             showAjaxErrorGritter(result);
         });
     }
