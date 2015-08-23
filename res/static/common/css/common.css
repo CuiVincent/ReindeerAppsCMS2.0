@@ -159,8 +159,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     }
 
     .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
-        color: #fff;
-        background-color: #b63141;
+        color: #b63141;
+        background-color: transparent;
         text-decoration: none;
         outline: 0;
     }

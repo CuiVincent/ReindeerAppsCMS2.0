@@ -7,6 +7,7 @@ from reindeer.sys.handler import user
 from reindeer.sys.handler import group
 from reindeer.sys.handler import action
 from reindeer.sys.module import navbar_menu
+from reindeer.sys.module import action_list
 from app_settings import app_settings
 
 sys_urls = [
@@ -32,4 +33,4 @@ sys_urls = [
 
 ]
 
-sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule}
+sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule, 'ActionList': action_list.ActionListModule}

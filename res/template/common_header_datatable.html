@@ -55,27 +55,11 @@
                     parent.initIFrameHeight();
                 } catch (e) {
                 }
-                initTableCheckBox();
             }, "fnInitComplete": function (oSettings, json) {
             }, "bDestroy": true
         })
     }
 
-    function initTableCheckBox() {
-        $("span.icon input:checkbox, th input:checkbox").click(function () {
-            var checkedStatus = this.checked;
-            var checkbox = $(this).parents('.dataTables_wrapper').find('tr td:first-child input:checkbox');
-            checkbox.each(function () {
-                this.checked = checkedStatus;
-                if (checkedStatus == this.checked) {
-                    $(this).closest('.checker > span').removeClass('checked');
-                }
-                if (this.checked) {
-                    $(this).closest('.checker > span').addClass('checked');
-                }
-            });
-        });
-    }
     function getTableCheckBoxChecked(table_id) {
         var checkeds = new Array();
         var checkBoxs = $('#' + table_id + ' input.table_checkbox[type=checkbox]');

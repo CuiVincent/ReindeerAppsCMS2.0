@@ -1,0 +1,84 @@
+.ratree {
+    padding: 10px;
+}
+
+.ratree ul ul {
+    margin-bottom: 0;
+}
+
+.ratree ul {
+    padding: 0;
+    margin: 0 0 10px 25px;
+}
+
+.ratree li {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 5px 0 5px;
+    position: relative;
+}
+
+.ratree li::before, .ratree li::after {
+    content: '';
+    left: -20px;
+    position: absolute;
+    right: auto;
+}
+
+.ratree li::before {
+    border-left: 1px solid #999;
+    bottom: 50px;
+    height: 100%;
+    top: 0;
+    width: 1px;
+}
+
+.ratree li.operatable::before {
+    top: -33px;
+}
+
+.ratree li::after {
+    border-top: 1px solid #999;
+    height: 20px;
+    top: 25px;
+    width: 38px;
+}
+
+.ratree li.parent-li::after {
+    width: 21px;
+}
+
+.ratree > ul > li::before, .ratree > ul > li::after {
+    border: 0;
+}
+
+.ratree li:last-child::before {
+    height: 25px;
+}
+
+.ratree li.operatable:last-child::before {
+    height: 58px;
+}
+
+.ratree .tree-item {
+    display: inline;
+}
+
+.ratree .tree-operation {
+    margin-top: 5px;
+    margin-left: 40px;
+}
+
+.ratree .tree-state {
+    width: 10px;
+    top: 4px;
+}
+
+.ratree .tree-checkbox {
+    position: relative;
+    top: 4px;
+}
+
+.ratree .tree-label {
+    min-width: 130px;
+}

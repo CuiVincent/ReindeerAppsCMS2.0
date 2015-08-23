@@ -4,8 +4,9 @@ __author__ = 'CuiVincent'
 from sqlalchemy import Column, String, Integer
 from reindeer.sys.base_db_model import InfoTableModel
 from reindeer.sys.model.sys_group_action import SysGroupAction
-from reindeer.sys import constants
 from reindeer.sys.model.sys_group_user import SysGroupUser
+from reindeer.sys.model.sys_group import SysGroup
+from reindeer.sys import constants
 from sqlalchemy.orm import relationship
 import uuid
 
@@ -42,7 +43,8 @@ class SysAction(InfoTableModel):
             return 1
 
     @classmethod
-    def add_and_get(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None, icon=None):
+    def add_and_get(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None,
+                    icon=None):
         action = SysAction(NAME=name, TYPE=type, URL=url, DES=des, PARENT=parent, LOG=log, SORT=sort,
                            ICON_TYPE=icon_type,
                            ICON=icon)
@@ -65,14 +67,24 @@ class SysAction(InfoTableModel):
         return item
 
     @classmethod
-    def get_action_tree_by_user_and_parent(cls, user_id, parent, type):
-        sql = " select t.*  from " + SysAction.__tablename__ + "  t , (select distinct ga.ACTION id from " + SysGroupAction.__tablename__ + " ga, " + SysGroupUser.__tablename__ + " gu where gu.USER ='" + user_id + "' and gu.GROUP = ga.GROUP) b  where b.id=t.ID and t.PARENT='" + parent + "'and t.TYPE = '" + type + "' order by t.sort asc"
-        rows = cls.db_engine.execute(sql).fetchall()
-        # ID | C_USER | C_DATE | NAME | TYPE | URL | DES | PARENT | LOG | SORT | ICON_TYPE | ICON
+    def get_tree_by_user_and_parent(cls, user_id, parent, type):
+        items = cls.db_session.query(SysAction).join(SysGroupAction).join(SysGroup).join(SysGroupUser).filter(
+            SysGroupUser.USER == user_id, SysAction.PARENT == parent, SysAction.TYPE == type).all()
         actions = []
-        for r in rows:
+        for item in items:
             actions.append(
-                {'id': r[0], 'v_id': str(uuid.uuid1()), 'name': r[3], 'url': r[5], 'icon_type': r[10], 'icon': r[11],
-                 'children': SysAction.get_action_tree_by_user_and_parent(user_id, r[0], type)})
+                {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME, 'url': item.URL,
+                 'icon_type': item.ICON_TYPE, 'icon': item.ICON,
+                 'children': SysAction.get_tree_by_user_and_parent(user_id, item.ID, type)})
         return actions
 
+    @classmethod
+    def get_tree_by_parent(cls, parent, type):
+        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).all()
+        actions = []
+        for item in items:
+            actions.append(
+                {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME, 'url': item.URL,
+                 'icon_type': item.ICON_TYPE, 'icon': item.ICON,
+                 'children': SysAction.get_tree_by_parent(item.ID, type)})
+        return actions

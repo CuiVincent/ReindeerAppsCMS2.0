@@ -1,0 +1,28 @@
+{% include './common_header_gritter.html' %}
+<link rel="stylesheet" href="{{ static_url('common/css/ratree.css') }}"/>
+<script>
+    function initTree(tree_id) {
+        $('#' + tree_id + ' li:has(ul)').addClass('parent-li').find(' > span');
+        $('#' + tree_id + ' li.parent-li > .tree-item').on('click', function (e) {
+            var children = $(this).parent('li.parent-li').find(' > ul > li');
+            if (children.is(":visible")) {
+                children.hide('fast');
+                $(this).find(' > .tree-state').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-bottom');
+            } else {
+                children.show('fast');
+                $(this).find(' > .tree-state').addClass('glyphicon-triangle-bottom').removeClass('glyphicon-triangle-right');
+            }
+        });
+        $('#' + tree_id + ' li.parent-li > .tree-item').find(' > .tree-state').addClass('glyphicon-triangle-bottom');
+        $('#' + tree_id + ' .tree-checkbox').on('click', function (e) {
+            e.stopPropagation();
+            e.cancelBubble = true;
+        });
+    }
+
+    function getTreeCheckBoxChecked(tree_id) {
+        var checkeds = new Array();
+
+        return checkeds;
+    }
+</script>

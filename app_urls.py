@@ -1,5 +1,6 @@
 __author__ = 'CuiVincent'
-__all__ = ['app_urls','app_modules']
+# encoding:utf-8
+__all__ = ['app_urls', 'app_modules']
 
 from reindeer.sys.urls import sys_urls
 from reindeer.sys.urls import sys_modules

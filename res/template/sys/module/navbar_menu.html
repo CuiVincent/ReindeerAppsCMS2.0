@@ -19,13 +19,15 @@
         {% end %}
                 <span class="menu-text"> {{menu['name']}}</span>
             </a>
-        {% if level == 0 %}
+        {% if menu['children'] %}
+            {% if level == 0 %}
             <ul class="dropdown-menu" role="menu">
-        {% else %}
+            {% else %}
             <ul>
-        {% end %}
-        {% module NavbarMenu(menu['children'],level+1) %}
+            {% end %}
+            {% module NavbarMenu(menu['children'],level+1) %}
             </ul>
+        {% end %}
         </li>
     {% end %}
 {% end %}

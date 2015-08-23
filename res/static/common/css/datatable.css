@@ -1,5 +1,6 @@
 .data-table {
     width: 100% !important;
+    border-color: #dadada;
 }
 
 .data-table th {
