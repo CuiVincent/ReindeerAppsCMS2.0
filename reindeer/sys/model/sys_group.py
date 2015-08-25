@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, or_
 from reindeer.sys.base_db_model import InfoTableModel, to_json
 from sqlalchemy.orm import relationship
 from reindeer.sys.model.sys_group_user import SysGroupUser
+from reindeer.sys.model.sys_group_action import SysGroupAction
 
 
 class SysGroup(InfoTableModel):
@@ -83,14 +84,27 @@ class SysGroup(InfoTableModel):
         return to_json(SysGroup.get_all())
 
     @classmethod
-    def get_json_by_joined_userid(cls, uid):
+    def get_json_by_joined_user(cls, uid):
         items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(
             SysGroupUser.USER == uid).all()
         return to_json(items)
 
     @classmethod
-    def get_json_by_unjoined_userid(cls, uid):
+    def get_json_by_unjoined_user(cls, uid):
         sub = cls.db_session.query(SysGroup.ID).join(SysGroupUser).filter(
             SysGroupUser.USER == uid).subquery()
+        items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
+        return to_json(items)
+
+    @classmethod
+    def get_json_by_joined_action(cls, aid):
+        items = cls.db_session.query(SysGroup).join(SysGroupAction).filter(
+            SysGroupAction.ACTION == aid).all()
+        return to_json(items)
+
+    @classmethod
+    def get_json_by_unjoined_action(cls, aid):
+        sub = cls.db_session.query(SysGroup.ID).join(SysGroupAction).filter(
+            SysGroupAction.ACTION == aid).subquery()
         items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
         return to_json(items)

@@ -13,10 +13,29 @@ class SysGroupAction(InfoTableModel):
     @classmethod
     def add(cls, group, action):
         action = not isinstance(action, list) and [action] or action
+        group = not isinstance(group, list) and [group] or group
         for a in action:
-            group_action = SysGroupAction(ACTION=a, GROUP=group)
-            if not group_action.get():
-                cls.db_session.add(group_action)
+            for g in group:
+                group_action = SysGroupAction(ACTION=a, GROUP=g)
+                if not group_action.get():
+                    cls.db_session.add(group_action)
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
+    def delete(cls, group, action):
+        action = not isinstance(action, list) and [action] or action
+        group = not isinstance(group, list) and [group] or group
+        for a in action:
+            for g in group:
+                items = cls.db_session.query(SysGroupAction).filter(SysGroupAction.GROUP == g,
+                                                                    SysGroupAction.ACTION == a)
+                if items:
+                    items.delete()
         try:
             cls.db_session.commit()
             return 0

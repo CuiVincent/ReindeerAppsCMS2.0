@@ -24,13 +24,19 @@ sys_urls = [
     (r'/group_list', group.GroupListHandler),
     (r'/group_list_user_joined', group.GroupListUserJoinedHandler),
     (r'/group_list_user_unjoined', group.GroupListUserUnjoinedHandler),
+    (r'/group_list_action_joined', group.GroupListActionJoinedHandler),
+    (r'/group_list_action_unjoined', group.GroupListActionUnjoinedHandler),
     (r'/group_add', group.GroupAddHandler),
     (r'/group_delete', group.GroupDeleteHandler),
     (r'/group_edit', group.GroupEditHandler),
     (r'/group_user_add', group.GroupUserAddHandler),
     (r'/group_user_delete', group.GroupUserDeleteHandler),
+    (r'/group_action_add', group.GroupActionAddHandler),
+    (r'/group_action_delete', group.GroupActionDeleteHandler),
     (r'/action_list', action.ActionListHandler),
-    (r'/action_add', action.ActionAddHandler)
+    (r'/action_add', action.ActionAddHandler),
+    (r'/action_edit', action.ActionEditHandler),
+    (r'/action_delete', action.ActionDeleteHandler)
 ]
 
 sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule, 'ActionList': action_list.ActionListModule}

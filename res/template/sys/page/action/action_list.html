@@ -3,11 +3,12 @@
 <head lang="zh-cmn-Hans">
     {% include '../../../common_header_base.html' %}
     {% include '../../../common_header_ratree.html' %}
+    {% include '../../../common_header_datatable.html' %}
     {% include '../../../common_header_validate.html' %}
     <title></title>
     <script>
         $(document).ready(function () {
-            initTree('action_list');
+            initTree('tree');
         });
     </script>
 </head>
@@ -17,7 +18,7 @@
 
     <div class="content-body-title-button">
         <button class="btn btn-primary btn-sm" onclick="doAddByCheck();"><span class="glyphicon glyphicon-plus-sign"
-                                                                        aria-hidden="true"></span>&nbsp;新建
+                                                                               aria-hidden="true"></span>&nbsp;新建
         </button>
         <button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
                                                                                  aria-hidden="true"></span>&nbsp;批量删除
@@ -29,13 +30,16 @@
 </div>
 <hr>
 <div class="content-body-info">
-    <div id="action_list" class="ratree">
+    <div id="tree" class="ratree">
         <ul>
             {% module ActionList(actions,True,True) %}
         </ul>
     </div>
 </div>
 {% include 'action_add.html' %}
+{% include 'action_edit.html' %}
+{% include 'action_delete.html' %}
+{% include 'action_edit_group.html' %}
 </body>
 </html>
 

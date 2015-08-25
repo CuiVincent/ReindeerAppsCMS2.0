@@ -13,27 +13,68 @@ class ActionListHandler(reindeer.sys.base_handler.BaseHandler):
         actions = SysAction.get_tree_by_parent(constants.action_root_main_parent, constants.action_type_menu_menu)
         self.render('sys/page/action/action_list.html', actions=actions)
 
-    def post(self):
+
+class ActionAddHandler(reindeer.sys.base_handler.BaseHandler):
+    def get(self):
         id = self.get_argument('id')
-        if id:
-            return self.write(json_encode({'success': True, 'data': SysAction.get_json_by_id(id)}))
+        action = SysAction.get_json_by_id(id)
+        if action:
+            return self.write(json_encode({'success': True, 'data': action}))
         else:
             raise BusinessRuleException(1151)
 
-
-class ActionAddHandler(reindeer.sys.base_handler.BaseHandler):
     def post(self):
         name = self.get_argument('name')
         des = self.get_argument('des')
         parent = self.get_argument('pid')
         if not parent:
-            parent = constants.action_root_main_parent;
+            parent = constants.action_root_main_parent
         url = self.get_argument('url')
         sort = self.get_argument('sort')
         icon = self.get_argument('icon')
         err_code = SysAction.add(name=name, url=url, des=des,
                                  parent=parent,
                                  sort=sort, icon=icon)
+        if err_code == 0:
+            return self.write(json_encode({'success': True}))
+        else:
+            raise BusinessRuleException(err_code)
+
+
+class ActionDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        aids = str(self.get_argument('aid')).split(',')
+        success_count = 0
+        for aid in aids:
+            err_code = SysAction.delete(aid)
+            if err_code == 0:
+                success_count += 1
+        if success_count > 0:
+            return self.write(json_encode({'success': True}))
+        else:
+            raise BusinessRuleException(err_code)
+
+
+class ActionEditHandler(reindeer.sys.base_handler.BaseHandler):
+    def get(self):
+        id = self.get_argument('id')
+        action = SysAction.get_json_by_id(id)
+        if action:
+            parent_action = SysAction.get_parent_by_id(id)
+            return self.write(json_encode({'success': True, 'data': action,
+                                           'parent_data': parent_action and parent_action.NAME or constants.action_root_name}))
+        else:
+            raise BusinessRuleException(1152)
+
+    def post(self):
+        id = self.get_argument('aid')
+        name = self.get_argument('name')
+        des = self.get_argument('des')
+        url = self.get_argument('url')
+        sort = self.get_argument('sort')
+        icon = self.get_argument('icon')
+        err_code = SysAction.update(id=id, name=name, url=url, des=des,
+                                    sort=sort, icon=icon)
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

@@ -1,48 +1,38 @@
 <script>
-    var addPid;
-
-    function doAddByCheck() {
-        var ids = getTreeCheckBoxChecked('tree');
-        if (ids.length > 1) {
-            showGritter("error", "勾选错误", "请仅勾选一项作为父节点");
-            return;
-        }
-        doAdd(ids[0]);
-    }
-
-    function doAdd(pid) {
-        if (pid) {
-            addPid = pid;
-            ajaxCommitWithGritter('GET', 'action_add', [
-                {name: 'id', value: pid}
+    function doEdit(id) {
+        if (id) {
+            ajaxCommitWithGritter('GET', 'action_edit', [
+                {name: 'id', value: id}
             ], function (result) {
-                if (result.data) {
+                if (result.parent_data && result.data) {
+                    $("#e_pname").attr("value", result.parent_data);
                     var json = eval(result.data);
                     if (json.length > 0) {
-                        $("#a_pname").attr("value", json[0].NAME);
-                        $('#alert_add').modal('show');
+                        $("#e_aid").attr("value", id);
+                        $("#e_name").attr("value", json[0].NAME);
+                        $("#e_des").attr("value", json[0].DES);
+                        $("#e_url").attr("value", decodeURIComponent(json[0].URL));
+                        $("#e_sort").attr("value", json[0].SORT);
+                        $("#e_icon").attr("value", decodeURIComponent(json[0].ICON));
+                        $('#alert_edit').modal('show');
                     }
                 }
             });
         } else {
-            addPid = null;
-            $("#a_pname").attr("value", '根节点');
-            $('#alert_add').modal('show');
+            showGritter("error", "编辑失败", "未选择节点");
         }
     }
 
-    function doAddOk() {
-        if (validate($("#form_add")))//主动校验
-            ajaxCommitFormWithGritter($("#form_add"), function () {
-                $('#alert_add').modal('hide');
+    function doEditOk() {
+        if (validate($("#form_edit")))//主动校验
+            ajaxCommitFormWithGritter($("#form_edit"), function () {
+                $('#alert_edit').modal('hide');
                 doRefresh();
-            }, [
-                {name: "pid", value: addPid}
-            ]);
+            });
     }
 
 </script>
-<div id="alert_add" class="modal fade">
+<div id="alert_edit" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,39 +41,41 @@
                 <h4 class="modal-title">新建</h4>
             </div>
 
-            <form id="form_add" action="action_add" method="post" class="form-horizontal">
+            <form id="form_edit" action="action_edit" method="post" class="form-horizontal">
                 {% raw xsrf_form_html() %}
+                <input type="hidden" id="e_aid" name="aid" value=""/>
+
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="form-label">父节点</label>
-                        <input class="form-control" type="text" id="a_pname" name="pname" disabled=""/>
+                        <input class="form-control" type="text" id="e_pname" name="pname" disabled=""/>
                     </div>
                     <div class="form-group">
                         <label class="form-label">名称</label>
-                        <input class="form-control" type="text" name="name"
+                        <input class="form-control" type="text" id="e_name" name="name"
                                validate="{required:true,messages:{required:'请输入名称'}}"
                                placeholder="请输入名称"/>
                     </div>
                     <div class="form-group">
                         <label class="form-label">描述</label>
-                        <input class="form-control" type="text" name="des" placeholder="请输入描述"/>
+                        <input class="form-control" type="text" id="e_des" name="des" placeholder="请输入描述"/>
                     </div>
                     <div class="form-group">
                         <label class="form-label">URL</label>
-                        <input class="form-control" type="text" name="url"
+                        <input class="form-control" type="text" id="e_url" name="url"
                                validate="{required:true,messages:{required:'请输入RUL'}}" placeholder="请输入URL"/>
                     </div>
                     <div class="form-group">
                         <label class="form-label">排序</label>
-                        <input class="form-control" type="text" name="sort" placeholder="请输入排序"/>
+                        <input class="form-control" type="text" id="e_sort" name="sort" placeholder="请输入排序"/>
                     </div>
                     <div class="form-group">
                         <label class="form-label">图标</label>
-                        <input class="form-control" type="text" name="icon" placeholder="请输入图标"/>
+                        <input class="form-control" type="text" id="e_icon" name="icon" placeholder="请输入图标"/>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-reindeer btn-sm" onclick="doAddOk();">保存</a>
+                    <a class="btn btn-reindeer btn-sm" onclick="doEditOk();">保存</a>
                     <a data-dismiss="modal" class="btn btn-primary btn-sm">取消</a>
                 </div>
             </form>

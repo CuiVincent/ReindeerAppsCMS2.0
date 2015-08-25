@@ -62,6 +62,41 @@ class SysAction(InfoTableModel):
             return None
 
     @classmethod
+    def delete(cls, id):
+        items = cls.db_session.query(SysAction).filter(SysAction.ID == id)
+        if not items:
+            return 1152
+        if SysAction.get_by_parent(items.first().ID):
+            return 1153
+        items.delete()
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
+    def update(cls, id, name, des, url, sort, icon):
+        items = cls.db_session.query(SysAction).filter(SysAction.ID == id)
+        if items.count() < 1:
+            return 1154
+        update = {
+            SysAction.NAME: name,
+            SysAction.DES: des,
+            SysAction.URL: url,
+            SysAction.SORT: sort,
+            SysAction.ICON: icon
+        }
+        items.update(update)
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
     def get_by_id(cls, id):
         item = cls.db_session.query(SysAction).filter(SysAction.ID == id).first()
         return item
@@ -69,6 +104,20 @@ class SysAction(InfoTableModel):
     @classmethod
     def get_json_by_id(cls, id):
         return to_json(SysAction.get_by_id(id))
+
+    @classmethod
+    def get_by_parent(cls, pid):
+        item = cls.db_session.query(SysAction).filter(SysAction.PARENT == pid).first()
+        return item
+
+    @classmethod
+    def get_parent_by_id(cls, id):
+        item = SysAction.get_by_id(id)
+        if not item:
+            return None
+        else:
+            parent = SysAction.get_by_id(item.PARENT)
+        return parent
 
     @classmethod
     def get_tree_by_user_and_parent(cls, user_id, parent, type):
