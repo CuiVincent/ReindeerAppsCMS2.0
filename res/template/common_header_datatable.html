@@ -11,7 +11,7 @@
         return table.dataTable({
             "bJQueryUI": false,
             "sPaginationType": "full_numbers",
-            "sDom": '<"datatable-top-bar"f>tr<"datatable-bottom-bar"lp>',
+            "sDom": '<"datatable-top-bar clearfix"f>tr<"datatable-bottom-bar clearfix"lp>',
             "bStateSave": true, //保存状态到cookie
             "bInfo": !sample,//页脚信息
             "bLengthChange": !sample, //改变每页显示数据数量
@@ -55,6 +55,8 @@
                     parent.initIFrameHeight();
                 } catch (e) {
                 }
+                $(".dataTables_filter input").addClass("form-control data-table-control");
+                $(".dataTables_length select").addClass("form-control data-table-control");
             }, "fnInitComplete": function (oSettings, json) {
             }, "bDestroy": true
         })
