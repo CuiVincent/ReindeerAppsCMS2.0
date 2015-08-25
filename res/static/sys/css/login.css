@@ -26,7 +26,8 @@ body {
 }
 
 .form-login .form-control {
-    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     width: 80%;
     display: inline-block;
     height: 32px;
