@@ -1,7 +1,7 @@
 <script>
     function doEdit(id) {
         if (id) {
-            ajaxCommitWithGritter('GET', 'action_edit', [
+            ajaxCommitWithGritter('GET', '/action_edit', [
                 {name: 'id', value: id}
             ], function (result) {
                 if (result.parent_data && result.data) {
@@ -38,10 +38,10 @@
             <div class="modal-header">
                 <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">新建</h4>
+                <h4 class="modal-title">编辑</h4>
             </div>
 
-            <form id="form_edit" action="action_edit" method="post" class="form-horizontal">
+            <form id="form_edit" action="/action_edit" method="post" class="form-horizontal">
                 {% raw xsrf_form_html() %}
                 <input type="hidden" id="e_aid" name="aid" value=""/>
 

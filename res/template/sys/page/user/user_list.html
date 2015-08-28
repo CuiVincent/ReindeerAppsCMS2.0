@@ -7,7 +7,7 @@
     <title></title>
     <script>
         function initTable() {
-            initDataTable($('#table'), "user_list", [
+            initDataTable($('#table'), "/user_list", [
                 { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation",
                     "mRender": function (data, type, full) {
                         return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';

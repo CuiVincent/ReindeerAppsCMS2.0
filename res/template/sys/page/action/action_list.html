@@ -8,7 +8,15 @@
     <title></title>
     <script>
         $(document).ready(function () {
-            initTree('tree');
+            initRaTree('tree', '/action_list', null, true, function (row) {
+                return [
+                    {'btn': 'primary', 'onclick': 'doAdd(\'' + row.id + '\');', 'icon': 'glyphicon-plus-sign'},
+                    {'btn': 'info', 'onclick': 'doEdit(\'' + row.id + '\');', 'icon': 'glyphicon-pencil'},
+                    {'btn': 'reindeer', 'onclick': 'doDelete(\'' + row.id + '\');', 'icon': 'glyphicon-trash'},
+                    {'btn': 'success', 'onclick': 'doEditGroup(\'' + row.id + '\');', 'icon': 'glyphicon-flag'}
+                ];
+            }, function () {
+            });
         });
     </script>
 </head>
@@ -30,11 +38,7 @@
 </div>
 <hr>
 <div class="content-body-info">
-    <div id="tree" class="ratree">
-        <ul>
-            {% module ActionList(actions,True,True) %}
-        </ul>
-    </div>
+    <tree id="tree"/>
 </div>
 {% include 'action_add.html' %}
 {% include 'action_edit.html' %}

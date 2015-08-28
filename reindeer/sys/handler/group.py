@@ -8,6 +8,7 @@ from tornado.escape import json_encode
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 
+
 class GroupListHandler(reindeer.sys.base_handler.BaseHandler):
     def get(self):
         self.render('sys/page/group/group_list.html')
@@ -118,7 +119,11 @@ class GroupActionAddHandler(reindeer.sys.base_handler.BaseHandler):
     def post(self):
         aid = str(self.get_argument('aid')).split(',')
         gid = str(self.get_argument('gid')).split(',')
-        err_code = SysGroupAction.add(gid, aid)
+        delete = self.get_argument('delete')
+        if delete:
+            err_code = SysGroupAction.delete_all_by_group_add(gid, aid)
+        else:
+            err_code = SysGroupAction.add(gid, aid)
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

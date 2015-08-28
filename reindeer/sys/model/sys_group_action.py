@@ -27,6 +27,19 @@ class SysGroupAction(InfoTableModel):
             return 1
 
     @classmethod
+    def delete_all_by_group_add(cls, group, action):
+        group = not isinstance(group, list) and [group] or group
+        for g in group:
+            items = cls.db_session.query(SysGroupAction).filter(SysGroupAction.GROUP == g)
+            if items:
+                items.delete()
+        try:
+            return SysGroupAction.add(group, action)
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
     def delete(cls, group, action):
         action = not isinstance(action, list) and [action] or action
         group = not isinstance(group, list) and [group] or group

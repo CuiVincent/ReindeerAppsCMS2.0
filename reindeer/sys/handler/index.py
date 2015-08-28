@@ -24,12 +24,8 @@ class IndexHandler(reindeer.sys.base_handler.BaseHandler):
 class ContentHandler(reindeer.sys.base_handler.BaseHandler):
     @reindeer.sys.base_handler.authenticated
     def get(self, url):
-        if url and url.lower().endswith('.html'):
-            try:
-                self.render(url)
-                return
-            except IOError:
-                pass
-        if not url.startswith('/'):
-            url = '/' + url
-        self.redirect(url)
+        try:
+            self.render(url)
+            return
+        except IOError:
+            pass

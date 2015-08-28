@@ -1,0 +1,52 @@
+<script>
+    var gea_gid;
+    function initTree(id) {
+        initRaTree('action_list', '/action_list', null, true, null, function () {
+            ajaxCommitWithGritter('POST', '/action_list_group_joined', [
+                {name: 'gid', value: id}
+            ], function (result) {
+                if (result.data) {
+                    setTreeCheckBoxChecked('action_list', result.data);
+                }
+            });
+        });
+    }
+
+    function doEditAction(id) {
+        gea_gid = id;
+        initTree(id);
+        $('#alert_edit_action').modal('show');
+    }
+
+    function doAddActionOk() {
+        var ids = getTreeCheckBoxChecked('action_list');
+        ajaxCommitWithGritter('POST', '/group_action_add', [
+            {name: 'gid', value: gea_gid},
+            {name: 'aid', value: ids},
+            {name: 'delete', value: true}
+        ], function () {
+            $('#alert_edit_action').modal('hide');
+            initTree(gea_gid);
+        });
+    }
+
+</script>
+
+<div id="alert_edit_action" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">配置操作权限</h4>
+            </div>
+            <div class="modal-body">
+                <tree id="action_list"/>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-reindeer btn-sm" onclick="doAddActionOk();">保存</a>
+                <a data-dismiss="modal" class="btn btn-primary btn-sm">取消</a>
+            </div>
+        </div>
+    </div>
+</div>

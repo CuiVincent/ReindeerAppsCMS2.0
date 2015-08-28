@@ -1,7 +1,7 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, or_
 from reindeer.sys.base_db_model import InfoTableModel, to_json
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
@@ -139,7 +139,29 @@ class SysAction(InfoTableModel):
         actions = []
         for item in items:
             actions.append(
-                {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME, 'url': item.URL,
+                {'id': item.ID, 'name': item.NAME, 'url': item.URL,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON,
                  'children': SysAction.get_tree_by_parent(item.ID, type)})
+        return actions
+
+    @classmethod
+    def get_ratree_by_parent(cls, parent, type):
+        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+            SysAction.SORT.asc()).all()
+        actions = []
+        for item in items:
+            actions.append(
+                {'id': item.ID, 'title': item.NAME,
+                 'icon_type': item.ICON_TYPE, 'icon': item.ICON,
+                 'children': SysAction.get_ratree_by_parent(item.ID, type)})
+        return actions
+
+    @classmethod
+    def get_ratree_checked_by_group(cls, type, gid):
+        items = cls.db_session.query(SysAction.ID).join(SysGroupAction).filter(
+            SysAction.TYPE == type, SysGroupAction.GROUP == gid).all()
+        actions = []
+        for item in items:
+            actions.append(
+                {'id': item.ID})
         return actions

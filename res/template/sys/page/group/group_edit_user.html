@@ -12,7 +12,7 @@
             showGritter("error", "未勾选内容", "请至少勾选一项");
             return;
         }
-        ajaxCommitWithGritter('POST', 'group_user_add', [
+        ajaxCommitWithGritter('POST', '/group_user_add', [
             {name: 'gid', value: geu_gid},
             {name: 'uid', value: ids}
         ], function () {
@@ -25,7 +25,7 @@
             showGritter("error", "未勾选内容", "请至少勾选一项");
             return;
         }
-        ajaxCommitWithGritter('POST', 'group_user_delete', [
+        ajaxCommitWithGritter('POST', '/group_user_delete', [
             {name: 'gid', value: geu_gid},
             {name: 'uid', value: ids}
         ], function () {
@@ -35,7 +35,7 @@
     }
 
     function initUserTable(uid) {
-        initDataTable($('#table_user_unjoined'), "user_list_group_unjoined", [
+        initDataTable($('#table_user_unjoined'), "/user_list_group_unjoined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
@@ -45,7 +45,7 @@
         ], false, null, true, [
             {name: "gid", value: geu_gid}
         ]);
-        initDataTable($('#table_user_joined'), "user_list_group_joined", [
+        initDataTable($('#table_user_joined'), "/user_list_group_joined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';

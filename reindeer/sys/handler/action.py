@@ -10,8 +10,19 @@ from tornado.escape import json_encode
 
 class ActionListHandler(reindeer.sys.base_handler.BaseHandler):
     def get(self):
-        actions = SysAction.get_tree_by_parent(constants.action_root_main_parent, constants.action_type_menu_menu)
-        self.render('sys/page/action/action_list.html', actions=actions)
+        self.render('sys/page/action/action_list.html')
+
+    def post(self):
+        actions = SysAction.get_ratree_by_parent(constants.action_root_main_parent, constants.action_type_menu_menu)
+        return self.write(json_encode({'success': True, 'data': actions}))
+
+
+class ActionListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+    def post(self):
+        gid = self.get_argument('gid')
+        actions = SysAction.get_ratree_checked_by_group(
+            constants.action_type_menu_menu, gid)
+        return self.write(json_encode({'success': True, 'data': actions}))
 
 
 class ActionAddHandler(reindeer.sys.base_handler.BaseHandler):

@@ -5,6 +5,11 @@ body {
     color: #666;
 }
 
+.dialog-body {
+    padding: 0px;
+    background-color: #ffffff;
+}
+
 hr {
     border-top-color: #dadada;
 }
@@ -275,9 +280,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 /* 修复子div float后，服div高度为0的问题*/
 .clearfix:after {
-     content: ".";
-     display: block;
-     height: 0;
-     clear: both;
-     visibility: hidden;
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }

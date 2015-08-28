@@ -25,21 +25,21 @@
                 $('.navbar-menu li').removeClass("active");
                 var ae = $("#" + aid);
                 ae.closest('li').addClass("active");
-                $("#iframe").attr("height", 0);
-                $("#iframe").attr("src", '/content/' + url);
+                $("#content_iframe").attr("height", 0);
+                $("#content_iframe").attr("src", url);
             }
         }
 
         function initIFrameHeight() {
-            var ifm = document.getElementById("iframe");
-            var subWeb = document.frames ? document.frames["iframe"].document : ifm.contentDocument;
+            var ifm = document.getElementById("content_iframe");
+            var subWeb = document.frames ? document.frames["content_iframe"].document : ifm.contentDocument;
             if (ifm != null && subWeb != null) {
                 ifm.height = subWeb.body.scrollHeight;
             }
         }
 
         function toHome() {
-            setContent('ae_home', '{{main_page}}');
+            setContent('ae_home', '/content/{{main_page}}');
         }
 
         $(function () {
@@ -108,7 +108,8 @@
 <div class="container-fluid content">
     <!--<div id="content-header">-->
     <!--</div>-->
-    <iframe src="#" id="iframe" width="100%" onreadystatechange="iFrameHeight()" onLoad="initIFrameHeight()"
+    <iframe src="#" id="content_iframe" name="content_iframe" width="100%" onreadystatechange="initIFrameHeight()"
+            onLoad="initIFrameHeight()"
             runat="server"
             frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"
             allowtransparency="yes" class="content-iframe"></iframe>

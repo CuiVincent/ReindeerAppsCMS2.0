@@ -14,7 +14,7 @@
         $('#alert_delete').modal('show');
     }
     function doDeleteOk() {
-        ajaxCommitWithGritter('POST', 'action_delete', [
+        ajaxCommitWithGritter('POST', '/action_delete', [
             {name: 'aid', value: deleteId}
         ], doRefresh);
     }

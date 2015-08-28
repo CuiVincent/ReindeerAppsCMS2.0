@@ -2,9 +2,19 @@
 <html>
 <head lang="zh-cmn-Hans">
     {% include '../common_header_base.html' %}
+    {% include '../common_header_dialog.html' %}
     <title>首页</title>
+    <script>
+        function dialog1() {
+            openDialog("dialog_user_list", "/user_list", false);
+        }
+        function dialog2() {
+            openDialog("dialog_action_list", "/action_list", false);
+        }
+    </script>
 </head>
-<body>
-this is mainpage
+<body class="container content-body">
+<button class="btn btn-primary btn-sm" onclick="dialog1();">dialog1</button>
+<button class="btn btn-reindeer btn-sm" onclick="dialog2();">dialog2</button>
 </body>
 </html>

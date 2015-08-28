@@ -1,7 +1,73 @@
 {% include './common_header_ajax.html' %}
 <link rel="stylesheet" href="{{ static_url('common/css/ratree.css') }}"/>
 <script>
-    function initTree(tree_id) {
+    function initRaTree(tree_id, url, param, checkable, operations, onfinish) {
+        $('#' + tree_id).addClass('ratree');
+        ajaxCommitWithGritter('POST', url, param, function (result) {
+            if (result.data) {
+                var data = eval(result.data);
+                var html = createTree(data, checkable, operations);
+                $('#' + tree_id).html(html);
+                afterCreateTree(tree_id);
+                if (onfinish) {
+                    onfinish();
+                }
+            }
+        });
+    }
+
+    function createTree(data, checkable, operations) {
+        var html = '';
+        if (data && data.length > 0) {
+            html += '<ul>';
+            for (var i = 0; i < data.length; i++) {
+                var opers = operations ? operations(data[i]) : null;
+                if (opers && opers.length > 0) {
+                    html += '<li class="operatable">';
+                } else {
+                    html += '<li>';
+                }
+                html += ' <div class="tree-item">'
+                html += '<span class="tree-state glyphicon" aria-hidden="true"></span>';
+                if (checkable) {
+                    if (data[i].checked) {
+                        html += '  <input id="' + data[i].id + '" class="tree-checkbox" type="checkbox" checked="checked" >';
+                    } else {
+                        html += '  <input id="' + data[i].id + '" class="tree-checkbox" type="checkbox">';
+                    }
+                }
+                html += '  <button class="btn btn-sm btn-content tree-label">';
+                if (data[i].icon) {
+                    if ('1' == data[i].icon_type) {
+                        html += '<span class="glyphicon ' + data[i].icon + '" aria-hidden="true"></span>';
+                    }
+                    else if ('2' == data[i].icon_type) {
+                    }
+                }
+                else {
+                    html += '<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>';
+                }
+                html += ' <span class="tree-text"> ' + data[i].title + '</span>';
+                html += '</button>';
+                html += '</div>';
+                if (opers && opers.length > 0) {
+                    html += '<div class="tree-operation">';
+                    for (var j = 0; j < opers.length; j++) {
+                        html += ' <button class="btn btn-' + opers[j].btn + ' btn-xs" onclick="' + opers[j].onclick + '"><span class="glyphicon ' + opers[j].icon + '" aria-hidden="true"></span></button>';
+                    }
+                    html += '</div>';
+                }
+                if (data[i].children) {
+                    html += createTree(data[i].children, checkable, operations);
+                }
+                html += '</li>';
+            }
+            html += '</ul>';
+        }
+        return html;
+    }
+
+    function afterCreateTree(tree_id) {
         $('#' + tree_id + ' li:has(ul)').addClass('parent-li').find(' > span');
         $('#' + tree_id + ' li.parent-li > .tree-item').on('click', function (e) {
             var children = $(this).parent('li.parent-li').find(' > ul > li');
@@ -18,6 +84,18 @@
             e.stopPropagation();
             e.cancelBubble = true;
         });
+        try {
+            parent.initIFrameHeight();
+        } catch (e) {
+        }
+    }
+
+    function setTreeCheckBoxChecked(tree_id, data) {
+        if (data) {
+            for (var i = 0; i < data.length; i++) {
+                $('#' + data[i].id).attr("checked", true);
+            }
+        }
     }
 
     function getTreeCheckBoxChecked(tree_id) {
