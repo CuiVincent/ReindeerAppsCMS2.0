@@ -89,6 +89,7 @@ def to_page(items_query, key_word, start, end, sort_col, sort_dir, *search_cols,
         order_by = sort_cols[sort_col].desc() if sort_dir == 'desc' else sort_cols[sort_col].asc()
     if order_by is not None:
         item = item.order_by(order_by)
-    item = item.slice(start, end)
+    if end > start:
+        item = item.slice(start, end)
     page["data"] = item.all()
     return page
