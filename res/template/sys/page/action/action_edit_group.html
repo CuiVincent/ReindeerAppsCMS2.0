@@ -14,7 +14,8 @@
         }
         ajaxCommitWithGritter('POST', '/group_action_add', [
             {name: 'aid', value: aeg_aid},
-            {name: 'gid', value: ids}
+            {name: 'gid', value: ids},
+            {name: 'clean', value: false}
         ], function () {
             initGroupTable(aeg_aid);
         });

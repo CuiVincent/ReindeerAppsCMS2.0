@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 from sqlalchemy import Column, String, ForeignKey
-from reindeer.sys.base_db_model import InfoTableModel
+from reindeer.base.base_db_model import InfoTableModel
 
 
 class SysGroupAction(InfoTableModel):
@@ -27,12 +27,14 @@ class SysGroupAction(InfoTableModel):
             return 1
 
     @classmethod
-    def delete_all_by_group_add(cls, group, action):
+    def delete_by_group_and_add(cls, group, action):
         group = not isinstance(group, list) and [group] or group
         for g in group:
             items = cls.db_session.query(SysGroupAction).filter(SysGroupAction.GROUP == g)
             if items:
                 items.delete()
+        if not action or action is '' or (isinstance(action, list) and len(action) is 1 and action[0] is ''):
+            return 0
         try:
             return SysGroupAction.add(group, action)
         except:

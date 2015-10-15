@@ -11,6 +11,7 @@ from reindeer.sys.model.sys_action import SysAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys import constants
+from reindeer.cms.model.cms_app import CmsApp
 
 
 class DatabaseInstance:
@@ -95,22 +96,27 @@ class DatabaseUtil:
                                                    icon='glyphicon-user').ID
         sys_action_action_id = SysAction.add_and_get(name='操作权限管理', url='action_list', parent=sys_action_id, sort=3,
                                                      icon='glyphicon-eye-close').ID
-        app_action_id = SysAction.add_and_get(name='App管理', url='app_manager',
+        cms_action_id = SysAction.add_and_get(name='AppCMS', url='app_manager',
                                               parent=constants.action_root_main_parent,
                                               sort=2, icon='glyphicon-phone').ID
-        app_action_platform_id = SysAction.add_and_get(name='平台管理', url='12', parent=app_action_id, sort=1,
-                                                       icon='glyphicon-list-alt').ID
-        test_app_action_platform_android_id = SysAction.add_and_get(name='Android for test', url='22',
-                                                                    parent=app_action_platform_id, sort=1,
-                                                                    icon='glyphicon-phone').ID
-        test_app_action_platform_sony_id = SysAction.add_and_get(name='SONY for test', url='23',
-                                                                 parent=test_app_action_platform_android_id, sort=1,
-                                                                 icon='glyphicon-phone').ID
+        cms_action_app_id = SysAction.add_and_get(name='App管理', url='cms/app_list', parent=cms_action_id, sort=1,
+                                                  icon='glyphicon-th-large').ID
+        cms_action_group_id = SysAction.add_and_get(name='用户组管理', url='cms/group_list', parent=cms_action_id, sort=2,
+                                                    icon='glyphicon-flag').ID
+        cms_action_user_id = SysAction.add_and_get(name='用户管理', url='cms/user_list', parent=cms_action_id, sort=3,
+                                                   icon='glyphicon-user').ID
+        cms_action_layout_id = SysAction.add_and_get(name='布局管理', url='cms/layout_list', parent=cms_action_id, sort=4,
+                                                     icon='glyphicon-blackboard').ID
+        cms_action_data_id = SysAction.add_and_get(name='数据管理', url='cms/data_list', parent=cms_action_id, sort=5,
+                                                   icon='glyphicon-hdd').ID
+
         SysGroupAction.add(group_id, [sys_action_id, sys_action_group_id, sys_action_user_id, sys_action_action_id])
-        SysGroupAction.add(group_id, [app_action_id, app_action_platform_id, test_app_action_platform_android_id,
-                                      test_app_action_platform_sony_id])
+        SysGroupAction.add(group_id, [cms_action_id, cms_action_app_id, cms_action_group_id,
+                                      cms_action_user_id, cms_action_layout_id, cms_action_data_id])
 
         DatabaseUtil.init_test_data()
+
+        CmsApp.add(name="TEST_APP", package_name="test.com")
 
     @staticmethod
     def init(db_instance):

@@ -1,9 +1,9 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-from sqlalchemy import Column, String, or_
-from reindeer.sys.base_db_model import InfoTableModel, to_json
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from reindeer.base.base_db_model import InfoTableModel, to_json
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
 

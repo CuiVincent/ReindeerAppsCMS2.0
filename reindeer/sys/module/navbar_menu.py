@@ -1,7 +1,7 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-from reindeer.sys.base_module import BaseModule
+from reindeer.base.base_module import BaseModule
 
 
 class NavbarMenuModule(BaseModule):

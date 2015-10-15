@@ -23,7 +23,7 @@
         ajaxCommitWithGritter('POST', '/group_action_add', [
             {name: 'gid', value: gea_gid},
             {name: 'aid', value: ids},
-            {name: 'delete', value: true}
+            {name: 'clean', value: 'by_group'}
         ], function () {
             $('#alert_edit_action').modal('hide');
             initTree(gea_gid);

@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 from sqlalchemy import Column, String, ForeignKey
-from reindeer.sys.base_db_model import InfoTableModel
+from reindeer.base.base_db_model import InfoTableModel
 
 
 class SysGroupUser(InfoTableModel):

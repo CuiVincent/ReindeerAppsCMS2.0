@@ -1,14 +1,14 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-from sqlalchemy import Column, String, Integer, or_
-from reindeer.sys.base_db_model import InfoTableModel, to_json
+import uuid
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
+from reindeer.base.base_db_model import InfoTableModel, to_json
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group import SysGroup
 from reindeer.sys import constants
-from sqlalchemy.orm import relationship
-import uuid
 
 
 class SysAction(InfoTableModel):

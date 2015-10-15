@@ -2,12 +2,12 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 import tornado.web
-import reindeer.sys.base_handler
+import reindeer.base.base_handler
 from reindeer.sys.model.sys_action import SysAction
 from reindeer.sys import constants
 
 
-class IndexHandler(reindeer.sys.base_handler.BaseHandler):
+class IndexHandler(reindeer.base.base_handler.BaseHandler):
     @tornado.web.authenticated
     def get(self):
         user_name = self.get_current_user().NAME
@@ -21,8 +21,8 @@ class IndexHandler(reindeer.sys.base_handler.BaseHandler):
         return menu
 
 
-class ContentHandler(reindeer.sys.base_handler.BaseHandler):
-    @reindeer.sys.base_handler.authenticated
+class ContentHandler(reindeer.base.base_handler.BaseHandler):
+    @reindeer.base.base_handler.authenticated
     def get(self, url):
         try:
             self.render(url)

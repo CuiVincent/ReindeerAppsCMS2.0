@@ -1,14 +1,14 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-import reindeer.sys.base_handler
+from tornado.escape import json_encode
+import reindeer.base.base_handler
 from reindeer.sys import constants
 from reindeer.sys.model.sys_action import SysAction
 from reindeer.sys.exceptions import BusinessRuleException
-from tornado.escape import json_encode
 
 
-class ActionListHandler(reindeer.sys.base_handler.BaseHandler):
+class ActionListHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         self.render('sys/page/action/action_list.html')
 
@@ -17,7 +17,7 @@ class ActionListHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(json_encode({'success': True, 'data': actions}))
 
 
-class ActionListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class ActionListGroupJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
         actions = SysAction.get_ratree_checked_by_group(
@@ -25,7 +25,7 @@ class ActionListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(json_encode({'success': True, 'data': actions}))
 
 
-class ActionAddHandler(reindeer.sys.base_handler.BaseHandler):
+class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         id = self.get_argument('id')
         action = SysAction.get_json_by_id(id)
@@ -52,7 +52,7 @@ class ActionAddHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class ActionDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+class ActionDeleteHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aids = str(self.get_argument('aid')).split(',')
         success_count = 0
@@ -66,7 +66,7 @@ class ActionDeleteHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class ActionEditHandler(reindeer.sys.base_handler.BaseHandler):
+class ActionEditHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         id = self.get_argument('id')
         action = SysAction.get_json_by_id(id)

@@ -1,14 +1,13 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-import reindeer.sys.base_handler
-from reindeer.sys.model.sys_user import SysUser
 from tornado.escape import json_encode
-
+import reindeer.base.base_handler
+from reindeer.sys.model.sys_user import SysUser
 from reindeer.sys.exceptions import BusinessRuleException
 
 
-class UserListHandler(reindeer.sys.base_handler.BaseHandler):
+class UserListHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         self.render('sys/page/user/user_list.html')
 
@@ -19,7 +18,7 @@ class UserListHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class UserListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class UserListGroupJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
         page = SysUser.get_page_json_by_joined_groupid(gid, *self.get_page_arguments())
@@ -28,7 +27,7 @@ class UserListGroupJoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class UserListGroupUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class UserListGroupUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
         page = SysUser.get_page_json_by_unjoined_groupid(gid, *self.get_page_arguments())
@@ -37,7 +36,7 @@ class UserListGroupUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class UserAddHandler(reindeer.sys.base_handler.BaseHandler):
+class UserAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         code = self.get_argument('code')
         name = self.get_argument('name')
@@ -49,7 +48,7 @@ class UserAddHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class UserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+class UserDeleteHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uids = str(self.get_argument('uid')).split(',')
         success_count = 0
@@ -63,7 +62,7 @@ class UserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class UserEditHandler(reindeer.sys.base_handler.BaseHandler):
+class UserEditHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
         status = self.get_argument('status') if self.get_argument('status') else 1

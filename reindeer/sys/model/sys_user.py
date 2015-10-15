@@ -3,10 +3,10 @@ __author__ = 'CuiVincent'
 
 from sqlalchemy import Column, String
 from sqlalchemy.exc import IntegrityError
-from reindeer.util.common_util import to_md5
-from reindeer.sys.base_db_model import InfoTableModel, to_json, to_page
-from reindeer.sys import constants
 from sqlalchemy.orm import relationship
+from reindeer.base.util.common_util import to_md5
+from reindeer.base.base_db_model import InfoTableModel, to_json, to_page
+from reindeer.sys import constants
 from reindeer.sys.model.sys_group_user import SysGroupUser
 
 

@@ -1,15 +1,15 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-import reindeer.sys.base_handler
+from tornado.escape import json_encode
+import reindeer.base.base_handler
 from reindeer.sys.model.sys_group import SysGroup
 from reindeer.sys.exceptions import BusinessRuleException
-from tornado.escape import json_encode
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 
 
-class GroupListHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupListHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         self.render('sys/page/group/group_list.html')
 
@@ -20,7 +20,7 @@ class GroupListHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class GroupListUserJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupListUserJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
         json = SysGroup.get_json_by_joined_user(uid)
@@ -29,7 +29,7 @@ class GroupListUserJoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class GroupListUserUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupListUserUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
         json = SysGroup.get_json_by_unjoined_user(uid)
@@ -38,7 +38,7 @@ class GroupListUserUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class GroupListActionJoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupListActionJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = self.get_argument('aid')
         json = SysGroup.get_json_by_joined_action(aid)
@@ -47,7 +47,7 @@ class GroupListActionJoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class GroupListActionUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupListActionUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = self.get_argument('aid')
         json = SysGroup.get_json_by_unjoined_action(aid)
@@ -56,7 +56,7 @@ class GroupListActionUnjoinedHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(r_json)
 
 
-class GroupAddHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         name = self.get_argument('name')
         des = self.get_argument('des')
@@ -67,7 +67,7 @@ class GroupAddHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupDeleteHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gids = str(self.get_argument('gid')).split(',')
         success_count = 0
@@ -81,7 +81,7 @@ class GroupDeleteHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupEditHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupEditHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
         name = self.get_argument('name')
@@ -93,7 +93,7 @@ class GroupEditHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupUserAddHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupUserAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = str(self.get_argument('uid')).split(',')
         gid = str(self.get_argument('gid')).split(',')
@@ -104,7 +104,7 @@ class GroupUserAddHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupUserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupUserDeleteHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = str(self.get_argument('uid')).split(',')
         gid = str(self.get_argument('gid')).split(',')
@@ -115,13 +115,13 @@ class GroupUserDeleteHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupActionAddHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupActionAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = str(self.get_argument('aid')).split(',')
         gid = str(self.get_argument('gid')).split(',')
-        delete = self.get_argument('delete')
-        if delete:
-            err_code = SysGroupAction.delete_all_by_group_add(gid, aid)
+        clean = str(self.get_argument('clean'))
+        if clean == 'by_group':
+            err_code = SysGroupAction.delete_by_group_and_add(gid, aid)
         else:
             err_code = SysGroupAction.add(gid, aid)
         if err_code == 0:
@@ -130,7 +130,7 @@ class GroupActionAddHandler(reindeer.sys.base_handler.BaseHandler):
             raise BusinessRuleException(err_code)
 
 
-class GroupActionDeleteHandler(reindeer.sys.base_handler.BaseHandler):
+class GroupActionDeleteHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = str(self.get_argument('aid')).split(',')
         gid = str(self.get_argument('gid')).split(',')

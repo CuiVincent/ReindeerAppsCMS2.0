@@ -2,13 +2,14 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 from tornado.escape import json_encode
-import reindeer.sys.base_handler
+import reindeer.base.base_handler
 from reindeer.sys.model.sys_user import SysUser
 from reindeer.sys.exceptions import BusinessRuleException
-from reindeer.util.common_util import to_md5
+from reindeer.base.util.common_util import to_md5
 from reindeer.sys import constants
 
-class LoginHandler(reindeer.sys.base_handler.BaseHandler):
+
+class LoginHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         if not self.get_current_user():
             self.render('sys/login.html')
@@ -31,7 +32,7 @@ class LoginHandler(reindeer.sys.base_handler.BaseHandler):
         return self.write(json_encode({'success': True}))
 
 
-class LogoutHandler(reindeer.sys.base_handler.BaseHandler):
+class LogoutHandler(reindeer.base.base_handler.BaseHandler):
     def get(self):
         self.clear_cookie('user_id')
         self.render('sys/login.html')
