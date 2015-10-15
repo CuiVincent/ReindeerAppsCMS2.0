@@ -38,7 +38,7 @@ class BaseHandler(tornado.web.RequestHandler):
             else:
                 err_title = str(err_code)
             if err_code == 1000:
-                func = 'toPage("'+self.application.settings["login_url"]+'");'
+                func = 'toPage("' + self.application.settings["login_url"] + '");'
                 func_text = '登录'
             else:
                 func = 'back();'
@@ -48,6 +48,22 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         user_id = self.get_secure_cookie('user_id')
         return SysUser.get_by_id(user_id)
+
+    def get_page_arguments(self):
+        r_start = int(self.get_argument('iDisplayStart'))
+        r_length = int(self.get_argument('iDisplayLength'))
+        r_search = self.get_argument('sSearch')
+        r_sort_col = self.get_arguments('iSortCol_0')[0]
+        r_sort_dir = self.get_arguments('sSortDir_0')[0]
+        return [r_search, r_start, r_start + r_length, r_sort_col, r_sort_dir]
+
+    def get_page_result_json(self, page):
+        r_echo = self.get_argument('sEcho')
+        json = page["data"]
+        total = page["total"]
+        search_total = page["search_total"]
+        return '{"success": true, "aaData":' + json + ',"iTotalRecords":' + str(
+            total) + ',"iTotalDisplayRecords":' + str(search_total) + ',"sEcho":' + str(r_echo) + '}'
 
 
 class ErrorHandler(BaseHandler):

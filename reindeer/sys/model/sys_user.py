@@ -1,11 +1,10 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
-import json
-from sqlalchemy import Column, String, Integer, or_
+from sqlalchemy import Column, String
 from sqlalchemy.exc import IntegrityError
 from reindeer.util.common_util import to_md5
-from reindeer.sys.base_db_model import InfoTableModel, new_alchemy_encoder, to_json
+from reindeer.sys.base_db_model import InfoTableModel, to_json, to_page
 from reindeer.sys import constants
 from sqlalchemy.orm import relationship
 from reindeer.sys.model.sys_group_user import SysGroupUser
@@ -106,11 +105,7 @@ class SysUser(InfoTableModel):
         return to_json(items)
 
     @classmethod
-    def get_all_count(cls):
-        return cls.db_session.query(SysUser).count()
-
-    @classmethod
-    def get_slice(cls, like, start, stop, sort_col, sort_dir):
+    def get_page(cls, key_word, start, end, sort_col, sort_dir):
         sort_cols = {
             u'1': SysUser.CODE,
             u'2': SysUser.NAME,
@@ -118,35 +113,49 @@ class SysUser(InfoTableModel):
             u'4': SysUser.C_USER,
             u'5': SysUser.C_DATE
         }
-        order_by = None
-        if not sort_col == '0':
-            order_by = -sort_cols[sort_col] if sort_dir == 'desc' else sort_cols[sort_col]
-        item = cls.db_session.query(SysUser).filter(
-            or_(SysUser.CODE.like("%" + like + "%"), SysUser.NAME.like("%" + like + "%"),
-                SysUser.C_USER.like("%" + like + "%")))
-        if order_by is not None:
-            item = item.order_by(order_by)
-        if stop - start >= 0:
-            item = item.slice(start, stop)
-        return item.all()
+        search_cols = (
+            SysUser.CODE,
+            SysUser.NAME,
+            SysUser.C_USER
+        )
+        return to_page(cls.db_session.query(SysUser), key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
 
     @classmethod
-    def get_slice_json(cls, like, start, stop, sort_col, sort_dir):
-        return to_json(SysUser.get_slice(like, start, stop, sort_col, sort_dir))
+    def get_page_json(cls, key_word, start, stop, sort_col, sort_dir):
+        page = SysUser.get_page(key_word, start, stop, sort_col, sort_dir)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_slice_count(cls, like):
-        return cls.db_session.query(SysUser).filter(
-            or_(SysUser.CODE.like("%" + like + "%"), SysUser.NAME.like("%" + like + "%"),
-                SysUser.C_USER.like("%" + like + "%"))).count()
+    def get_page_json_by_joined_groupid(cls, gid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysUser.CODE,
+            u'2': SysUser.NAME
+        }
+        search_cols = (
+            SysUser.CODE,
+            SysUser.NAME
+        )
+        query = cls.db_session.query(SysUser).join(SysGroupUser).filter(SysGroupUser.GROUP == gid)
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_slice_json_by_joined_groupid(cls, gid):
-        item = cls.db_session.query(SysUser).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).all()
-        return to_json(item)
-
-    @classmethod
-    def get_slice_json_by_unjoined_groupid(cls, gid):
+    def get_page_json_by_unjoined_groupid(cls, gid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysUser.CODE,
+            u'2': SysUser.NAME
+        }
+        search_cols = (
+            SysUser.CODE,
+            SysUser.NAME
+        )
         sub = cls.db_session.query(SysUser.ID).join(SysGroupUser).filter(SysGroupUser.GROUP == gid).subquery()
-        item = cls.db_session.query(SysUser).filter(~SysUser.ID.in_(sub)).all()
-        return to_json(item)
+        query = cls.db_session.query(SysUser).filter(~SysUser.ID.in_(sub))
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page

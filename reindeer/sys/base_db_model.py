@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, or_
 from datetime import datetime
 import uuid
 import json
@@ -75,3 +75,20 @@ def to_json(items):
     for item in items:
         r_json.append(item)
     return json.dumps(r_json, cls=new_alchemy_encoder(), check_circular=False)
+
+
+def to_page(items_query, key_word, start, end, sort_col, sort_dir, *search_cols, **sort_cols):
+    page = {"total": items_query.count()}
+    search = []
+    for col in search_cols:
+        search.append(col.like("%" + key_word + "%"))
+    item = items_query.filter(or_(*search))
+    page["search_total"] = item.count()
+    order_by = None
+    if not sort_col == '0':
+        order_by = sort_cols[sort_col].desc() if sort_dir == 'desc' else sort_cols[sort_col].asc()
+    if order_by is not None:
+        item = item.order_by(order_by)
+    item = item.slice(start, end)
+    page["data"] = item.all()
+    return page
