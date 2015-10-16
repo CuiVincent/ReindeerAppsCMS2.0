@@ -20,9 +20,7 @@ class Application(tornado.web.Application):
         settings['ui_modules'] = app_modules
         tornado.web.Application.__init__(self, handlers, **settings)
         tornado.web.ErrorHandler = reindeer.base.base_handler.ErrorHandler
-        self.db_instance = DatabaseInstance(db_settings, [InfoTableModel, NormalTableModel])
         Application.instance = self
-        # DatabaseUtil.init(self.db_instance)
 
     @classmethod
     def instance(cls):
