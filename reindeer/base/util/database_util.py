@@ -109,10 +109,14 @@ class DatabaseUtil:
                                                      icon='glyphicon-blackboard').ID
         cms_action_data_id = SysAction.add_and_get(name='数据管理', url='cms/data_list', parent=cms_action_id, sort=5,
                                                    icon='glyphicon-hdd').ID
+        cms_action_platform_id = SysAction.add_and_get(name='平台管理', url='cms/platform_list', parent=cms_action_id,
+                                                       sort=6,
+                                                       icon='glyphicon-phone').ID
 
         SysGroupAction.add(group_id, [sys_action_id, sys_action_group_id, sys_action_user_id, sys_action_action_id])
         SysGroupAction.add(group_id, [cms_action_id, cms_action_app_id, cms_action_group_id,
-                                      cms_action_user_id, cms_action_layout_id, cms_action_data_id])
+                                      cms_action_user_id, cms_action_layout_id, cms_action_data_id,
+                                      cms_action_platform_id])
 
         DatabaseUtil.init_test_data()
 
