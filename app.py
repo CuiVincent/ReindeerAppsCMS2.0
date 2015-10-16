@@ -6,13 +6,9 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import reindeer
-from tornado.options import define, options
-from app_settings import app_settings, db_settings
+from tornado.options import options
+from app_settings import app_settings, app_listen_settings
 from app_urls import app_urls, app_modules
-from reindeer.base.util.database_util import DatabaseInstance, DatabaseUtil
-from reindeer.base.base_db_model import InfoTableModel, NormalTableModel
-
-define("port", default=9000, help="run on the given port", type=int)
 
 
 class Application(tornado.web.Application):
@@ -30,5 +26,9 @@ class Application(tornado.web.Application):
 if __name__ == "__main__":
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(app_urls, **app_settings))
-    http_server.listen(options.port)
+    print(app_listen_settings)
+    if app_listen_settings['ip']:
+        http_server.listen(app_listen_settings['port'], app_listen_settings['ip'])
+    else:
+        http_server.listen(app_listen_settings['port'])
     tornado.ioloop.IOLoop.instance().start()
