@@ -120,7 +120,7 @@ class DatabaseUtil:
 
         DatabaseUtil.init_test_data()
 
-        CmsApp.add(name="TEST_APP", package_name="test.com")
+        CmsApp.add(name="TEST_APP", code="test.com")
 
     @staticmethod
     def init(db_instance):
