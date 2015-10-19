@@ -30,7 +30,7 @@ class CmsUser(InfoTableModel):
             cls.db_session.commit()
         except IntegrityError:
             cls.db_session.rollback()
-            return 1051
+            return 11051
             # 先回滚再抛出异常，否则回滚不会执行
         except:
             cls.db_session.rollback()
@@ -74,7 +74,7 @@ class CmsUser(InfoTableModel):
     def update(cls, id, name, status):
         items = cls.db_session.query(CmsUser).filter(CmsUser.ID == id)
         if items.count() < 1:
-            return 1053
+            return 11053
         update = {
             CmsUser.NAME: name,
             CmsUser.STATUS: status,

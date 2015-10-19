@@ -13,7 +13,7 @@ class CmsGroup(InfoTableModel):
     NAME = Column(String(100))
     DES = Column(String(1000))
     users = relationship('CmsUser', secondary='RA_CMS_GROUP_USER')
-    apps = relationship('CmsApp', secondary='RA_CMS_GROUP_APP')
+    actions = relationship('CmsAction', secondary='RA_CMS_GROUP_ACTION')
 
     @classmethod
     def add(cls, name, des, c_user=None):

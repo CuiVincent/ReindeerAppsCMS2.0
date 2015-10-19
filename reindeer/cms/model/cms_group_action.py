@@ -6,9 +6,9 @@ from reindeer.base.base_db_model import InfoTableModel
 
 
 class CmsGroupAction(InfoTableModel):
-    __tablename__ = 'RA_SYS_GROUP_ACTION'
+    __tablename__ = 'RA_CMS_GROUP_ACTION'
     GROUP = Column(String(50), ForeignKey('RA_CMS_GROUP.ID', ondelete='CASCADE', onupdate='CASCADE'))
-    ACTION = Column(String(50), ForeignKey('RA_SYS_ACTION.ID', ondelete='CASCADE', onupdate='CASCADE'))
+    ACTION = Column(String(50), ForeignKey('RA_CMS_ACTION.ID', ondelete='CASCADE', onupdate='CASCADE'))
 
     @classmethod
     def add(cls, group, action):

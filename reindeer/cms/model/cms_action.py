@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 import uuid
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from reindeer.base.base_db_model import InfoTableModel, to_json
 from reindeer.cms.model.cms_group_action import CmsGroupAction
@@ -22,7 +22,7 @@ class CmsAction(InfoTableModel):
     ICON_TYPE = Column(String(1), default=constants.icon_client)
     ICON = Column(String(200))
     THEME = Column(String(50))
-    APP = Column(String(50))
+    APP = Column(String(50), ForeignKey('RA_CMS_APP.ID', ondelete='CASCADE', onupdate='CASCADE'))
     groups = relationship('CmsGroup', secondary='RA_CMS_GROUP_ACTION')
 
     @classmethod
@@ -80,7 +80,7 @@ class CmsAction(InfoTableModel):
 
     # @classmethod
     # def update(cls, id, name, des, sort, icon):
-    #     items = cls.db_session.query(CmsAction).filter(CmsAction.ID == id)
+    # items = cls.db_session.query(CmsAction).filter(CmsAction.ID == id)
     #     if items.count() < 1:
     #         return 11154
     #     update = {

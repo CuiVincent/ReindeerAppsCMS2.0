@@ -9,7 +9,7 @@ import json
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from reindeer.sys import constants
 
-# 以下是不提供默认字段的普通表基类
+# 以下是不提供默认字段的普通表基类，因为有关系的表必须来自同一个Base，所以这个类暂时不推荐用
 NormalTableModel = declarative_base(name='NormalTableModel')
 
 # 以下是提供ID、创建信息等默认字段的信息表基类

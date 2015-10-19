@@ -12,6 +12,11 @@ from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys import constants
 from reindeer.cms.model.cms_app import CmsApp
+from reindeer.cms.model.cms_action import CmsAction
+from reindeer.cms.model.cms_group import CmsGroup
+from reindeer.cms.model.cms_group_action import CmsGroupAction
+from reindeer.cms.model.cms_group_user import CmsGroupUser
+from reindeer.cms.model.cms_user import CmsUser
 
 
 class DatabaseInstance:
@@ -121,6 +126,11 @@ class DatabaseUtil:
         DatabaseUtil.init_test_data()
 
         CmsApp.add(name="TEST_APP", code="test.com")
+        CmsUser
+        CmsAction
+        CmsGroup
+        CmsGroupUser
+        CmsGroupAction
 
     @staticmethod
     def init(db_instance):
