@@ -10,7 +10,8 @@ from reindeer.sys.model.sys_user import SysUser
 from reindeer.sys.model.sys_action import SysAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
-from reindeer.sys import constants
+from reindeer.sys import constants as sys_constants
+from reindeer.cms import constants as cms_constants
 from reindeer.cms.model.cms_app import CmsApp
 from reindeer.cms.model.cms_action import CmsAction
 from reindeer.cms.model.cms_group import CmsGroup
@@ -89,11 +90,11 @@ class DatabaseUtil:
 
     @staticmethod
     def init_database_data():
-        user_id = SysUser.add_and_get('reindeer', '超级管理员', '111', 1, constants.str_user_sys).ID
+        user_id = SysUser.add_and_get('reindeer', '超级管理员', '111', 1, sys_constants.str_user_sys).ID
         group_id = SysGroup.add_and_get('admin', '系统管理组').ID
         SysGroupUser.add(group_id, user_id)
         sys_action_id = SysAction.add_and_get(name='系统管理', url='sys_manager',
-                                              parent=constants.action_root_main_parent,
+                                              parent=sys_constants.action_root_main_parent,
                                               sort=1, icon='glyphicon-cog').ID
         sys_action_group_id = SysAction.add_and_get(name='用户组管理', url='group_list', parent=sys_action_id, sort=1,
                                                     icon='glyphicon-flag').ID
@@ -102,9 +103,12 @@ class DatabaseUtil:
         sys_action_action_id = SysAction.add_and_get(name='操作权限管理', url='action_list', parent=sys_action_id, sort=3,
                                                      icon='glyphicon-eye-close').ID
         cms_action_id = SysAction.add_and_get(name='AppCMS', url='app_manager',
-                                              parent=constants.action_root_main_parent,
+                                              parent=sys_constants.action_root_main_parent,
                                               sort=2, icon='glyphicon-phone').ID
-        cms_action_app_id = SysAction.add_and_get(name='App管理', url='cms/app_list', parent=cms_action_id, sort=1,
+        cms_action_app_id = SysAction.add_and_get(name='App管理', url='cms/app_list',
+                                                  type=sys_constants.action_type_scalable_menu_menu,
+                                                  scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree(\'cms/app_info\')',
+                                                  parent=cms_action_id, sort=1,
                                                   icon='glyphicon-th-large').ID
         cms_action_group_id = SysAction.add_and_get(name='用户组管理', url='cms/group_list', parent=cms_action_id, sort=2,
                                                     icon='glyphicon-flag').ID

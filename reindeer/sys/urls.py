@@ -39,4 +39,4 @@ sys_urls = [
     (r'/action_delete', action.ActionDeleteHandler)
 ]
 
-sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule}
+sys_modules = {'NavbarMenu': navbar_menu.NavbarMenuModule, 'NavbarScaleMenu': navbar_menu.NavbarScaleMenuModule}

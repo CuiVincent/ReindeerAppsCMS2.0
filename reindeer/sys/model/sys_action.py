@@ -2,7 +2,7 @@ __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
 import uuid
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, or_
 from sqlalchemy.orm import relationship
 from reindeer.base.base_db_model import InfoTableModel, to_json
 from reindeer.sys.model.sys_group_action import SysGroupAction
@@ -16,6 +16,7 @@ class SysAction(InfoTableModel):
     NAME = Column(String(100))
     TYPE = Column(String(2), default=constants.action_type_menu_menu)
     URL = Column(String(200))
+    SCALE_SCRIPT = Column(String(5000))
     DES = Column(String(1000))
     PARENT = Column(String(50), default=constants.action_root_main_parent)
     LOG = Column(String(1), default='1')
@@ -25,8 +26,10 @@ class SysAction(InfoTableModel):
     groups = relationship('SysGroup', secondary='RA_SYS_GROUP_ACTION')
 
     @classmethod
-    def add(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None, icon=None):
-        action = SysAction(NAME=name, TYPE=type, URL=url, DES=des, PARENT=parent, LOG=log, SORT=sort,
+    def add(cls, name=None, type=None, url=None, scale_script=None, des=None, parent=None, log=None, sort=None,
+            icon_type=None, icon=None):
+        action = SysAction(NAME=name, TYPE=type, URL=url, SCALE_SCRIPT=scale_script, DES=des, PARENT=parent, LOG=log,
+                           SORT=sort,
                            ICON_TYPE=icon_type,
                            ICON=icon)
         if not str(action.PARENT).startswith(constants.action_root_prefix):
@@ -43,9 +46,11 @@ class SysAction(InfoTableModel):
             return 1
 
     @classmethod
-    def add_and_get(cls, name=None, type=None, url=None, des=None, parent=None, log=None, sort=None, icon_type=None,
+    def add_and_get(cls, name=None, type=None, url=None, scale_script=None, des=None, parent=None, log=None, sort=None,
+                    icon_type=None,
                     icon=None):
-        action = SysAction(NAME=name, TYPE=type, URL=url, DES=des, PARENT=parent, LOG=log, SORT=sort,
+        action = SysAction(NAME=name, TYPE=type, URL=url, SCALE_SCRIPT=scale_script, DES=des, PARENT=parent, LOG=log,
+                           SORT=sort,
                            ICON_TYPE=icon_type,
                            ICON=icon)
         if not str(action.PARENT).startswith(constants.action_root_prefix):
@@ -77,7 +82,8 @@ class SysAction(InfoTableModel):
             return 1
 
     @classmethod
-    def update(cls, id, name, des, url, sort, icon):
+    def update(cls, id, name=None, type=None, url=None, scale_script=None, des=None, sort=None,
+               icon=None):
         items = cls.db_session.query(SysAction).filter(SysAction.ID == id)
         if items.count() < 1:
             return 1154
@@ -85,6 +91,8 @@ class SysAction(InfoTableModel):
             SysAction.NAME: name,
             SysAction.DES: des,
             SysAction.URL: url,
+            SysAction.TYPE: type,
+            SysAction.SCALE_SCRIPT: scale_script,
             SysAction.SORT: sort,
             SysAction.ICON: icon
         }
@@ -120,46 +128,56 @@ class SysAction(InfoTableModel):
         return parent
 
     @classmethod
-    def get_tree_by_user_and_parent(cls, user_id, parent, type):
+    def get_tree_by_user_and_parent(cls, user_id, parent):
         items = cls.db_session.query(SysAction).join(SysGroupAction).join(SysGroup).join(SysGroupUser).filter(
-            SysGroupUser.USER == user_id, SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+            SysGroupUser.USER == user_id, SysAction.PARENT == parent,
+            or_(SysAction.TYPE == constants.action_type_menu_menu,
+                SysAction.TYPE == constants.action_type_scalable_menu_menu)).order_by(
             SysAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(
                 {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME, 'url': item.URL,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON,
-                 'children': SysAction.get_tree_by_user_and_parent(user_id, item.ID, type)})
+                 'children': SysAction.get_tree_by_user_and_parent(user_id, item.ID),
+                 'scale_script': item.SCALE_SCRIPT if item.TYPE == constants.action_type_scalable_menu_menu else None})
         return actions
 
     @classmethod
-    def get_tree_by_parent(cls, parent, type):
-        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+    def get_tree_by_parent(cls, parent):
+        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent,
+                                                       or_(SysAction.TYPE == constants.action_type_menu_menu,
+                                                           SysAction.TYPE == constants.action_type_scalable_menu_menu)).order_by(
             SysAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(
                 {'id': item.ID, 'name': item.NAME, 'url': item.URL,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON,
-                 'children': SysAction.get_tree_by_parent(item.ID, type)})
+                 'children': SysAction.get_tree_by_parent(item.ID),
+                 'scale_script': item.SCALE_SCRIPT if item.TYPE == constants.action_type_scalable_menu_menu else None})
         return actions
 
     @classmethod
-    def get_ratree_by_parent(cls, parent, type):
-        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent, SysAction.TYPE == type).order_by(
+    def get_ratree_by_parent(cls, parent):
+        items = cls.db_session.query(SysAction).filter(SysAction.PARENT == parent,
+                                                       or_(SysAction.TYPE == constants.action_type_menu_menu,
+                                                           SysAction.TYPE == constants.action_type_scalable_menu_menu)).order_by(
             SysAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(
                 {'id': item.ID, 'title': item.NAME,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON,
-                 'children': SysAction.get_ratree_by_parent(item.ID, type)})
+                 'children': SysAction.get_ratree_by_parent(item.ID),
+                 'scale_script': item.SCALE_SCRIPT if item.TYPE == constants.action_type_scalable_menu_menu else None})
         return actions
 
     @classmethod
-    def get_ratree_checked_by_group(cls, type, gid):
+    def get_ratree_checked_by_group(cls, gid):
         items = cls.db_session.query(SysAction.ID).join(SysGroupAction).filter(
-            SysAction.TYPE == type, SysGroupAction.GROUP == gid).all()
+            or_(SysAction.TYPE == constants.action_type_menu_menu,
+                SysAction.TYPE == constants.action_type_scalable_menu_menu), SysGroupAction.GROUP == gid).all()
         actions = []
         for item in items:
             actions.append(

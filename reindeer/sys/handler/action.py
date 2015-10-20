@@ -13,15 +13,14 @@ class ActionListHandler(reindeer.base.base_handler.BaseHandler):
         self.render('sys/page/action/action_list.html')
 
     def post(self):
-        actions = SysAction.get_ratree_by_parent(constants.action_root_main_parent, constants.action_type_menu_menu)
+        actions = SysAction.get_ratree_by_parent(constants.action_root_main_parent)
         return self.write(json_encode({'success': True, 'data': actions}))
 
 
 class ActionListGroupJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
-        actions = SysAction.get_ratree_checked_by_group(
-            constants.action_type_menu_menu, gid)
+        actions = SysAction.get_ratree_checked_by_group(gid)
         return self.write(json_encode({'success': True, 'data': actions}))
 
 
@@ -43,7 +42,9 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
         url = self.get_argument('url')
         sort = self.get_argument('sort')
         icon = self.get_argument('icon')
-        err_code = SysAction.add(name=name, url=url, des=des,
+        type = self.get_argument('type')
+        scale_script = self.get_argument('scale_script')
+        err_code = SysAction.add(name=name, url=url, type=type, scale_script=scale_script, des=des,
                                  parent=parent,
                                  sort=sort, icon=icon)
         if err_code == 0:
@@ -84,7 +85,9 @@ class ActionEditHandler(reindeer.base.base_handler.BaseHandler):
         url = self.get_argument('url')
         sort = self.get_argument('sort')
         icon = self.get_argument('icon')
-        err_code = SysAction.update(id=id, name=name, url=url, des=des,
+        type = self.get_argument('type')
+        scale_script = self.get_argument('scale_script')
+        err_code = SysAction.update(id=id, name=name, url=url, type=type, scale_script=scale_script, des=des,
                                     sort=sort, icon=icon)
         if err_code == 0:
             return self.write(json_encode({'success': True}))

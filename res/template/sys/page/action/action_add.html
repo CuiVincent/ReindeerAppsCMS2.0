@@ -1,6 +1,26 @@
 <script>
     var addPid;
 
+    function getAddTypeValue() {
+        var type = 0;
+        if ($("#add_type_group .btn:eq(1)").hasClass("active")) {
+            type = 1;
+        }
+        return type;
+    }
+
+    function initAddTypeStatus(timeout) {
+        if (timeout) {
+            setTimeout('initAddTypeStatus(false)', 100)
+        } else {
+            if (getAddTypeValue() == 1) {
+                $("#add_scale_script").css("display", "block");
+            } else {
+                $("#add_scale_script").css("display", "none");
+            }
+        }
+    }
+
     function doAddByCheck() {
         var ids = getTreeCheckBoxChecked('tree');
         if (ids.length > 1) {
@@ -29,6 +49,7 @@
             $("#a_pname").attr("value", '根节点');
             $('#alert_add').modal('show');
         }
+        initAddTypeStatus();
     }
 
     function doAddOk() {
@@ -37,7 +58,7 @@
                 $('#alert_add').modal('hide');
                 doRefresh();
             }, [
-                {name: "pid", value: addPid}
+                {name: "pid", value: addPid}, {name: "type", value: getAddTypeValue()}
             ]);
     }
 
@@ -80,6 +101,17 @@
                     <div class="form-group">
                         <label class="form-label">图标</label>
                         <input class="form-control" type="text" name="icon" placeholder="请输入图标"/>
+                    </div>
+                     <div class="form-group">
+                        <label class="form-label">类型</label>
+                        <div id="add_type_group" data-toggle="buttons" class="btn-group btn-group-xs" >
+                            <label class="btn btn-primary active" onchange="initAddTypeStatus(true);"><input type="radio" >普通</label>
+                            <label class="btn btn-primary" onchange="initAddTypeStatus(true);"> <input type="radio" >自扩展</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="add_scale_script" >
+                        <label class="form-label">扩展脚本</label>
+                        <input class="form-control" type="text" name="scale_script" placeholder="请输入扩展脚本"/>
                     </div>
                 </div>
                 <div class="modal-footer">

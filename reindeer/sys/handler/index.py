@@ -16,8 +16,7 @@ class IndexHandler(reindeer.base.base_handler.BaseHandler):
 
     def get_user_main_menu(self):
         user_id = self.get_current_user().ID
-        menu = SysAction.get_tree_by_user_and_parent(user_id, constants.action_root_main_parent,
-                                                     constants.action_type_menu_menu)
+        menu = SysAction.get_tree_by_user_and_parent(user_id, constants.action_root_main_parent)
         return menu
 
 

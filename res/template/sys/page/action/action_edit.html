@@ -1,4 +1,35 @@
 <script>
+    function getEditTypeValue() {
+        var type = 0;
+        if ($("#edit_type_group .btn:eq(1)").hasClass("active")) {
+            type = 1;
+        }
+        return type;
+    }
+
+    function initEditTypeStatus(timeout) {
+        if (timeout) {
+            setTimeout('initEditTypeStatus(false)', 100)
+        } else {
+            if (getEditTypeValue() == 1) {
+                $("#edit_scale_script").css("display", "block");
+            } else {
+                $("#edit_scale_script").css("display", "none");
+            }
+        }
+    }
+
+    function setEditType(type) {
+        if (type == 0) {
+            $("#edit_type_group .btn:eq(0)").addClass("active");
+            $("#edit_type_group .btn:eq(1)").removeClass("active");
+        }else  if(type == 1)   {
+            $("#edit_type_group .btn:eq(1)").addClass("active");
+            $("#edit_type_group .btn:eq(0)").removeClass("active");
+        }
+        initEditTypeStatus();
+    }
+
     function doEdit(id) {
         if (id) {
             ajaxCommitWithGritter('GET', '/action_edit', [
@@ -11,9 +42,11 @@
                         $("#e_aid").attr("value", id);
                         $("#e_name").attr("value", json[0].NAME);
                         $("#e_des").attr("value", json[0].DES);
-                        $("#e_url").attr("value", decodeURIComponent(json[0].URL));
+                        $("#e_url").attr("value", json[0].URL?decodeURIComponent(json[0].URL):'');
                         $("#e_sort").attr("value", json[0].SORT);
-                        $("#e_icon").attr("value", decodeURIComponent(json[0].ICON));
+                        $("#e_icon").attr("value", json[0].ICON?decodeURIComponent(json[0].ICON):'');
+                        setEditType(json[0].TYPE);
+                        $("#e_scale_script").attr("value",json[0].SCALE_SCRIPT?decodeURIComponent(json[0].SCALE_SCRIPT):'');
                         $('#alert_edit').modal('show');
                     }
                 }
@@ -28,7 +61,9 @@
             ajaxCommitFormWithGritter($("#form_edit"), function () {
                 $('#alert_edit').modal('hide');
                 doRefresh();
-            });
+            },[
+            {name: "type", value: getEditTypeValue()}
+        ]);
     }
 
 </script>
@@ -72,6 +107,17 @@
                     <div class="form-group">
                         <label class="form-label">图标</label>
                         <input class="form-control" type="text" id="e_icon" name="icon" placeholder="请输入图标"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">类型</label>
+                        <div id="edit_type_group" data-toggle="buttons" class="btn-group btn-group-xs" >
+                            <label class="btn btn-primary active"  onchange="initEditTypeStatus(true);"><input type="radio" >普通</label>
+                            <label class="btn btn-primary"  onchange="initEditTypeStatus(true);"> <input type="radio">自扩展</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="edit_scale_script" >
+                        <label class="form-label">扩展脚本</label>
+                        <input class="form-control" type="text" id="e_scale_script" name="scale_script" placeholder="请输入扩展脚本"/>
                     </div>
                 </div>
                 <div class="modal-footer">

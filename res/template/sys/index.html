@@ -20,6 +20,7 @@
         var contentUrl = '';
 
         function setContent(aid, url) {
+            url = decodeURIComponent(url)
             if (null != url && "/" != url && "" != url && "null" != url && contentUrl != url) {
                 contentUrl = url;
                 $('.navbar-menu li').removeClass("active");

@@ -8,6 +8,8 @@ action_root_title_parent = action_root_prefix + 'TITLE_MENU'
 
 #操作权限类型-菜单
 action_type_menu_menu = '0'
+#操作权限类型-可扩展菜单
+action_type_scalable_menu_menu = '1'
 
 #用户状态-正常
 user_status_normal = '1'

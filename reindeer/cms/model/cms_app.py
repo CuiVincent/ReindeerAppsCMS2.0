@@ -1,6 +1,7 @@
 __author__ = 'CuiVincent'
 # -*- coding: utf8 -*-
 
+import uuid
 from sqlalchemy import Column, String
 from reindeer.base.base_db_model import InfoTableModel
 from reindeer.cms import constants
@@ -30,3 +31,14 @@ class CmsApp(InfoTableModel):
             return 0
         else:
             return 1
+
+    @classmethod
+    def get_tree(cls, base_url):
+        items = cls.db_session.query(CmsApp).all()
+        actions = []
+        for item in items:
+            actions.append(
+                {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME,
+                 'url': base_url + ('&' if '?' in base_url else '?') + 'id=' + item.ID,
+                 'icon_type': item.ICON_TYPE, 'icon': item.ICON, 'children': None, 'scale_script': None})
+        return actions
