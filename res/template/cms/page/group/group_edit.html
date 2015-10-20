@@ -1,0 +1,51 @@
+<script>
+
+    function doEdit(id, name, des) {
+        $("#e_gid").attr("value", id);
+        $("#e_name").attr("value", name);
+        $("#e_des").attr("value", des);
+        $('#alert_edit').modal('show');
+    }
+
+    function doEditOk() {
+        ajaxCommitFormWithGritter($("#form_edit"), function () {
+            $('#alert_edit').modal('hide');
+            doRefresh();
+        });
+    }
+</script>
+
+<div id="alert_edit" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改</h4>
+            </div>
+
+            <form id="form_edit" action="/cms/group_edit" method="post" class="form-horizontal">
+                {% raw xsrf_form_html() %}
+                <input type="hidden" id="e_gid" name="gid" value=""/>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">用户组名</label>
+                        <input class="form-control" type="text" id="e_name" name="name"
+                               validate="{required:true,messages:{required:'请输入用户组名'}}"
+                               placeholder="请输入用户组名"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">描述</label>
+                        <input class="form-control" type="text" id="e_des" name="des" placeholder="请输入描述"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-reindeer btn-sm" onclick="doEditOk();">保存</a>
+                    <a data-dismiss="modal" class="btn btn-primary btn-sm">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
