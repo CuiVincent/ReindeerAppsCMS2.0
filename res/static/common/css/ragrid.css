@@ -1,0 +1,16 @@
+.ragrid .grid-item {
+    padding: 20px;
+    margin: 10px;
+    font-size: 15px;
+}
+
+.ragrid .grid-item .grid-text {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ragrid .grid-operation {
+    margin-top: 5px;
+}
+

@@ -61,7 +61,7 @@ class CmsUser(InfoTableModel):
     def delete(cls, id):
         items = cls.db_session.query(CmsUser).filter(CmsUser.ID == id)
         if not items.count():
-            return 1052
+            return 11052
         items.delete()
         try:
             cls.db_session.commit()

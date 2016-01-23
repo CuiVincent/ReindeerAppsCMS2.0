@@ -5,16 +5,11 @@
     {% include '../common_header_dialog.html' %}
     <title>首页</title>
     <script>
-        function dialog1() {
-            openDialog("dialog_user_list", "/user_list", false);
-        }
-        function dialog2() {
-            openDialog("dialog_action_list", "/action_list", false);
-        }
+        $(function () {
+            parent.setContent('home', '/cms/app_list');
+        });
     </script>
 </head>
 <body class="container content-body">
-<button class="btn btn-primary btn-sm" onclick="dialog1();">dialog1</button>
-<button class="btn btn-reindeer btn-sm" onclick="dialog2();">dialog2</button>
 </body>
 </html>

@@ -20,8 +20,8 @@
         var contentUrl = '';
 
         function setContent(aid, url) {
-            url = decodeURIComponent(url)
-            if (null != url && "/" != url && "" != url && "null" != url && contentUrl != url) {
+            url = decodeURIComponent(url);
+            if (url && "/" != url && "" != url && "null" != url && contentUrl != url) {
                 contentUrl = url;
                 $('.navbar-menu li').removeClass("active");
                 var ae = $("#" + aid);
@@ -40,7 +40,11 @@
         }
 
         function toHome() {
-            setContent('ae_home', '/content/{{main_page}}');
+            setContent('home', '/content/{{main_page}}');
+        }
+
+        function toOther() {
+            setContent('other', '/content/sys/test.html');
         }
 
         $(function () {
@@ -72,8 +76,9 @@
                         class="menu-text"> 首页</span></a>
                 </li>
                 {% module NavbarMenu(main_menu,0) %}
-                <li><a href="#"><span class="glyphicon glyphicon-folder-close"
-                                      aria-hidden="true"></span><span class="menu-text"> 其他</span></a></li>
+                <li><a href="#" onclick="toOther();"><span class="glyphicon glyphicon-folder-close"
+                                                           aria-hidden="true"></span><span
+                        class="menu-text"> 其他</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="navbar-user dropdown-toggle" href="#" data-toggle="dropdown" role="button"

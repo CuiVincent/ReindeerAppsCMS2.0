@@ -49,7 +49,7 @@ class CmsGroup(InfoTableModel):
     def delete(cls, id):
         items = cls.db_session.query(CmsGroup).filter(CmsGroup.ID == id)
         if not items:
-            return 1101
+            return 11101
         items.delete()
         try:
             cls.db_session.commit()
@@ -62,7 +62,7 @@ class CmsGroup(InfoTableModel):
     def update(cls, id, name, des):
         items = cls.db_session.query(CmsGroup).filter(CmsGroup.ID == id)
         if items.count() < 1:
-            return 1102
+            return 11102
         update = {
             CmsGroup.NAME: name,
             CmsGroup.DES: des,

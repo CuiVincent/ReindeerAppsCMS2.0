@@ -2,11 +2,52 @@
 <html>
 <head lang="zh-cmn-Hans">
     {% include '../../../common_header_base.html' %}
+    {% include '../../../common_header_ragrid.html' %}
+    {% include '../../../common_header_validate.html' %}
     <title>app</title>
     <script>
+        $(document).ready(function () {
+            initRaGrid('grid', '/cms/app_list', null, function (row) {
+                return [
+                    {'btn': 'primary', 'onclick': 'doView(\'' + row['ID'] + '\');', 'icon': 'glyphicon-search'},
+                    {'btn': 'info', 'onclick': 'doEdit(\'' + row['ID'] + '\');', 'icon': 'glyphicon-pencil'},
+                    {'btn': 'reindeer', 'onclick': 'doDelete(\'' + row['ID'] + '\');', 'icon': 'glyphicon-trash'},
+                    {'btn': 'warning', 'onclick': 'doLog(\'' + row['ID'] + '\');', 'icon': 'glyphicon-file'},
+                    {'btn': 'success', 'onclick': 'doMonitor(\'' + row['ID'] + '\');', 'icon': 'glyphicon-scale'}
+                ];
+            }, function () {
+            }, ['ID', 'NAME', 'ICON_TYPE', 'ICON']);
+        });
+
+        function doView(aid) {
+            parent.setContent('', '/cms/app_info?id=' + aid);
+        }
+
+        function doEdit(aid) {
+            parent.setContent('', '/cms/app_info?id=' + aid);
+        }
+
     </script>
 </head>
 <body class="container content-body">
-<button class="btn btn-reindeer btn-sm">app</button>
+<div class="content-body-title">
+    <h4>APP管理</h4>
+
+    <div class="content-body-title-button">
+        <button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
+                                                                        aria-hidden="true"></span>&nbsp;新建
+        </button>
+        <button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
+                                                                            aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-body-info">
+    <div id="grid">
+    </div>
+</div>
+{% include 'app_add.html' %}
+{% include 'app_delete.html' %}
 </body>
 </html>

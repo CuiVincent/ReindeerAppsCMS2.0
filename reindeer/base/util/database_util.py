@@ -141,7 +141,7 @@ class DatabaseUtil:
 
     @staticmethod
     def init(db_instance):
-        DatabaseUtil.drop_all_table(db_instance)  # 不知为什么会锁表
+        DatabaseUtil.drop_all_table(db_instance)
         DatabaseUtil.create_all_table(db_instance)
         DatabaseUtil.init_database_data()
 

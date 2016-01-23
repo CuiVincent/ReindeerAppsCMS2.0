@@ -25,7 +25,6 @@ app_control_login = '1'
 app_control_action = '2'
 #应用类型-使用服务器获取数据
 app_control_data = '3'
-app_control_default = app_control_login + '|' + app_control_action + '|' + app_control_data
 
 #图标类型-默认
 icon_default = '0'

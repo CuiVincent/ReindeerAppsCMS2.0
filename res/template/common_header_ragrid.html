@@ -1,0 +1,63 @@
+{% include './common_header_ajax.html' %}
+<link rel="stylesheet" href="{{ static_url('common/css/ragrid.css') }}"/>
+<script>
+    var default_data_keys = ['id', 'title', 'icon_type', 'icon'];
+
+    function initRaGrid(grid_id, url, param, operations, onfinish, data_keys) {
+        $('#' + grid_id).addClass('ragrid');
+        ajaxCommitWithGritter('POST', url, param, function (result) {
+            if (result.data) {
+                var data = eval(result.data);
+                var html = createGrid(data, data_keys ? data_keys : default_data_keys, operations);
+                $('#' + grid_id).html(html);
+                afterCreateGrid(grid_id);
+                if (onfinish) {
+                    onfinish();
+                }
+            }
+        });
+    }
+
+
+    function createGrid(data, data_keys, operations) {
+        var html = '';
+        if (data && data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i][data_keys[1]] && data[i][data_keys[1]].length > 12) {
+                    html += '<div class="grid-item btn-content col-md-6 col-lg-4">';
+                } else {
+                    html += '<div class="grid-item btn-content col-md-4 col-lg-3">';
+                }
+                var opers = operations ? operations(data[i]) : null;
+                if (data[i][data_keys[3]]) {
+                    if ('1' == data[i][data_keys[2]]) {
+                        html += '<span class="glyphicon ' + data[i][data_keys[3]] + '" aria-hidden="true"></span>';
+                    }
+                    else if ('2' == data[i][data_keys[2]]) {
+                    }
+                }
+                else {
+                    html += '<span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>';
+                }
+                html += ' <span class="gird-text"> ' + data[i][data_keys[1]] + '</span>';
+                if (opers && opers.length > 0) {
+                    html += '<div class="grid-operation">';
+                    for (var j = 0; j < opers.length; j++) {
+                        html += ' <button class="btn btn-' + opers[j].btn + ' btn-xs" onclick="' + opers[j].onclick + '"><span class="glyphicon ' + opers[j].icon + '" aria-hidden="true"></span></button>';
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+        }
+        return html;
+    }
+
+    function afterCreateGrid(grid_id) {
+        try {
+            parent.initIFrameHeight();
+        } catch (e) {
+        }
+    }
+
+</script>

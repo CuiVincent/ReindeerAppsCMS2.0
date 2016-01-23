@@ -1,0 +1,47 @@
+<script>
+
+    function doAdd() {
+        $('#alert_add').modal('show');
+    }
+
+    function doAddOk() {
+        if (validate($("#form_add")))//主动校验
+            ajaxCommitFormWithGritter($("#form_add"), function () {
+                $('#alert_add').modal('hide');
+                doRefresh();
+            });
+    }
+
+</script>
+<div id="alert_add" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新建</h4>
+            </div>
+
+            <form id="form_add" action="/cms/app_add" method="post" class="form-horizontal">
+                {% raw xsrf_form_html() %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">App名</label>
+                        <input class="form-control" type="text" name="name"
+                               validate="{required:true,messages:{required:'请输入App名'}}"
+                               placeholder="请输入App名"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">描述</label>
+                        <input class="form-control " type="text" name="des" placeholder="请输入描述"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-reindeer btn-sm" onclick="doAddOk();">保存</a>
+                    <a data-dismiss="modal" class="btn btn-primary btn-sm">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
