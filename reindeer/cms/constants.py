@@ -6,6 +6,11 @@ action_root_name = '根节点'
 
 # 操作权限类型-独立页面
 action_type_page = '0'
+# 操作权限类型-复数页面
+action_type_multiple_page = '1'
+
+disable_log = '0'
+enable_log = '1'
 
 # 用户状态-正常
 user_status_normal = '1'
@@ -29,3 +34,7 @@ icon_client = '1'
 #图标类型-上传
 icon_upload = '2'
 
+
+layout_root = '[LAYOUT_ROOT]'
+#默认转场方式
+layout_trans_default = '0'

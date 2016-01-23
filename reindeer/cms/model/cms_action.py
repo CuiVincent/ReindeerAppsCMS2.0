@@ -17,12 +17,12 @@ class CmsAction(InfoTableModel):
     TYPE = Column(String(2), default=constants.action_type_page)
     DES = Column(String(1000))
     PARENT = Column(String(50), default=constants.action_root)
-    LOG = Column(String(1), default='1')
     SORT = Column(Integer)
+    LOG = Column(String(1), default=constants.enable_log)
     ICON_TYPE = Column(String(1), default=constants.icon_client)
     ICON = Column(String(200))
-    THEME = Column(String(50))
     APP = Column(String(50), ForeignKey('RA_CMS_APP.ID', ondelete='CASCADE', onupdate='CASCADE'))
+    LAYOUT = Column(String(50), ForeignKey('RA_CMS_LAYOUT.ID', onupdate='CASCADE'))
     groups = relationship('CmsGroup', secondary='RA_CMS_GROUP_ACTION')
 
     @classmethod

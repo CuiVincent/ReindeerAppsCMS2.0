@@ -11,13 +11,14 @@ from reindeer.sys.model.sys_action import SysAction
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
 from reindeer.sys import constants as sys_constants
-from reindeer.cms import constants as cms_constants
 from reindeer.cms.model.cms_app import CmsApp
 from reindeer.cms.model.cms_action import CmsAction
 from reindeer.cms.model.cms_group import CmsGroup
 from reindeer.cms.model.cms_group_action import CmsGroupAction
 from reindeer.cms.model.cms_group_user import CmsGroupUser
 from reindeer.cms.model.cms_user import CmsUser
+from reindeer.cms.model.cms_action_relation import CmsActionRelation
+from reindeer.cms.model.cms_layout import CmsLayout
 
 
 class DatabaseInstance:
@@ -96,7 +97,7 @@ class DatabaseUtil:
         sys_action_id = SysAction.add_and_get(name='系统管理', url='sys_manager',
                                               parent=sys_constants.action_root_main_parent,
                                               sort=1, icon='glyphicon-cog').ID
-        sys_action_group_id = SysAction.add_and_get(name='用户组管理', url='group_list', parent=sys_action_id, sort=1,
+        sys_action_group_id = SysAction.add_and_get(name='组织管理', url='group_list', parent=sys_action_id, sort=1,
                                                     icon='glyphicon-flag').ID
         sys_action_user_id = SysAction.add_and_get(name='用户管理', url='user_list', parent=sys_action_id, sort=2,
                                                    icon='glyphicon-user').ID
@@ -110,7 +111,7 @@ class DatabaseUtil:
                                                   scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree(\'cms/app_info\')',
                                                   parent=cms_action_id, sort=1,
                                                   icon='glyphicon-th-large').ID
-        cms_action_group_id = SysAction.add_and_get(name='用户组管理', url='cms/group_list', parent=cms_action_id, sort=2,
+        cms_action_group_id = SysAction.add_and_get(name='组织管理', url='cms/group_list', parent=cms_action_id, sort=2,
                                                     icon='glyphicon-flag').ID
         cms_action_user_id = SysAction.add_and_get(name='用户管理', url='cms/user_list', parent=cms_action_id, sort=3,
                                                    icon='glyphicon-user').ID
@@ -135,10 +136,12 @@ class DatabaseUtil:
         CmsGroup
         CmsGroupUser
         CmsGroupAction
+        CmsActionRelation
+        CmsLayout
 
     @staticmethod
     def init(db_instance):
-        # DatabaseUtil.drop_all_table(db_instance) #不知为什么会锁表
+        DatabaseUtil.drop_all_table(db_instance)  # 不知为什么会锁表
         DatabaseUtil.create_all_table(db_instance)
         DatabaseUtil.init_database_data()
 

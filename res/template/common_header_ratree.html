@@ -1,12 +1,14 @@
 {% include './common_header_ajax.html' %}
 <link rel="stylesheet" href="{{ static_url('common/css/ratree.css') }}"/>
 <script>
-    function initRaTree(tree_id, url, param, checkable, operations, onfinish) {
+    var default_data_keys = ['id','title','icon_type','icon','checked','children'];
+
+    function initRaTree(tree_id, url, param, checkable, operations, onfinish ,data_keys) {
         $('#' + tree_id).addClass('ratree');
         ajaxCommitWithGritter('POST', url, param, function (result) {
             if (result.data) {
                 var data = eval(result.data);
-                var html = createTree(data, checkable, operations);
+                var html = createTree(data, data_keys ? data_keys : default_data_keys, checkable, operations);
                 $('#' + tree_id).html(html);
                 afterCreateTree(tree_id);
                 if (onfinish) {
@@ -16,7 +18,7 @@
         });
     }
 
-    function createTree(data, checkable, operations) {
+    function createTree(data, data_keys, checkable, operations) {
         var html = '';
         if (data && data.length > 0) {
             html += '<ul>';
@@ -30,35 +32,35 @@
                 html += ' <div class="tree-item">'
                 html += '<span class="tree-state glyphicon" aria-hidden="true"></span>';
                 if (checkable) {
-                    if (data[i].checked) {
-                        html += '  <input id="' + data[i].id + '" class="tree-checkbox" type="checkbox" checked="checked" >';
+                    if (data[i][data_keys[4]]) {
+                        html += '  <input id="' + data[i][data_keys[0]] + '" class="tree-checkbox" type="checkbox" checked="checked" >';
                     } else {
-                        html += '  <input id="' + data[i].id + '" class="tree-checkbox" type="checkbox">';
+                        html += '  <input id="' + data[i][data_keys[0]] + '" class="tree-checkbox" type="checkbox">';
                     }
                 }
                 html += '  <button class="btn btn-sm btn-content tree-label">';
-                if (data[i].icon) {
-                    if ('1' == data[i].icon_type) {
-                        html += '<span class="glyphicon ' + data[i].icon + '" aria-hidden="true"></span>';
+                if (data[i][data_keys[3]]) {
+                    if ('1' == data[i][data_keys[2]]) {
+                        html += '<span class="glyphicon ' + data[i][data_keys[3]] + '" aria-hidden="true"></span>';
                     }
-                    else if ('2' == data[i].icon_type) {
+                    else if ('2' == data[i][data_keys[2]]) {
                     }
                 }
                 else {
                     html += '<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>';
                 }
-                html += ' <span class="tree-text"> ' + data[i].title + '</span>';
+                html += ' <span class="tree-text"> ' + data[i][data_keys[1]] + '</span>';
                 html += '</button>';
                 html += '</div>';
                 if (opers && opers.length > 0) {
                     html += '<div class="tree-operation">';
                     for (var j = 0; j < opers.length; j++) {
-                        html += ' <button class="btn btn-' + opers[j].btn + ' btn-xs" onclick="' + opers[j].onclick + '"><span class="glyphicon ' + opers[j].icon + '" aria-hidden="true"></span></button>';
+                        html += ' <button class="btn btn-' + opers[j].btn + ' btn-xs" onclick="' + opers[j].onclick + '"><span class="glyphicon ' + opers[j][data_keys[3]] + '" aria-hidden="true"></span></button>';
                     }
                     html += '</div>';
                 }
-                if (data[i].children) {
-                    html += createTree(data[i].children, checkable, operations);
+                if (data[i][data_keys[5]]) {
+                    html += createTree(data[i][data_keys[5]], data_keys, checkable, operations);
                 }
                 html += '</li>';
             }
@@ -90,10 +92,10 @@
         }
     }
 
-    function setTreeCheckBoxChecked(tree_id, data) {
+    function setTreeCheckBoxChecked(tree_id, data, id_key) {
         if (data) {
             for (var i = 0; i < data.length; i++) {
-                $('#' + data[i].id).attr("checked", true);
+                $('#' + data[i][id_key ? id_key : default_data_keys[0]]).attr("checked", true);
             }
         }
     }
