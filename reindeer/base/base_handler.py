@@ -10,13 +10,14 @@ import functools
 
 class BaseHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
+        _ = self.get_local_translate_string
         err_page = 'sys/error.html'
         err_code = status_code
-        msg = '系统错误'
+        msg = _('System error')
         info = self._reason
         if status_code == 404:
-            msg = '您所访问的链接[' + self.request.uri + ']不存在'
-            info = '请确认链接地址或联系管理员'
+            msg = _('The link [%(uri)s] does not exist') % {'uri': self.request.uri}
+            info = _('Make sure the link or contact the administrator')
         elif status_code == 500:
             if len(kwargs['exc_info']) > 1 and kwargs['exc_info'][1]:
                 exception = kwargs['exc_info'][1]
@@ -39,10 +40,10 @@ class BaseHandler(tornado.web.RequestHandler):
                 err_title = str(err_code)
             if err_code == 1000:
                 func = 'toPage("' + self.application.settings["login_url"] + '");'
-                func_text = '登录'
+                func_text = _('Sign in')
             else:
                 func = 'back();'
-                func_text = '返回'
+                func_text = _('Back')
             self.render(err_page, err_title=err_title, msg=msg, info=info, func=func, func_text=func_text)
 
     def get_current_user(self):
@@ -65,6 +66,9 @@ class BaseHandler(tornado.web.RequestHandler):
         return '{"success": true, "aaData":' + json + ',"iTotalRecords":' + str(
             total) + ',"iTotalDisplayRecords":' + str(search_total) + ',"sEcho":' + str(r_echo) + '}'
 
+    def get_local_translate_string(self, string):
+        return self.get_browser_locale().translate(string)
+
 
 class ErrorHandler(BaseHandler):
     def initialize(self, status_code):
@@ -81,6 +85,7 @@ def authenticated(method):
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         if not self.current_user:
-            raise BusinessRuleException(1000)
+            raise BusinessRuleException(1000).translate(self.get_browser_locale())
         return method(self, *args, **kwargs)
+
     return wrapper

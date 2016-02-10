@@ -35,7 +35,7 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
         if action:
             return self.write(json_encode({'success': True, 'data': action}))
         else:
-            raise CmsBusinessRuleException(11151)
+            raise CmsBusinessRuleException(11151).translate(self.get_browser_locale())
 
     def post(self):
         name = self.get_argument('name')
@@ -51,7 +51,7 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise CmsBusinessRuleException(err_code)
+            raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 # class ActionDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -65,7 +65,7 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
 #         if success_count > 0:
 #             return self.write(json_encode({'success': True}))
 #         else:
-#             raise CmsBusinessRuleException(err_code)
+#             raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())
 #
 #
 # class ActionEditHandler(reindeer.base.base_handler.BaseHandler):
@@ -77,7 +77,7 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
 #             return self.write(json_encode({'success': True, 'data': action,
 #                                            'parent_data': parent_action and parent_action.NAME or constants.action_root_name}))
 #         else:
-#             raise CmsBusinessRuleException(1152)
+#             raise CmsBusinessRuleException(1152).translate(self.get_browser_locale())
 #
 #     def post(self):
 #         id = self.get_argument('aid')
@@ -93,4 +93,4 @@ class ActionAddHandler(reindeer.base.base_handler.BaseHandler):
 #         if err_code == 0:
 #             return self.write(json_encode({'success': True}))
 #         else:
-#             raise CmsBusinessRuleException(err_code)
+#             raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())

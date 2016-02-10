@@ -26,7 +26,7 @@ class AppAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise CmsBusinessRuleException(err_code)
+            raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class AppDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -40,4 +40,4 @@ class AppDeleteHandler(reindeer.base.base_handler.BaseHandler):
         if success_count > 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise CmsBusinessRuleException(err_code)
+            raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())

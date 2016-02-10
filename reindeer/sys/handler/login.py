@@ -22,11 +22,11 @@ class LoginHandler(reindeer.base.base_handler.BaseHandler):
         user = SysUser.get_by_code(user_code)
         if user:
             if to_md5(pass_wd) != user.PASSWORD:
-                raise BusinessRuleException(1002)
+                raise BusinessRuleException(1002).translate(self.get_browser_locale())
             elif user.STATUS != constants.user_status_normal:
-                raise BusinessRuleException(1003)
+                raise BusinessRuleException(1003).translate(self.get_browser_locale())
         else:
-            raise BusinessRuleException(1001)
+            raise BusinessRuleException(1001).translate(self.get_browser_locale())
 
         self.set_secure_cookie('user_id', str(user.ID), expires_days=7)
         return self.write(json_encode({'success': True}))

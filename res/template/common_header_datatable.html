@@ -17,24 +17,24 @@
             "bLengthChange": !sample, //改变每页显示数据数量
             "aLengthMenu": [
                 [10, 25, 50, -1],
-                [10, 25, 50, "全部"]
+                [10, 25, 50, "{{_('All')}}"]
             ],
             "bAutoWidth": true,
             "bSort": true,
             "aaSorting": defSort,
             "oLanguage": {
-                "sProcessing": "正在加载",
-                "sLengthMenu": "每页 _MENU_ 项",
-                "sZeroRecords": "未找到相关记录",
-                "sEmptyTable": "无记录",
-                "sInfo": "从 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-                "sInfoFiltered": "共 _MAX_ 条记录",
-                "sSearch": "检索",
+                "sProcessing": "{{_('Loading')}}",
+                "sLengthMenu": "{{_('_MENU_ Records per page')}}",
+                "sZeroRecords": "{{_('No records found')}}",
+                "sEmptyTable": "{{_('No records')}}",
+                "sInfo": "{{_('From _START_ to _END_, total _TOTAL_ Records')}}",
+                "sInfoFiltered": "{{_('Total _MAX_ Records')}}",
+                "sSearch": "{{_('Search')}}",
                 "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sLast": "末页"
+                    "sFirst": "{{_('First')}}",
+                    "sPrevious": "{{_('Previous')}}",
+                    "sNext": "{{_('Next')}}",
+                    "sLast": "{{_('Last')}}"
                 }
             },
             "sAjaxSource": url,

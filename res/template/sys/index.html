@@ -74,12 +74,12 @@
             <ul class="nav navbar-nav navbar-left navbar-menu">
                 <li><a href="#" onclick="toHome();"><span class="glyphicon glyphicon-home"
                                                           aria-hidden="true"></span><span
-                        class="menu-text"> 首页</span></a>
+                        class="menu-text"> {{_('Home')}}</span></a>
                 </li>
                 {% module NavbarMenu(main_menu,0) %}
                 <li><a href="#" onclick="toOther();"><span class="glyphicon glyphicon-folder-close"
                                                            aria-hidden="true"></span><span
-                        class="menu-text"> 其他</span></a></li>
+                        class="menu-text"> {{_('Other')}}</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="navbar-user dropdown-toggle" href="#" data-toggle="dropdown" role="button"
@@ -87,12 +87,12 @@
                     <img alt="" class="img-circle" src="{{ static_url('common/image/tmp_user_image.jpg') }}">
                 </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;我的资料</a>
+                        <li><a href="#"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;{{_('Your profile')}}</a>
                         </li>
-                        <li><a href="#"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;收件箱</a>
+                        <li><a href="#"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;{{_('In box')}}</a>
                         </li>
                         <li><a href="#" onclick="doLogout();"> <span class="glyphicon glyphicon-off"
-                                                                     aria-hidden="true"></span>&nbsp;登出</a>
+                                                                     aria-hidden="true"></span>&nbsp;&nbsp;{{_('Sign out')}}</a>
                         </li>
                     </ul>
                 </li>
@@ -101,7 +101,7 @@
                 <li>
                     <form class="navbar-form search-form" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="检索">
+                            <input type="text" class="form-control" placeholder="{{_('Search')}}">
 
                             <a class="btn btn-reindeer"> <span class="glyphicon glyphicon-search"
                                                                aria-hidden="true"></span></a></div>
@@ -122,7 +122,7 @@
 
 <footer class="footer footer-default">
     <div class="container">
-        <span class="footer-text">2014 &copy; ReindeerApps. 版权所有 <a href="/">www.r-apps.com</a></span>
+        <span class="footer-text">&copy; 2016 ReindeerApps.</span>
     </div>
 </footer>
 </body>

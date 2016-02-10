@@ -4,8 +4,8 @@ __author__ = 'CuiVincent'
 import tornado.web
 import tornado.httpserver
 import tornado.ioloop
-import tornado.options
 import reindeer
+import os
 from tornado.options import options
 from reindeer.base.base_db_model import InfoTableModel, NormalTableModel
 from reindeer.base.util.database_util import DatabaseInstance
@@ -28,6 +28,8 @@ class Application(tornado.web.Application):
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
+    tornado.locale.load_translations(
+        os.path.join(os.path.dirname(__file__), 'reindeer', 'base', 'translation'))
     http_server = tornado.httpserver.HTTPServer(Application(app_urls, **app_settings))
     if app_listen_settings['ip']:
         http_server.listen(app_listen_settings['port'], app_listen_settings['ip'])

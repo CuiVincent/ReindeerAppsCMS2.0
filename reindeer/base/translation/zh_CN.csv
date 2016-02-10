@@ -1,0 +1,65 @@
+Sign in,登录
+Back,返回
+Remember me,记住我
+Enter Username,请输入用户名
+Enter Password,请输入密码
+Sign in failed,登录失败
+Email has been sent,邮件已发送
+Home,主页
+Other,其他
+Your profile,我的资料
+In box,收信箱
+Sign out,登出
+Search,检索
+root node,根节点
+System error,系统错误
+The link [%(uri)s] does not exist,您所访问的链接[%(uri)s]不存在
+Make sure the link or contact the administrator,请确认链接地址或联系管理员
+
+Action management,操作权限管理
+Create,新建
+Batch delete,批量删除
+Check error,勾选错误
+Please check only one item as parent node,请仅勾选一项作为父节点
+Parent node,父节点
+Name,名称
+Enter Name,请输入名称
+Description,描述
+Enter Description,请输入描述
+URL,URL
+Enter URL,请输入URL
+Sort Number,排序值
+Enter Sort Number,请输入排序值
+Icon,图标
+Enter Icon,请输入图标
+Normal,普通
+Script extension,脚本扩展
+Script,脚本
+Enter Script,请输入脚本
+Save,保存
+Cancel,取消
+
+All,全部
+Loading,正在加载
+_MENU_ Records per page,每页 _MENU_ 条
+No records found,未找到相关记录
+No records,无记录
+"From _START_ to _END_, total _TOTAL_ Records",从 _START_ 到 _END_ 条，共 _TOTAL_ 条记录
+Total _MAX_ Records,共 _MAX_ 条记录
+First,首页
+Previous,上一页
+Next,下一页
+Last,末页
+
+Successed,成功
+Operation successed,操作成功
+Failed,失败
+Operation failed,操作失败
+Unknown Error,未知错误
+Try later,请稍后再试
+Not signed,未登录
+You are not signed or sign has expired,您未登录或登录已过期
+Incorrect username,该账号不存在
+Incorrect password,密码错误
+Account is desabled,该账号已被禁用
+

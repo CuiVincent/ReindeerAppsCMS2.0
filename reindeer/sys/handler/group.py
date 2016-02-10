@@ -64,7 +64,7 @@ class GroupAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -78,7 +78,7 @@ class GroupDeleteHandler(reindeer.base.base_handler.BaseHandler):
         if success_count > 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupEditHandler(reindeer.base.base_handler.BaseHandler):
@@ -90,7 +90,7 @@ class GroupEditHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupUserAddHandler(reindeer.base.base_handler.BaseHandler):
@@ -101,7 +101,7 @@ class GroupUserAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupUserDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -112,7 +112,7 @@ class GroupUserDeleteHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupActionAddHandler(reindeer.base.base_handler.BaseHandler):
@@ -127,7 +127,7 @@ class GroupActionAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class GroupActionDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -138,4 +138,4 @@ class GroupActionDeleteHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())

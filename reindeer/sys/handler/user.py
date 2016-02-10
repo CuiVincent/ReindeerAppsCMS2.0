@@ -45,7 +45,7 @@ class UserAddHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class UserDeleteHandler(reindeer.base.base_handler.BaseHandler):
@@ -59,7 +59,7 @@ class UserDeleteHandler(reindeer.base.base_handler.BaseHandler):
         if success_count > 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
 class UserEditHandler(reindeer.base.base_handler.BaseHandler):
@@ -71,6 +71,6 @@ class UserEditHandler(reindeer.base.base_handler.BaseHandler):
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
-            raise BusinessRuleException(err_code)
+            raise BusinessRuleException(err_code).translate(self.get_browser_locale())
 
 
