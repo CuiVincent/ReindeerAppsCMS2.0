@@ -4,11 +4,14 @@ __all__ = ['cms_urls', 'cms_modules']
 from reindeer.cms.handler import app
 from reindeer.cms.handler import user
 from reindeer.cms.handler import group
+from reindeer.cms.handler import action
 
 cms_urls = [
     (r'/cms/app_list', app.AppListHandler),
     (r'/cms/app_add', app.AppAddHandler),
     (r'/cms/app_delete', app.AppDeleteHandler),
+    (r'/cms/app_info', action.ActionListHandler),
+    (r'/cms/action_add', action.ActionAddHandler),
     (r'/cms/user_list', user.UserListHandler),
     (r'/cms/user_list_group_joined', user.UserListGroupJoinedHandler),
     (r'/cms/user_list_group_unjoined', user.UserListGroupUnjoinedHandler),

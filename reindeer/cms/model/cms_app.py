@@ -35,6 +35,24 @@ class CmsApp(InfoTableModel):
             return 1
 
     @classmethod
+    def delete(cls, id):
+        items = cls.db_session.query(CmsApp).filter(CmsApp.ID == id)
+        if not items:
+            return 11201
+        items.delete()
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1
+
+    @classmethod
+    def get_by_id(cls, id):
+        item = cls.db_session.query(CmsApp).filter(CmsApp.ID == id).first()
+        return item
+
+    @classmethod
     def get_tree(cls, base_url):
         items = cls.db_session.query(CmsApp).all()
         apps = []
@@ -53,16 +71,3 @@ class CmsApp(InfoTableModel):
     @classmethod
     def get_all_json(cls):
         return to_json(CmsApp.get_all())
-
-    @classmethod
-    def delete(cls, id):
-        items = cls.db_session.query(CmsApp).filter(CmsApp.ID == id)
-        if not items:
-            return 11201
-        items.delete()
-        try:
-            cls.db_session.commit()
-            return 0
-        except:
-            cls.db_session.rollback()
-            return 1

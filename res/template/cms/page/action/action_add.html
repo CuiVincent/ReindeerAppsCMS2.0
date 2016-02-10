@@ -33,13 +33,13 @@
     function doAdd(pid) {
         if (pid) {
             addPid = pid;
-            ajaxCommitWithGritter('GET', '/action_add', [
+            ajaxCommitWithGritter('GET', '/cms/action_add', [
                 {name: 'id', value: pid}
             ], function (result) {
                 if (result.data) {
                     var json = eval(result.data);
                     if (json.length > 0) {
-                        $("#a_pname").attr("value", json[0].NAME);
+//                        $("#a_pname").attr("value", json[0].NAME);
                         showDialog('dialog_add');
                     }
                 }

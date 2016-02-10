@@ -2,6 +2,7 @@
 <html>
 <head lang="zh-cmn-Hans">
     {% include '../common_header_base.html' %}
+    {% include '../common_header_gritter.html' %}
     <link rel="stylesheet" href="{{ static_url('sys/css/index.css') }}"/>
     <script>
         /**
@@ -112,8 +113,6 @@
 </nav>
 
 <div class="container-fluid content">
-    <!--<div id="content-header">-->
-    <!--</div>-->
     <iframe src="#" id="content_iframe" name="content_iframe" width="100%" onreadystatechange="initIFrameHeight()"
             onLoad="initIFrameHeight()"
             runat="server"

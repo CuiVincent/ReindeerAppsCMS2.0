@@ -4,18 +4,18 @@
         $("#e_gid").attr("value", id);
         $("#e_name").attr("value", name);
         $("#e_des").attr("value", des);
-        $('#alert_edit').modal('show');
+        showDialog('dialog_edit');
     }
 
     function doEditOk() {
         ajaxCommitFormWithGritter($("#form_edit"), function () {
-            $('#alert_edit').modal('hide');
+            hideDialog('dialog_edit');
             doRefresh();
         });
     }
 </script>
 
-<div id="alert_edit" class="modal fade">
+<div id="dialog_edit" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

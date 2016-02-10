@@ -3,7 +3,7 @@
     function doEditGroup(id) {
         aeg_aid = id;
         initGroupTable(id);
-        $('#alert_edit_group').modal('show');
+        showDialog('dialog_edit_group');
     }
 
     function doAddGroupOk() {
@@ -58,7 +58,7 @@
     }
 
 </script>
-<div id="alert_edit_group" class="modal fade">
+<div id="dialog_edit_group" class="modal fade">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

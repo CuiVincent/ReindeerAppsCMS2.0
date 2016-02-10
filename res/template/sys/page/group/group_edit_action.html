@@ -15,7 +15,7 @@
     function doEditAction(id) {
         gea_gid = id;
         initTree(id);
-        $('#alert_edit_action').modal('show');
+        showDialog('dialog_edit_action');
     }
 
     function doAddActionOk() {
@@ -25,14 +25,14 @@
             {name: 'aid', value: ids},
             {name: 'clean', value: 'by_group'}
         ], function () {
-            $('#alert_edit_action').modal('hide');
+            hideDialog('dialog_edit_action');
             initTree(gea_gid);
         });
     }
 
 </script>
 
-<div id="alert_edit_action" class="modal fade">
+<div id="dialog_edit_action" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="{{ static_url('jquery/css/jquery.gritter.css') }}"/>
+<script src="{{ static_url('jquery/js/jquery.gritter.min.js') }}"></script>
+<script>
+    function showGritter(type, title, msg) {
+        var icon = 'glyphicon glyphicon-info-sign';
+        var classname = 'gritter-green';
+        if (type == "error") {
+            icon = 'glyphicon glyphicon-exclamation-sign';
+            classname = '';
+        }
+        if (type == "msg") {
+            icon = 'glyphicon glyphicon-comment';
+            classname = 'gritter-orange';
+        }
+        if (type == "letter") {
+            icon = 'glyphicon glyphicon-envelope';
+            classname = 'gritter-orange';
+        }
+        var gritter = parent.$.gritter ? parent.$.gritter : $.gritter;
+        gritter.add({
+            title: title,
+            text: msg,
+            image: icon,
+            sticky: false,
+            class_name: classname
+        });
+    }
+</script>

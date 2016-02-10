@@ -27,10 +27,10 @@ class CmsAction(InfoTableModel):
 
     @classmethod
     def add(cls, name=None, type=None, des=None, parent=None, log=None, sort=None, icon_type=None, icon=None,
-            theme=None, app=None):
+            layout=None, app=None):
         action = CmsAction(NAME=name, TYPE=type, DES=des, PARENT=parent, LOG=log, SORT=sort,
                            ICON_TYPE=icon_type,
-                           ICON=icon, THEME=theme, APP=app)
+                           ICON=icon, LAYOUT=layout, APP=app)
         if not str(action.PARENT) == constants.action_root:
             if not cls.get_by_id(action.PARENT):
                 return 11151

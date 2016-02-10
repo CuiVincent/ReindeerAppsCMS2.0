@@ -47,7 +47,7 @@
                         $("#e_icon").attr("value", json[0].ICON?decodeURIComponent(json[0].ICON):'');
                         setEditType(json[0].TYPE);
                         $("#e_scale_script").attr("value",json[0].SCALE_SCRIPT?decodeURIComponent(json[0].SCALE_SCRIPT):'');
-                        $('#alert_edit').modal('show');
+                        showDialog('dialog_edit');
                     }
                 }
             });
@@ -59,7 +59,7 @@
     function doEditOk() {
         if (validate($("#form_edit")))//主动校验
             ajaxCommitFormWithGritter($("#form_edit"), function () {
-                $('#alert_edit').modal('hide');
+                hideDialog('dialog_edit');
                 doRefresh();
             },[
             {name: "type", value: getEditTypeValue()}
@@ -67,7 +67,7 @@
     }
 
 </script>
-<div id="alert_edit" class="modal fade">
+<div id="dialog_edit" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

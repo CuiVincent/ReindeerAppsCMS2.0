@@ -1,20 +1,21 @@
 <script>
-    function setContent(id, url) {
+    function setDialogContent(id, url) {
         if (null != url && "/" != url && "" != url && "null" != url) {
             $("#dialog_iframe" + id).attr("height", 0);
             $("#dialog_iframe" + id).attr("src", url);
         }
     }
 
-    function initIFrameHeight(id) {
+    function initDialogIFrameHeight(id) {
         var ifm = document.getElementById("dialog_iframe" + id);
         var subWeb = document.frames ? document.frames["dialog_iframe" + id].document : ifm.contentDocument;
         if (ifm != null && subWeb != null) {
             ifm.height = subWeb.body.scrollHeight;
         }
+        alert("dialog_iframe" + id);
     }
 
-    function openDialog(id, url, small) {
+    function showDialogByUrl(id, url, small) {
         if ($('#' + id).length == 0) {
             var size = 'modal-lg';
             if (small) {
@@ -23,16 +24,24 @@
             var html =
             '<div id="'+id+'" class="modal fade">'+
                 '<div class="modal-dialog '+size+' " role="document">'+
-                    '<iframe src="#" id="dialog_iframe'+id+'" name="dialog_iframe'+id+'" width="100%" onreadystatechange="initIFrameHeight(\''+id+'\')" onLoad="initIFrameHeight(\''+id+'\')"  runat="server" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>'+
+                    '<iframe src="#" id="dialog_iframe' + id + '" name="dialog_iframe' + id + '" width="100%" onreadystatechange="initDialogIFrameHeight(\'' + id + '\')" onLoad="initDialogIFrameHeight(\'' + id + '\')"  runat="server" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>' +
                 '</div>'+
             '</div>';
             $("body").append(html);
         }
-        setContent(id, url);
-        $('#' + id).modal('show');
+        setDialogContent(id, url);
+        showDialog(id);
+    }
+
+    function showDialog(id) {
+        var scrollTop = parent.document.documentElement.scrollTop || parent.document.body.scrollTop || document.documentElement.scrollTop || document.body.scrollTop;
+        $('#' + id).modal('show').css({
+            top: scrollTop
+        });
+    }
+
+    function hideDialog(id) {
+        $('#' + id).modal('hide');
     }
 </script>
-<div>
-
-</div>
 

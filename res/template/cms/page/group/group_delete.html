@@ -2,7 +2,7 @@
     var deleteId;
     function doDelete(id) {
         deleteId = id;
-        $('#alert_delete').modal('show');
+        showDialog('dialog_delete');
     }
     function doBatchDelete() {
         var ids = getTableCheckBoxChecked('table')
@@ -11,7 +11,7 @@
             return;
         }
         deleteId = ids;
-        $('#alert_delete').modal('show');
+        showDialog('dialog_delete');
     }
     function doDeleteOk() {
         ajaxCommitWithGritter('POST', '/cms/group_delete', [
@@ -19,7 +19,7 @@
         ], doRefresh);
     }
 </script>
-<div id="alert_delete" class="modal fade">
+<div id="dialog_delete" class="modal fade">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">

@@ -7,13 +7,13 @@
         return status;
     }
     function doAdd() {
-        $('#alert_add').modal('show');
+        showDialog('dialog_add');
     }
 
     function doAddOk() {
         if (validate($("#form_add")))//主动校验
             ajaxCommitFormWithGritter($("#form_add"), function () {
-                $('#alert_add').modal('hide');
+                hideDialog('dialog_add');
                 doRefresh();
             }, [
                 {name: "user_status", value: getAddStatusValue()}
@@ -21,7 +21,7 @@
     }
 
 </script>
-<div id="alert_add" class="modal fade">
+<div id="dialog_add" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

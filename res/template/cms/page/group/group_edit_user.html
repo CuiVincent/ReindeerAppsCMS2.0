@@ -3,7 +3,7 @@
     function doEditUser(id) {
         geu_gid = id;
         initUserTable(id);
-        $('#alert_edit_user').modal('show');
+        showDialog('dialog_edit_user');
     }
 
     function doAddGroupOk() {
@@ -59,7 +59,7 @@
     }
 
 </script>
-<div id="alert_edit_user" class="modal fade">
+<div id="dialog_edit_user" class="modal fade">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
