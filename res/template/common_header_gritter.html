@@ -16,8 +16,7 @@
             icon = 'glyphicon glyphicon-envelope';
             classname = 'gritter-orange';
         }
-        var gritter = parent.$.gritter ? parent.$.gritter : $.gritter;
-        gritter.add({
+        getTopWindow().$.gritter.add({
             title: title,
             text: msg,
             image: icon,

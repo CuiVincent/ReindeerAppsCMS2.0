@@ -277,7 +277,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     margin-bottom: 10px;
 }
 
-/* 修复子div float后，服div高度为0的问题*/
+/* 修复子div float后，父div高度为0的问题*/
 .clearfix:after {
     content: ".";
     display: block;

@@ -52,7 +52,7 @@
             "aoColumns": columns,
             "fnDrawCallback": function (oSettings) {
                 try {
-                    parent.initIFrameHeight();
+                    onPageLoadFinish();
                 } catch (e) {
                 }
                 $(".dataTables_filter input").addClass("form-control data-table-control");

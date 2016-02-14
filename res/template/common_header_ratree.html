@@ -86,10 +86,7 @@
             e.stopPropagation();
             e.cancelBubble = true;
         });
-        try {
-            parent.initIFrameHeight();
-        } catch (e) {
-        }
+        onPageLoadFinish();
     }
 
     function setTreeCheckBoxChecked(tree_id, data, id_key) {

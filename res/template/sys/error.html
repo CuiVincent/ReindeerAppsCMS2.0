@@ -5,18 +5,6 @@
     <link rel="stylesheet" href="{{ static_url('sys/css/error.css') }}"/>
     <title>RACMS</title>
 </head>
-<script>
-    function back() {
-        history.back();
-    }
-    function toPage(url) {
-        try {
-            parent.toPage(url);
-        } catch (e) {
-            location.href = url;
-        }
-    }
-</script>
 </head>
 <body class="container content-body">
 <div class="content-body-title">

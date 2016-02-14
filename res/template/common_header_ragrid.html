@@ -18,7 +18,6 @@
         });
     }
 
-
     function createGrid(data, data_keys, operations) {
         var html = '';
         if (data && data.length > 0) {
@@ -54,10 +53,7 @@
     }
 
     function afterCreateGrid(grid_id) {
-        try {
-            parent.initIFrameHeight();
-        } catch (e) {
-        }
+        onPageLoadFinish();
     }
 
 </script>

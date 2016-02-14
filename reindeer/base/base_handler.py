@@ -42,7 +42,7 @@ class BaseHandler(tornado.web.RequestHandler):
                 func = 'toPage("' + self.application.settings["login_url"] + '");'
                 func_text = _('Sign in')
             else:
-                func = 'back();'
+                func = 'doBack();'
                 func_text = _('Back')
             self.render(err_page, err_title=err_title, msg=msg, info=info, func=func, func_text=func_text)
 

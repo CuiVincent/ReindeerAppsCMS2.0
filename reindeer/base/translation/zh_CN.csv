@@ -18,9 +18,18 @@ Make sure the link or contact the administrator,请确认链接地址或联系�
 
 Action management,操作权限管理
 Create,新建
+Edit,编辑
+Delete,删除
 Batch delete,批量删除
 Check error,勾选错误
+Confirm,确认
+Save,保存
+Cancel,取消
 Please check only one item as parent node,请仅勾选一项作为父节点
+Unchecked items,未勾选项目
+Please check at least one item,请至少勾选一项
+Do you want to delete the selected item?,是否要删除选中项？
+
 Parent node,父节点
 Name,名称
 Enter Name,请输入名称
@@ -33,11 +42,10 @@ Enter Sort Number,请输入排序值
 Icon,图标
 Enter Icon,请输入图标
 Normal,普通
+Type,类型
 Script extension,脚本扩展
 Script,脚本
 Enter Script,请输入脚本
-Save,保存
-Cancel,取消
 
 All,全部
 Loading,正在加载

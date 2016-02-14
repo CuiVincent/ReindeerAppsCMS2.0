@@ -5,24 +5,11 @@
     {% include '../common_header_gritter.html' %}
     <link rel="stylesheet" href="{{ static_url('sys/css/index.css') }}"/>
     <script>
-        /**
-         跳转
-         */
-        function toPage(url) {
-            location.href = url;
-        }
-        /**
-         登出
-         */
-        function doLogout() {
-            toPage("/{{logout_url}}");
-        }
-
         var contentUrl = '';
 
         function setContent(aid, url) {
             url = decodeURIComponent(url);
-            if (url && "/" != url && "" != url && "null" != url && contentUrl != url) {
+            if (url && "/" != url && "null" != url && contentUrl != url) {
                 contentUrl = url;
                 $('.navbar-menu li').removeClass("active");
                 var ae = $("#" + aid);
@@ -32,10 +19,22 @@
             }
         }
 
+        function doLogout() {
+            toPage("/{{logout_url}}");
+        }
+
+        function initIFrame() {
+            initIFrameHeight();
+            var ifm = document.getElementById("content_iframe");
+            addEvent(ifm.contentWindow.document, 'click', function () {
+                $("#content_container").click();
+            });
+        }
+
         function initIFrameHeight() {
             var ifm = document.getElementById("content_iframe");
             var subWeb = document.frames ? document.frames["content_iframe"].document : ifm.contentDocument;
-            if (ifm != null && subWeb != null) {
+            if (ifm && subWeb) {
                 ifm.height = subWeb.body.scrollHeight;
             }
         }
@@ -49,6 +48,7 @@
         }
 
         $(function () {
+            window.isTopWindow = true;
             toHome();
         });
 
@@ -57,7 +57,6 @@
     <title>RACMS</title>
 </head>
 <body>
-
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -112,12 +111,13 @@
     </div>
 </nav>
 
-<div class="container-fluid content">
-    <iframe src="#" id="content_iframe" name="content_iframe" width="100%" onreadystatechange="initIFrameHeight()"
-            onLoad="initIFrameHeight()"
+<div id ="content_container" class="container-fluid content">
+    <iframe src="#" id="content_iframe" name="content_iframe" width="100%" onreadystatechange="onPageLoadFinish();"
+            onLoad="initIFrame();"
             runat="server"
             frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"
             allowtransparency="yes" class="content-iframe"></iframe>
+    <!-- 改用ajax的话，有内存泄露、js全局变量、跨域问题 -->
 </div>
 
 <footer class="footer footer-default">
