@@ -33,17 +33,6 @@
     }
 
     function showDialog(id) {
-        var scrollTop = getTopWindow().document.documentElement.scrollTop || getTopWindow().document.body.scrollTop;
-        var scrollHeight = getTopWindow().document.body.scrollHeight;
-        var fieldHeight = scrollHeight - scrollTop - 160 - 60 - 60;
-        $('#' + id).on('show.bs.modal', function () {
-            $(this).css({
-                top: function () {
-                    var emptyFieldHeight = fieldHeight - $(this).find(".modal-content").height();
-                    return  emptyFieldHeight > 0 ? scrollTop : scrollTop + emptyFieldHeight > 0 ? scrollTop + emptyFieldHeight : scrollTop;
-                }
-            });
-        });
         $('#' + id).modal('show');
     }
 

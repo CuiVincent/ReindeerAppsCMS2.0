@@ -1,4 +1,3 @@
-{% include './common_header_ajax.html' %}
 <link rel="stylesheet" href="{{ static_url('common/css/datatable.css') }}"/>
 <script src="{{ static_url('jquery/js/jquery.dataTables.js') }}"></script>
 <script>
@@ -51,10 +50,6 @@
             },
             "aoColumns": columns,
             "fnDrawCallback": function (oSettings) {
-                try {
-                    onPageLoadFinish();
-                } catch (e) {
-                }
                 $(".dataTables_filter input").addClass("form-control data-table-control");
                 $(".dataTables_length select").addClass("form-control data-table-control");
                 initTableCheckBox(table.attr('id'));

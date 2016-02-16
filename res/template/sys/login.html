@@ -18,7 +18,7 @@
             //$("#loginform").submit();
             if (validate($("#loginform")))//主动校验
                 ajaxCommitFormWithGritter($("#loginform"), function () {
-                    location.href = "/";
+                    toPage('/');
                 });
         }
         /*

@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head lang="zh-cmn-Hans">
-    {% include '../common_header_base.html' %}
-    {% include '../common_header_dialog.html' %}
-    <title>{{_('Home')}}</title>
-    <script>
-        $(function () {
-            toContent('home', '/cms/app_list');
-        });
-    </script>
-</head>
-<body class="container content-body">
-</body>
-</html>
+{% extends "./index.html" %}
+{% block title %}{{_('Home')}}{% end %}
+{% block title_button %}
+{% end %}
+{% block content %}
+{% end %}

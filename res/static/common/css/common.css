@@ -1,12 +1,20 @@
 body {
     font-size: 13px;
-    background-color: #eee;
     color: #666;
+}
+
+.content {
+    background-color: #eee;
 }
 
 .dialog-body {
     padding: 0px;
     background-color: #ffffff;
+}
+
+.modal-open {
+    overflow: inherit;
+    padding-right: 0px !important;
 }
 
 hr {

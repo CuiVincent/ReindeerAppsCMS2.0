@@ -2,54 +2,24 @@
 <html>
 <head lang="zh-cmn-Hans">
     {% include '../common_header_base.html' %}
-    {% include '../common_header_gritter.html' %}
+    {% include '../common_header_ajax.html' %}
     <link rel="stylesheet" href="{{ static_url('sys/css/index.css') }}"/>
     <script>
-        var contentUrl = '';
-
-        function setContent(aid, url) {
-            url = decodeURIComponent(url);
-            if (url && "/" != url && "null" != url && contentUrl != url) {
-                contentUrl = url;
-                $('.navbar-menu li').removeClass("active");
-                var ae = $("#" + aid);
-                ae.closest('li').addClass("active");
-                $("#content_iframe").attr("height", 0);
-                $("#content_iframe").attr("src", url);
-            }
-        }
 
         function doLogout() {
-            toPage("/{{logout_url}}");
-        }
-
-        function initIFrame() {
-            initIFrameHeight();
-            var ifm = document.getElementById("content_iframe");
-            addEvent(ifm.contentWindow.document, 'click', function () {
-                $("#content_container").click();
-            });
-        }
-
-        function initIFrameHeight() {
-            var ifm = document.getElementById("content_iframe");
-            var subWeb = document.frames ? document.frames["content_iframe"].document : ifm.contentDocument;
-            if (ifm && subWeb) {
-                ifm.height = subWeb.body.scrollHeight;
-            }
+            toPage("/logout");
         }
 
         function toHome() {
-            setContent('home', '/content/{{main_page}}');
+            toPage('home', '/content/{/{main_page}/}');
         }
 
         function toOther() {
-            setContent('other', '/content/sys/test.html');
+            toPage('other', '/sys/test.html');
         }
 
         $(function () {
-            window.isTopWindow = true;
-            toHome();
+
         });
 
 
@@ -75,7 +45,7 @@
                                                           aria-hidden="true"></span><span
                         class="menu-text"> {{_('Home')}}</span></a>
                 </li>
-                {% module NavbarMenu(main_menu,0) %}
+                {% module NavbarMenu(None,0) %}
                 <li><a href="#" onclick="toOther();"><span class="glyphicon glyphicon-folder-close"
                                                            aria-hidden="true"></span><span
                         class="menu-text"> {{_('Other')}}</span></a></li>
@@ -111,13 +81,24 @@
     </div>
 </nav>
 
-<div id ="content_container" class="container-fluid content">
-    <iframe src="#" id="content_iframe" name="content_iframe" width="100%" onreadystatechange="onPageLoadFinish();"
-            onLoad="initIFrame();"
-            runat="server"
-            frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"
-            allowtransparency="yes" class="content-iframe"></iframe>
-    <!-- 改用ajax的话，有内存泄露、js全局变量、跨域问题 -->
+<div id="content_container" class="container-fluid content">
+    <div class="container content-body">
+        <div class="content-body-title">
+            <h4>
+                {% block title %}
+                {% end %}
+            </h4>
+            <div class="content-body-title-button">
+                {% block title_button %}
+                {% end %}
+            </div>
+        </div>
+        <hr>
+        <div class="content-body-info">
+            {% block content %}
+            {% end %}
+        </div>
+    </div>
 </div>
 
 <footer class="footer footer-default">
