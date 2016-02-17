@@ -1,75 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head lang="zh-cmn-Hans">
-    {% include '../../../common_header_base.html' %}
-    {% include '../../../common_header_datatable.html' %}
-    {% include '../../../common_header_dialog.html' %}
-    {% include '../../../common_header_ratree.html' %}
-    {% include '../../../common_header_validate.html' %}
-    <title></title>
-    <script>
-        function initTable() {
-            initDataTable($('#table'), "/cms/group", [
-                { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation",
-                    "mRender": function (data, type, full) {
-                        return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
-                    }},
-                { "mDataProp": "NAME", "sWidth": "25%" },
-                { "mDataProp": "DES", "sWidth": "25%" },
-                { "mDataProp": "C_USER" },
-                { "mDataProp": "C_DATE" },
-                { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "20%",
-                    "mRender": function (data, type, full) {
-                        return  '<button class="btn btn-info  btn-xs"  onclick="doEdit(\'' + data + '\',\'' + full.NAME + '\',\'' + full.DES + '\');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>' +
-                                '<button class="btn btn-reindeer btn-xs"  onclick="doDelete(\'' + data + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>' +
-                                '<button class="btn btn-success btn-xs"  onclick="doEditUser(\'' + data + '\');"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>';
-                    }}
-            ], false, [
-                [ 5, "desc" ]
-            ]);
-        }
-        $(document).ready(function () {
-            initTable();
-        });
-    </script>
-</head>
-<body class="container content-body">
-<div class="content-body-title">
-    <h4>组织管理</h4>
-
-    <div class="content-body-title-button">
-        <button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
-                                                                        aria-hidden="true"></span>&nbsp;新建
-        </button>
-        <button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
-                                                                                 aria-hidden="true"></span>&nbsp;批量删除
-        </button>
-        <button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
-                                                                            aria-hidden="true"></span>
-        </button>
-    </div>
-</div>
-<hr>
-<div class="content-body-info">
-    <table id="table" class="table data-table">
-        <thead>
-        <tr>
-            <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-            <th>群组名</th>
-            <th>描述</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+{% extends "../../../base_index.html" %}
+{% block title %}{{_('Group management')}}{% end %}
+{% block title_button %}
+<button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
+                                                                aria-hidden="true"></span>&nbsp;{{_('Create')}}
+</button>
+<button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
+                                                                         aria-hidden="true"></span>&nbsp;{{_('Batch delete')}}
+</button>
+<button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
+                                                                    aria-hidden="true"></span>
+</button>
+{%end%}
+{% block content %}
+{% include '../../../common_header_datatable.html' %}
+{% include '../../../common_header_dialog.html' %}
+{% include '../../../common_header_ratree.html' %}
+{% include '../../../common_header_validate.html' %}
+<script>
+    function initTable() {
+        initDataTable($('#table'), "/cms/group", [
+            { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation",
+                "mRender": function (data, type, full) {
+                    return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
+                }},
+            { "mDataProp": "NAME", "sWidth": "25%" },
+            { "mDataProp": "DES", "sWidth": "25%" },
+            { "mDataProp": "C_USER" },
+            { "mDataProp": "C_DATE" },
+            { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "20%",
+                "mRender": function (data, type, full) {
+                    return  '<button class="btn btn-info  btn-xs"  onclick="doEdit(\'' + data + '\',\'' + full.NAME + '\',\'' + full.DES + '\');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>' +
+                            '<button class="btn btn-reindeer btn-xs"  onclick="doDelete(\'' + data + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>' +
+                            '<button class="btn btn-success btn-xs"  onclick="doEditUser(\'' + data + '\');"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>';
+                }}
+        ], false, [
+            [ 5, "desc" ]
+        ]);
+    }
+    $(document).ready(function () {
+        initTable();
+    });
+</script>
+<table id="table" class="table data-table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" name="data-table-title-checkbox"/></th>
+        <th>{{_('Group name')}}</th>
+        <th>{{_('Description')}}</th>
+        <th>{{_('Creator')}}</th>
+        <th>{{_('Create date')}}</th>
+        <th>{{_('Operations')}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 {% include 'group_add.html' %}
 {% include 'group_edit.html' %}
 {% include 'group_delete.html' %}
 {% include 'group_edit_user.html' %}
-</body>
-</html>
+{% end %}
 

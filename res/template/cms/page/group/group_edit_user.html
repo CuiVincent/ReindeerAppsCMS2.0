@@ -9,7 +9,7 @@
     function doAddGroupOk() {
         var ids = getTableCheckBoxChecked('table_user_unjoined');
         if (ids.length < 1) {
-            showGritter("error", "未勾选内容", "请至少勾选一项");
+            showGritter("error", "{{_('Unchecked items')}}", "{{_('Please check at least one item')}}");
             return;
         }
         ajaxCommitWithGritter('POST', '/cms/group_user_add', [
@@ -22,7 +22,7 @@
     function doRemoveGroupOk() {
         var ids = getTableCheckBoxChecked('table_user_joined');
         if (ids.length < 1) {
-            showGritter("error", "未勾选内容", "请至少勾选一项");
+            showGritter("error", "{{_('Unchecked items')}}", "{{_('Please check at least one item')}}");
             return;
         }
         ajaxCommitWithGritter('POST', '/cms/group_user_delete', [
@@ -65,7 +65,7 @@
             <div class="modal-header">
                 <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">配置用户</h4>
+                <h4 class="modal-title">{{_('Setting user')}}</h4>
             </div>
             <div class="modal-body">
                 <table class="data-table-box">
@@ -75,8 +75,8 @@
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-                                    <th>用户名</th>
-                                    <th>昵称</th>
+                                    <th>{{_('Username')}}</th>
+                                    <th>{{_('Nick name')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -86,11 +86,11 @@
                         <td class="data-table-middle">
                             <button class="btn btn-primary btn-sm" onclick="doAddGroupOk();"><span
                                     class="glyphicon glyphicon-arrow-right"
-                                    aria-hidden="true"></span>&nbsp;配置
+                                    aria-hidden="true"></span>&nbsp;{{_('Set')}}
                             </button>
                             <button class="btn btn-reindeer btn-sm" onclick="doRemoveGroupOk();"><span
                                     class="glyphicon glyphicon-arrow-left"
-                                    aria-hidden="true"></span>&nbsp;移出
+                                    aria-hidden="true"></span>&nbsp;{{_('Remove')}}
                             </button>
                         </td>
                         <td class="data-table-right">
@@ -98,8 +98,8 @@
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-                                    <th>用户名</th>
-                                    <th>昵称</th>
+                                    <th>{{_('Username')}}</th>
+                                    <th>{{_('Nick name')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
