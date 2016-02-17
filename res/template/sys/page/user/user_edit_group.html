@@ -9,7 +9,7 @@
     function doAddGroupOk() {
         var ids = getTableCheckBoxChecked('table_group_unjoined');
         if (ids.length < 1) {
-            showGritter("error", "未勾选内容", "请至少勾选一项");
+            showGritter("error", "{{_('Unchecked items')}}", "{{_('Please check at least one item')}}");
             return;
         }
         ajaxCommitWithGritter('POST', '/group_user_add', [
@@ -22,7 +22,7 @@
     function doRemoveGroupOk() {
         var ids = getTableCheckBoxChecked('table_group_joined');
         if (ids.length < 1) {
-            showGritter("error", "未勾选内容", "请至少勾选一项");
+            showGritter("error", "{{_('Unchecked items')}}", "{{_('Please check at least one item')}}");
             return;
         }
         ajaxCommitWithGritter('POST', '/group_user_delete', [
@@ -35,7 +35,7 @@
     }
 
     function initGroupTable(uid) {
-        initDataTable($('#table_group_unjoined'), "/group_list_user_unjoined", [
+        initDataTable($('#table_group_unjoined'), "/group_user_unjoined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
@@ -44,7 +44,7 @@
         ], false, null, true, [
             {name: "uid", value: ueg_uid}
         ]);
-        initDataTable($('#table_group_joined'), "/group_list_user_joined", [
+        initDataTable($('#table_group_joined'), "/group_user_joined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
@@ -63,7 +63,7 @@
             <div class="modal-header">
                 <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">配置组织</h4>
+                <h4 class="modal-title">{{_('Setting group')}}</h4>
             </div>
             <div class="modal-body">
                 <table class="data-table-box">
@@ -73,7 +73,7 @@
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-                                    <th>组织名</th>
+                                    <th>{{_('Group name')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,11 +83,11 @@
                         <td class="data-table-middle">
                             <button class="btn btn-primary btn-sm" onclick="doAddGroupOk();"><span
                                     class="glyphicon glyphicon-arrow-right"
-                                    aria-hidden="true"></span>&nbsp;配置
+                                    aria-hidden="true"></span>&nbsp;{{_('Set')}}
                             </button>
                             <button class="btn btn-reindeer btn-sm" onclick="doRemoveGroupOk();"><span
                                     class="glyphicon glyphicon-arrow-left"
-                                    aria-hidden="true"></span>&nbsp;移出
+                                    aria-hidden="true"></span>&nbsp;{{_('Remove')}}
                             </button>
                         </td>
                         <td class="data-table-right">
@@ -95,7 +95,7 @@
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-                                    <th>组织名</th>
+                                    <th>{{_('Group name')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

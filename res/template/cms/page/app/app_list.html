@@ -8,7 +8,7 @@
     <title>app</title>
     <script>
         $(document).ready(function () {
-            initRaGrid('grid', '/cms/app_list', null, function (row) {
+            initRaGrid('grid', '/cms/app', null, function (row) {
                 return [
                     {'btn': 'primary', 'onclick': 'doView(\'' + row['ID'] + '\');', 'icon': 'glyphicon-search'},
                     {'btn': 'info', 'onclick': 'doEdit(\'' + row['ID'] + '\');', 'icon': 'glyphicon-pencil'},
@@ -21,11 +21,11 @@
         });
 
         function doView(aid) {
-            toPage('/cms/app_info?id=' + aid);
+            toPage('/cms/app/' + aid);
         }
 
         function doEdit(aid) {
-            toPage('/cms/app_info?id=' + aid);
+            toPage('/cms/app/' + aid);
         }
 
     </script>

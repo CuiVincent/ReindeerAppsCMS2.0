@@ -16,7 +16,6 @@ System error,系统错误
 The link [%(uri)s] does not exist,您所访问的链接[%(uri)s]不存在
 Make sure the link or contact the administrator,请确认链接地址或联系管理员
 
-Action management,操作权限管理
 Create,新建
 Edit,编辑
 Delete,删除
@@ -29,7 +28,12 @@ Please check only one item as parent node,请仅勾选一项作为父节点
 Unchecked items,未勾选项目
 Please check at least one item,请至少勾选一项
 Do you want to delete the selected item?,是否要删除选中项？
+Set,配置
+Remove,移除
 
+Action management,操作权限管理
+Group management,组织管理
+User management,用户管理
 Parent node,父节点
 Name,名称
 Enter Name,请输入名称
@@ -41,11 +45,28 @@ Sort Number,排序值
 Enter Sort Number,请输入排序值
 Icon,图标
 Enter Icon,请输入图标
-Normal,普通
+Ordinary,普通
 Type,类型
 Script extension,脚本扩展
 Script,脚本
 Enter Script,请输入脚本
+Group name,组织名称
+Enter Group name,请输入组织名称
+Creator,创建人
+Create date,创建时间
+Operations,操作
+Username,用户名
+Nick name,昵称
+Enter Nick name,请输入昵称
+State,状态
+Normal,正常
+Enable,启用
+Disable,禁用
+Deleted,已删除
+Disabled,已禁用
+Setting user,配置用户
+Setting group,配置组织
+Setting action,操作权限
 
 All,全部
 Loading,正在加载
@@ -59,8 +80,8 @@ Previous,上一页
 Next,下一页
 Last,末页
 
-Successed,成功
-Operation successed,操作成功
+Succeeded,成功
+Operation succeeded,操作成功
 Failed,失败
 Operation failed,操作失败
 Unknown Error,未知错误
@@ -69,5 +90,13 @@ Not signed,未登录
 You are not signed or sign has expired,您未登录或登录已过期
 Incorrect username,该账号不存在
 Incorrect password,密码错误
-Account is desabled,该账号已被禁用
-
+Account is disabled,该账号已被禁用
+Create failed,新建失败
+Delete failed,删除失败
+Edit failed,编辑失败
+This username already exists,该用户名已存在
+The user does not exist,该用户不存在
+The group does not exist,该组织不存在
+Parent node does not exist,父节点不存在
+The action does not exist,该操作权限不存在
+The node is not a leaf node,该节点不是叶子节点

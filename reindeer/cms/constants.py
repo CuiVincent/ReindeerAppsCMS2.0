@@ -41,19 +41,16 @@ layout_root = '[LAYOUT_ROOT]'
 layout_trans_default = '0'
 
 cms_err_codes = {
-    11001: ['登录失败', '您所输入的账号不存在'],
-    11002: ['登录失败', '密码错误'],
-    11003: ['登录失败', '该账号已被停止使用'],
-    11051: ['新建失败', '该用户名已存在'],
-    11052: ['删除失败', '该用户不存在'],
-    11053: ['编辑失败', '该用户不存在'],
-    11101: ['删除失败', '该组织不存在'],
-    11102: ['编辑失败', '该组织不存在'],
-    11151: ['创建失败', '父节点不存在'],
-    11152: ['删除失败', '该操作权限不存在'],
-    11153: ['删除失败', '该节点不是叶子节点'],
-    11154: ['编辑失败', '该操作权限不存在'],
-    11201: ['删除失败', '该APP不存在']
+    11051: ['Create failed', 'This username already exists'],
+    11052: ['Delete failed', 'This user does not exist'],
+    11053: ['Edit failed', 'This user does not exist'],
+    11101: ['Delete failed,' 'The group does not exist'],
+    11102: ['Edit failed,' 'The group does not exist'],
+    11151: ['Create failed', 'Parent node does not exist'],
+    11152: ['Delete failed,' 'The action does not exist'],
+    11153: ['Delete failed,' 'The node is not a leaf node'],
+    11154: ['Edit failed,' 'The action does not exist'],
+    11201: ['Delete failed', 'The APP does not exist']
 }
 
 cms_err_codes.update(err_codes)

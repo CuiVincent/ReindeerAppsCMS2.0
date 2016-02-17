@@ -9,7 +9,7 @@
     <title></title>
     <script>
         $(document).ready(function () {
-            initRaTree('tree', '/action_list', null, true, function (row) {
+            initRaTree('tree', '/action', null, true, function (row) {
                 return [
                     {'btn': 'primary', 'onclick': 'doAdd(\'' + row.id + '\');', 'icon': 'glyphicon-plus-sign'},
                     {'btn': 'info', 'onclick': 'doEdit(\'' + row.id + '\');', 'icon': 'glyphicon-pencil'},

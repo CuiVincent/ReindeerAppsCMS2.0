@@ -1,43 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head lang="zh-cmn-Hans">
-    {% include '../../../common_header_base.html' %}
-    {% include '../../../common_header_ratree.html' %}
-    {% include '../../../common_header_dialog.html' %}
-    {% include '../../../common_header_datatable.html' %}
-    {% include '../../../common_header_validate.html' %}
-    <title></title>
-    <script>
-        $(document).ready(function () {
-            initRaTree('tree', '/action_list', null, true, function (row) {
-                return [
-                    {'btn': 'primary', 'onclick': 'doAdd(\'' + row.id + '\');', 'icon': 'glyphicon-plus-sign'},
-                    {'btn': 'info', 'onclick': 'doEdit(\'' + row.id + '\');', 'icon': 'glyphicon-pencil'},
-                    {'btn': 'reindeer', 'onclick': 'doDelete(\'' + row.id + '\');', 'icon': 'glyphicon-trash'},
-                    {'btn': 'success', 'onclick': 'doEditGroup(\'' + row.id + '\');', 'icon': 'glyphicon-flag'}
-                ];
-            }, function () {
-            });
+{% extends "../../../base_index.html" %}
+{% block title %}{{_('Action management')}}{% end %}
+{% block title_button %}
+<button class="btn btn-primary btn-sm" onclick="doAddByCheck();"><span class="glyphicon glyphicon-plus-sign"
+                                                                       aria-hidden="true"></span>&nbsp;{{_('Create')}}
+</button>
+<button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
+                                                                         aria-hidden="true"></span>&nbsp;{{_('Batch delete')}}
+</button>
+<button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
+                                                                    aria-hidden="true"></span>
+</button>
+{%end%}
+{% block content %}
+{% include '../../../common_header_ratree.html' %}
+{% include '../../../common_header_dialog.html' %}
+{% include '../../../common_header_datatable.html' %}
+{% include '../../../common_header_validate.html' %}
+<script>
+    $(document).ready(function () {
+        initRaTree('tree', '/action', null, true, function (row) {
+            return [
+                {'btn': 'primary', 'onclick': 'doAdd(\'' + row.id + '\');', 'icon': 'glyphicon-plus-sign'},
+                {'btn': 'info', 'onclick': 'doEdit(\'' + row.id + '\');', 'icon': 'glyphicon-pencil'},
+                {'btn': 'reindeer', 'onclick': 'doDelete(\'' + row.id + '\');', 'icon': 'glyphicon-trash'},
+                {'btn': 'success', 'onclick': 'doEditGroup(\'' + row.id + '\');', 'icon': 'glyphicon-flag'}
+            ];
+        }, function () {
         });
-    </script>
-</head>
-<body class="container content-body">
-<div class="content-body-title">
-    <h4>{{_('Action management')}}</h4>
-
-    <div class="content-body-title-button">
-        <button class="btn btn-primary btn-sm" onclick="doAddByCheck();"><span class="glyphicon glyphicon-plus-sign"
-                                                                               aria-hidden="true"></span>&nbsp;{{_('Create')}}
-        </button>
-        <button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
-                                                                                 aria-hidden="true"></span>&nbsp;{{_('Batch delete')}}
-        </button>
-        <button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
-                                                                            aria-hidden="true"></span>
-        </button>
-    </div>
-</div>
-<hr>
+    });
+</script>
 <div class="content-body-info">
     <tree id="tree"/>
 </div>
@@ -45,6 +36,5 @@
 {% include 'action_edit.html' %}
 {% include 'action_delete.html' %}
 {% include 'action_edit_group.html' %}
-</body>
-</html>
+{% end %}
 

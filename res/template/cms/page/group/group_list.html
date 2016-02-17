@@ -9,7 +9,7 @@
     <title></title>
     <script>
         function initTable() {
-            initDataTable($('#table'), "/cms/group_list", [
+            initDataTable($('#table'), "/cms/group", [
                 { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation",
                     "mRender": function (data, type, full) {
                         return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';

@@ -20,20 +20,20 @@ str_user_unknown = '[UNKNOWN]'
 str_user_sys = '[SYS]'
 
 err_codes = {
-    0: ['Successed', 'Operation successed'],
+    0: ['Succeeded', 'Operation succeeded'],
     1: ['Failed', 'Operation failed'],
     2: ['Unknown Error', 'Try later'],
     1000: ['Not signed', 'You are not signed or sign has expired'],
     1001: ['Sign in failed', 'Incorrect username'],
     1002: ['Sign in failed', 'Incorrect password'],
-    1003: ['Sign in failed', 'Account is desabled'],
-    1051: ['新建失败', '该用户名已存在'],
-    1052: ['删除失败', '该用户不存在'],
-    1053: ['编辑失败', '该用户不存在'],
-    1101: ['删除失败', '该组织不存在'],
-    1102: ['编辑失败', '该组织不存在'],
-    1151: ['创建失败', '父节点不存在'],
-    1152: ['删除失败', '该操作权限不存在'],
-    1153: ['删除失败', '该节点不是叶子节点'],
-    1154: ['编辑失败', '该操作权限不存在']
+    1003: ['Sign in failed', 'Account is disabled'],
+    1051: ['Create failed', 'This username already exists'],
+    1052: ['Delete failed', 'This user does not exist'],
+    1053: ['Edit failed', 'This user does not exist'],
+    1101: ['Delete failed,' 'The group does not exist'],
+    1102: ['Edit failed,' 'The group does not exist'],
+    1151: ['Create failed', 'Parent node does not exist'],
+    1152: ['Delete failed,' 'The action does not exist'],
+    1153: ['Delete failed,' 'The node is not a leaf node'],
+    1154: ['Edit failed,' 'The action does not exist']
 }

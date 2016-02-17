@@ -35,7 +35,7 @@
     }
 
     function initGroupTable(uid) {
-        initDataTable($('#table_group_unjoined'), "/cms/group_list_user_unjoined", [
+        initDataTable($('#table_group_unjoined'), "/cms/group_user_unjoined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
@@ -44,7 +44,7 @@
         ], false, null, true, [
             {name: "uid", value: ueg_uid}
         ]);
-        initDataTable($('#table_group_joined'), "/cms/group_list_user_joined", [
+        initDataTable($('#table_group_joined'), "/cms/group_user_joined", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "10%",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';

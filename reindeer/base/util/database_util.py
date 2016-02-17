@@ -97,29 +97,29 @@ class DatabaseUtil:
         sys_action_id = SysAction.add_and_get(name='系统管理', url='sys_manager',
                                               parent=sys_constants.action_root_main_parent,
                                               sort=1, icon='glyphicon-cog').ID
-        sys_action_group_id = SysAction.add_and_get(name='组织管理', url='group_list', parent=sys_action_id, sort=1,
+        sys_action_group_id = SysAction.add_and_get(name='组织管理', url='group', parent=sys_action_id, sort=1,
                                                     icon='glyphicon-flag').ID
-        sys_action_user_id = SysAction.add_and_get(name='用户管理', url='user_list', parent=sys_action_id, sort=2,
+        sys_action_user_id = SysAction.add_and_get(name='用户管理', url='user', parent=sys_action_id, sort=2,
                                                    icon='glyphicon-user').ID
-        sys_action_action_id = SysAction.add_and_get(name='操作权限管理', url='action_list', parent=sys_action_id, sort=3,
+        sys_action_action_id = SysAction.add_and_get(name='操作权限管理', url='action', parent=sys_action_id, sort=3,
                                                      icon='glyphicon-eye-close').ID
         cms_action_id = SysAction.add_and_get(name='AppCMS', url='app_manager',
                                               parent=sys_constants.action_root_main_parent,
                                               sort=2, icon='glyphicon-phone').ID
-        cms_action_app_id = SysAction.add_and_get(name='App管理', url='cms/app_list',
+        cms_action_app_id = SysAction.add_and_get(name='App管理', url='cms/app',
                                                   type=sys_constants.action_type_scalable_menu_menu,
-                                                  scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree(\'cms/app_info\')',
+                                                  scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree(\'cms/app\')',
                                                   parent=cms_action_id, sort=1,
                                                   icon='glyphicon-th-large').ID
-        cms_action_group_id = SysAction.add_and_get(name='组织管理', url='cms/group_list', parent=cms_action_id, sort=2,
+        cms_action_group_id = SysAction.add_and_get(name='组织管理', url='cms/group', parent=cms_action_id, sort=2,
                                                     icon='glyphicon-flag').ID
-        cms_action_user_id = SysAction.add_and_get(name='用户管理', url='cms/user_list', parent=cms_action_id, sort=3,
+        cms_action_user_id = SysAction.add_and_get(name='用户管理', url='cms/user', parent=cms_action_id, sort=3,
                                                    icon='glyphicon-user').ID
-        cms_action_layout_id = SysAction.add_and_get(name='布局管理', url='cms/layout_list', parent=cms_action_id, sort=4,
+        cms_action_layout_id = SysAction.add_and_get(name='布局管理', url='cms/layout', parent=cms_action_id, sort=4,
                                                      icon='glyphicon-blackboard').ID
-        cms_action_data_id = SysAction.add_and_get(name='数据管理', url='cms/data_list', parent=cms_action_id, sort=5,
+        cms_action_data_id = SysAction.add_and_get(name='数据管理', url='cms/data', parent=cms_action_id, sort=5,
                                                    icon='glyphicon-hdd').ID
-        cms_action_platform_id = SysAction.add_and_get(name='平台管理', url='cms/platform_list', parent=cms_action_id,
+        cms_action_platform_id = SysAction.add_and_get(name='平台管理', url='cms/platform', parent=cms_action_id,
                                                        sort=6,
                                                        icon='glyphicon-phone').ID
 

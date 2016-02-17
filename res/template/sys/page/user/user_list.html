@@ -1,11 +1,11 @@
-{% extends "../../index.html" %}
-{% block title %}用户管理{% end %}
+{% extends "../../../base_index.html" %}
+{% block title %}{{_('User management')}}{% end %}
 {% block title_button %}
 <button class="btn btn-primary btn-sm" onclick="doAdd();"><span class="glyphicon glyphicon-plus-sign"
-                                                                aria-hidden="true"></span>&nbsp;新建
+                                                                aria-hidden="true"></span>&nbsp;{{_('Create')}}
 </button>
 <button class="btn btn-reindeer btn-sm" onclick="doBatchDelete();"><span class="glyphicon glyphicon-trash"
-                                                                         aria-hidden="true"></span>&nbsp;批量删除
+                                                                         aria-hidden="true"></span>&nbsp;{{_('Batch delete')}}
 </button>
 <button class="btn btn-success btn-sm" onclick="doRefresh();"><span class="glyphicon glyphicon-refresh"
                                                                     aria-hidden="true"></span>
@@ -17,7 +17,7 @@
 {% include '../../../common_header_validate.html' %}
 <script>
     function initTable() {
-        initDataTable($('#table'), "/user_list", [
+        initDataTable($('#table'), "/user", [
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation",
                 "mRender": function (data, type, full) {
                     return '<input id="' + data + '" class="table_checkbox" type="checkbox" />';
@@ -27,12 +27,12 @@
             { "mDataProp": "STATUS",
                 "mRender": function (data, type, full) {
                     if (data == '1') {
-                        return '正常';
+                        return "{{_('Normal')}}";
                     }
                     else if (data == '3') {
-                        return '已删除';
+                        return "{{_('Deleted')}}";
                     }
-                    return '已禁用';
+                    return "{{_('Disabled')}}";
                 }},
             { "mDataProp": "C_USER"  },
             { "mDataProp": "C_DATE" },
@@ -54,12 +54,12 @@
     <thead>
     <tr>
         <th><input type="checkbox" name="data-table-title-checkbox"/></th>
-        <th>用户名</th>
-        <th>昵称</th>
-        <th>状态</th>
-        <th>创建人</th>
-        <th>创建时间</th>
-        <th>操作</th>
+        <th>{{_('Username')}}</th>
+        <th>{{_('Nick name')}}</th>
+        <th>{{_('State')}}</th>
+        <th>{{_('Creator')}}</th>
+        <th>{{_('Create date')}}</th>
+        <th>{{_('Operations')}}</th>
     </tr>
     </thead>
     <tbody>

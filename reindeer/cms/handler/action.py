@@ -10,8 +10,7 @@ from reindeer.cms.exceptions import CmsBusinessRuleException
 
 
 class ActionListHandler(reindeer.base.base_handler.BaseHandler):
-    def get(self):
-        aid = self.get_argument('id')
+    def get(self, aid):
         app = CmsApp.get_by_id(aid)
         self.render('cms/page/action/action_list.html', app_id=aid, app_name=app.NAME)
 

@@ -59,7 +59,7 @@ class CmsApp(InfoTableModel):
         for item in items:
             apps.append(
                 {'id': item.ID, 'v_id': str(uuid.uuid1()), 'name': item.NAME,
-                 'url': base_url + ('&' if '?' in base_url else '?') + 'id=' + item.ID,
+                 'url': base_url + '/' + item.ID,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON, 'children': None, 'scale_script': None})
         return apps
 
