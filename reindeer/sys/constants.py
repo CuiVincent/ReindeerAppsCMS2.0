@@ -8,7 +8,7 @@ action_root_title_parent = action_root_prefix + 'TITLE_MENU'
 
 # 操作权限类型-菜单
 action_type_menu_menu = '0'
-#操作权限类型-可扩展菜单
+# 操作权限类型-可扩展菜单
 action_type_scalable_menu_menu = '1'
 
 #用户状态-正常
@@ -30,10 +30,10 @@ err_codes = {
     1051: ['Create failed', 'This username already exists'],
     1052: ['Delete failed', 'This user does not exist'],
     1053: ['Edit failed', 'This user does not exist'],
-    1101: ['Delete failed,' 'The group does not exist'],
-    1102: ['Edit failed,' 'The group does not exist'],
+    1101: ['Delete failed', 'The group does not exist'],
+    1102: ['Edit failed', 'The group does not exist'],
     1151: ['Create failed', 'Parent node does not exist'],
-    1152: ['Delete failed,' 'The action does not exist'],
-    1153: ['Delete failed,' 'The node is not a leaf node'],
-    1154: ['Edit failed,' 'The action does not exist']
+    1152: ['Delete failed', 'The action does not exist'],
+    1153: ['Delete failed', 'The node is not a leaf node'],
+    1154: ['Edit failed', 'The action does not exist']
 }

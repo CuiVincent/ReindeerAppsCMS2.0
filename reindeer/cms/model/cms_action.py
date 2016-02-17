@@ -81,11 +81,11 @@ class CmsAction(InfoTableModel):
     # @classmethod
     # def update(cls, id, name, des, sort, icon):
     # items = cls.db_session.query(CmsAction).filter(CmsAction.ID == id)
-    #     if items.count() < 1:
-    #         return 11154
-    #     update = {
-    #         CmsAction.NAME: name,
-    #         CmsAction.DES: des,
+    # if items.count() < 1:
+    # return 11154
+    # update = {
+    # CmsAction.NAME: name,
+    # CmsAction.DES: des,
     #         CmsAction.SORT: sort,
     #         CmsAction.ICON: icon
     #     }
@@ -109,6 +109,11 @@ class CmsAction(InfoTableModel):
     @classmethod
     def get_by_parent(cls, pid):
         item = cls.db_session.query(CmsAction).filter(CmsAction.PARENT == pid).first()
+        return item
+
+    @classmethod
+    def get_by_parent_and_app(cls, pid, aid):
+        item = cls.db_session.query(CmsAction).filter(CmsAction.PARENT == pid, CmsAction.APP == aid).first()
         return item
 
     @classmethod
@@ -146,15 +151,15 @@ class CmsAction(InfoTableModel):
         return actions
 
     @classmethod
-    def get_ratree_by_parent(cls, parent, type):
-        items = cls.db_session.query(CmsAction).filter(CmsAction.PARENT == parent, CmsAction.TYPE == type).order_by(
+    def get_ratree_by_parent_and_app(cls, parent, aid):
+        items = cls.db_session.query(CmsAction).filter(CmsAction.PARENT == parent, CmsAction.APP == aid).order_by(
             CmsAction.SORT.asc()).all()
         actions = []
         for item in items:
             actions.append(
                 {'id': item.ID, 'title': item.NAME,
                  'icon_type': item.ICON_TYPE, 'icon': item.ICON,
-                 'children': CmsAction.get_ratree_by_parent(item.ID, type)})
+                 'children': CmsAction.get_ratree_by_parent_and_app(item.ID, aid)})
         return actions
 
     @classmethod

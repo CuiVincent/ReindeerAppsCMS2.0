@@ -51,7 +51,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return SysUser.get_by_id(user_id)
 
     def get_current_user_id(self):
-        return self.get_secure_cookie('user_id')
+        return self.get_secure_cookie('user_id') and str(self.get_secure_cookie('user_id'), 'utf-8') or None
 
     def get_page_arguments(self):
         r_start = int(self.get_argument('iDisplayStart'))
@@ -79,9 +79,6 @@ class ErrorHandler(BaseHandler):
 
     def prepare(self):
         raise tornado.web.HTTPError(self._status_code)
-
-    def check_xsrf_cookie(self):
-        pass
 
 
 def authenticated(method):

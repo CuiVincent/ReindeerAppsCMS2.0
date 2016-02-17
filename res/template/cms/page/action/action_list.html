@@ -1,5 +1,5 @@
 {% extends "../../../base_index.html" %}
-{% block title %}{{_('Action management')}}{% end %}
+{% block title %}{{app_name}}{% end %}
 {% block title_button %}
 <button class="btn btn-primary btn-sm" onclick="doAddByCheck();"><span class="glyphicon glyphicon-plus-sign"
                                                                        aria-hidden="true"></span>&nbsp;{{_('Create')}}
@@ -18,7 +18,7 @@
 {% include '../../../common_header_validate.html' %}
 <script>
     $(document).ready(function () {
-        initRaTree('tree', '/action', null, true, function (row) {
+        initRaTree('tree', '/cms/app/{{app_id}}', null, true, function (row) {
             return [
                 {'btn': 'primary', 'onclick': 'doAdd(\'' + row.id + '\');', 'icon': 'glyphicon-plus-sign'},
                 {'btn': 'info', 'onclick': 'doEdit(\'' + row.id + '\');', 'icon': 'glyphicon-pencil'},
