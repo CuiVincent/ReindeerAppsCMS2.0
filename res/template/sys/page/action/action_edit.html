@@ -46,7 +46,7 @@
                         $("#e_sort").attr("value", json[0].SORT);
                         $("#e_icon").attr("value", json[0].ICON?decodeURIComponent(json[0].ICON):'');
                         setEditType(json[0].TYPE);
-                        $("#e_scale_script").attr("value",json[0].SCALE_SCRIPT?decodeURIComponent(json[0].SCALE_SCRIPT):'');
+                        $("#e_scale_script").val(json[0].SCALE_SCRIPT?decodeURIComponent(json[0].SCALE_SCRIPT):'');
                         showDialog('dialog_edit');
                     }
                 }
@@ -115,7 +115,8 @@
                     </div>
                     <div class="form-group" id="edit_scale_script" >
                         <label class="form-label">{{_('Script')}}</label>
-                        <input class="form-control" type="text" id="e_scale_script" name="scale_script" placeholder="{{_('Enter Script')}}"/>
+                        <textarea class="form-control" type="text" id="e_scale_script" name="scale_script"
+                                  placeholder="{{_('Enter Script')}}" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

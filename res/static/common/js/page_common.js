@@ -15,5 +15,5 @@ function doBack() {
 }
 
 function toPage(url) {
-    top.location.href = url;
+    top.location.href = decodeURIComponent(url);
 }

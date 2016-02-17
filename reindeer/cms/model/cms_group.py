@@ -3,9 +3,8 @@ __author__ = 'CuiVincent'
 
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from reindeer.base.base_db_model import InfoTableModel, to_json
+from reindeer.base.base_db_model import InfoTableModel, to_json, to_page
 from reindeer.cms.model.cms_group_user import CmsGroupUser
-from reindeer.cms.model.cms_group_action import CmsGroupAction
 
 
 class CmsGroup(InfoTableModel):
@@ -76,35 +75,54 @@ class CmsGroup(InfoTableModel):
             return 1
 
     @classmethod
-    def get_all(cls):
-        return cls.db_session.query(CmsGroup).all()
+    def get_page_by_c_user(cls, c_user, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': CmsGroup.NAME,
+            u'2': CmsGroup.DES,
+            u'3': CmsGroup.C_DATE
+        }
+        search_cols = (
+            CmsGroup.NAME,
+            CmsGroup.DES
+        )
+        return to_page(cls.db_session.query(CmsGroup).filter(CmsGroup.C_USER == c_user), key_word, start, end, sort_col,
+                       sort_dir, *search_cols,
+                       **sort_cols)
 
     @classmethod
-    def get_all_json(cls):
-        return to_json(CmsGroup.get_all())
+    def get_page_json_by_c_user(cls, c_user, key_word, start, end, sort_col, sort_dir):
+        page = CmsGroup.get_page_by_c_user(c_user, key_word, start, end, sort_col, sort_dir)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_json_by_joined_user(cls, uid):
-        items = cls.db_session.query(CmsGroup).join(CmsGroupUser).filter(
-            CmsGroupUser.USER == uid).all()
-        return to_json(items)
+    def get_page_json_by_joined_user_and_c_user(cls, uid, c_user, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': CmsGroup.NAME
+        }
+        search_cols = (
+            CmsGroup.NAME,
+        )
+        query = cls.db_session.query(CmsGroup).join(CmsGroupUser).filter(CmsGroupUser.USER == uid)
+        query = query.filter(CmsGroup.C_USER == c_user)
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_json_by_unjoined_user(cls, uid):
+    def get_page_json_by_unjoined_user_and_c_user(cls, uid, c_user, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': CmsGroup.NAME
+        }
+        search_cols = (
+            CmsGroup.NAME,
+        )
         sub = cls.db_session.query(CmsGroup.ID).join(CmsGroupUser).filter(
             CmsGroupUser.USER == uid).subquery()
-        items = cls.db_session.query(CmsGroup).filter(~CmsGroup.ID.in_(sub)).all()
-        return to_json(items)
-
-    @classmethod
-    def get_json_by_joined_action(cls, aid):
-        items = cls.db_session.query(CmsGroup).join(CmsGroupAction).filter(
-            CmsGroupAction.ACTION == aid).all()
-        return to_json(items)
-
-    @classmethod
-    def get_json_by_unjoined_action(cls, aid):
-        sub = cls.db_session.query(CmsGroup.ID).join(CmsGroupAction).filter(
-            CmsGroupAction.ACTION == aid).subquery()
-        items = cls.db_session.query(CmsGroup).filter(~CmsGroup.ID.in_(sub)).all()
-        return to_json(items)
+        query = cls.db_session.query(CmsGroup).filter(~CmsGroup.ID.in_(sub))
+        query = query.filter(CmsGroup.C_USER == c_user)
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page

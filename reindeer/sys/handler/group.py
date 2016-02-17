@@ -14,8 +14,8 @@ class GroupListHandler(reindeer.base.base_handler.BaseHandler):
         self.render('sys/page/group/group_list.html')
 
     def post(self):
-        json = SysGroup.get_all_json()
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = SysGroup.get_page_json(*self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -23,8 +23,8 @@ class GroupListHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListUserJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
-        json = SysGroup.get_json_by_joined_user(uid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = SysGroup.get_page_json_by_joined_user(uid, *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -32,8 +32,8 @@ class GroupListUserJoinedHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListUserUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
-        json = SysGroup.get_json_by_unjoined_user(uid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = SysGroup.get_page_json_by_unjoined_user(uid, *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -41,8 +41,8 @@ class GroupListUserUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListActionJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = self.get_argument('aid')
-        json = SysGroup.get_json_by_joined_action(aid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = SysGroup.get_page_json_by_joined_action(aid, *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -50,8 +50,8 @@ class GroupListActionJoinedHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListActionUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         aid = self.get_argument('aid')
-        json = SysGroup.get_json_by_unjoined_action(aid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = SysGroup.get_page_json_by_unjoined_action(aid, *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 

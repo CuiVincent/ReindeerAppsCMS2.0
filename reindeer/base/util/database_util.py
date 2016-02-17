@@ -108,7 +108,7 @@ class DatabaseUtil:
                                               sort=2, icon='glyphicon-phone').ID
         cms_action_app_id = SysAction.add_and_get(name='App管理', url='/cms/app',
                                                   type=sys_constants.action_type_scalable_menu_menu,
-                                                  scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree(\'/cms/app\')',
+                                                  scale_script='__import__(\'reindeer\').cms.model.cms_app.CmsApp.get_tree_by_c_user(\'/cms/app\',self.get_current_user_id())',
                                                   parent=cms_action_id, sort=1,
                                                   icon='glyphicon-th-large').ID
         cms_action_group_id = SysAction.add_and_get(name='组织管理', url='/cms/group', parent=cms_action_id, sort=2,
@@ -130,7 +130,7 @@ class DatabaseUtil:
 
         DatabaseUtil.init_test_data()
 
-        CmsApp.add(name="TEST_APP", code="test.com")
+        CmsApp.add(name="TEST_APP", code="test.com", c_user=user_id)
         CmsUser
         CmsAction
         CmsGroup

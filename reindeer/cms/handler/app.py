@@ -12,7 +12,7 @@ class AppListHandler(reindeer.base.base_handler.BaseHandler):
         self.render('cms/page/app/app_list.html')
 
     def post(self):
-        json = CmsApp.get_all_json()
+        json = CmsApp.get_all_json_by_c_user(self.get_current_user_id())
         r_json = '{"success": true, "data":' + json + '}'
         print(r_json)
         return self.write(r_json)
@@ -22,7 +22,7 @@ class AppAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         name = self.get_argument('name')
         des = self.get_argument('des')
-        err_code = CmsApp.add(name=name, des=des, c_user=self.get_current_user().CODE)
+        err_code = CmsApp.add(name=name, des=des, c_user=self.get_current_user_id())
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

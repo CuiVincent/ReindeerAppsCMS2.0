@@ -47,8 +47,11 @@ class BaseHandler(tornado.web.RequestHandler):
             self.render(err_page, err_title=err_title, msg=msg, info=info, func=func, func_text=func_text)
 
     def get_current_user(self):
-        user_id = self.get_secure_cookie('user_id')
+        user_id = self.get_current_user_id()
         return SysUser.get_by_id(user_id)
+
+    def get_current_user_id(self):
+        return self.get_secure_cookie('user_id')
 
     def get_page_arguments(self):
         r_start = int(self.get_argument('iDisplayStart'))

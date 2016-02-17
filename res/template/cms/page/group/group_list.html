@@ -25,7 +25,6 @@
                 }},
             { "mDataProp": "NAME", "sWidth": "25%" },
             { "mDataProp": "DES", "sWidth": "25%" },
-            { "mDataProp": "C_USER" },
             { "mDataProp": "C_DATE" },
             { "mDataProp": "ID", "bSortable": false, "bSearchable": false, "sClass": "data-table-operation", "sWidth": "20%",
                 "mRender": function (data, type, full) {
@@ -33,8 +32,8 @@
                             '<button class="btn btn-reindeer btn-xs"  onclick="doDelete(\'' + data + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>' +
                             '<button class="btn btn-success btn-xs"  onclick="doEditUser(\'' + data + '\');"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>';
                 }}
-        ], false, [
-            [ 5, "desc" ]
+        ], true, [
+            [ 3, "desc" ]
         ]);
     }
     $(document).ready(function () {
@@ -47,7 +46,6 @@
         <th><input type="checkbox" name="data-table-title-checkbox"/></th>
         <th>{{_('Group name')}}</th>
         <th>{{_('Description')}}</th>
-        <th>{{_('Creator')}}</th>
         <th>{{_('Create date')}}</th>
         <th>{{_('Operations')}}</th>
     </tr>

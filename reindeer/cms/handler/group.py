@@ -13,8 +13,8 @@ class GroupListHandler(reindeer.base.base_handler.BaseHandler):
         self.render('cms/page/group/group_list.html')
 
     def post(self):
-        json = CmsGroup.get_all_json()
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = CmsGroup.get_page_json_by_c_user(self.get_current_user_id(), *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -22,8 +22,9 @@ class GroupListHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListUserJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
-        json = CmsGroup.get_json_by_joined_user(uid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = CmsGroup.get_page_json_by_joined_user_and_c_user(uid, self.get_current_user_id(),
+                                                                *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -31,8 +32,9 @@ class GroupListUserJoinedHandler(reindeer.base.base_handler.BaseHandler):
 class GroupListUserUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         uid = self.get_argument('uid')
-        json = CmsGroup.get_json_by_unjoined_user(uid)
-        r_json = '{"success": true, "aaData":' + json + '}'
+        page = CmsGroup.get_page_json_by_unjoined_user_and_c_user(uid, self.get_current_user_id(),
+                                                                  *self.get_page_arguments())
+        r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
 
@@ -41,7 +43,7 @@ class GroupAddHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         name = self.get_argument('name')
         des = self.get_argument('des')
-        err_code = CmsGroup.add(name, des, self.get_current_user().CODE)
+        err_code = CmsGroup.add(name, des, self.get_current_user_id())
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:

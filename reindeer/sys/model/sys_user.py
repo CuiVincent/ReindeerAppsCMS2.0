@@ -124,8 +124,8 @@ class SysUser(InfoTableModel):
                        **sort_cols)
 
     @classmethod
-    def get_page_json(cls, key_word, start, stop, sort_col, sort_dir):
-        page = SysUser.get_page(key_word, start, stop, sort_col, sort_dir)
+    def get_page_json(cls, key_word, start, end, sort_col, sort_dir):
+        page = SysUser.get_page(key_word, start, end, sort_col, sort_dir)
         page["data"] = to_json(page["data"])
         return page
 

@@ -3,7 +3,7 @@ __author__ = 'CuiVincent'
 
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from reindeer.base.base_db_model import InfoTableModel, to_json
+from reindeer.base.base_db_model import InfoTableModel, to_json, to_page
 from reindeer.sys.model.sys_group_user import SysGroupUser
 from reindeer.sys.model.sys_group_action import SysGroupAction
 
@@ -84,27 +84,84 @@ class SysGroup(InfoTableModel):
         return to_json(SysGroup.get_all())
 
     @classmethod
-    def get_json_by_joined_user(cls, uid):
-        items = cls.db_session.query(SysGroup).join(SysGroupUser).filter(
-            SysGroupUser.USER == uid).all()
-        return to_json(items)
+    def get_page(cls, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysGroup.NAME,
+            u'2': SysGroup.DES,
+            u'3': SysGroup.C_USER,
+            u'4': SysGroup.C_DATE
+        }
+        search_cols = (
+            SysGroup.NAME,
+            SysGroup.DES,
+            SysGroup.C_USER
+        )
+        return to_page(cls.db_session.query(SysGroup), key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
 
     @classmethod
-    def get_json_by_unjoined_user(cls, uid):
+    def get_page_json(cls, key_word, start, end, sort_col, sort_dir):
+        page = SysGroup.get_page(key_word, start, end, sort_col, sort_dir)
+        page["data"] = to_json(page["data"])
+        return page
+
+    @classmethod
+    def get_page_json_by_joined_user(cls, uid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysGroup.NAME
+        }
+        search_cols = (
+            SysGroup.NAME,
+        )
+        query = cls.db_session.query(SysGroup).join(SysGroupUser).filter(SysGroupUser.USER == uid)
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page
+
+    @classmethod
+    def get_page_json_by_unjoined_user(cls, uid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysGroup.NAME
+        }
+        search_cols = (
+            SysGroup.NAME,
+        )
         sub = cls.db_session.query(SysGroup.ID).join(SysGroupUser).filter(
             SysGroupUser.USER == uid).subquery()
-        items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
-        return to_json(items)
+        query = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub))
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_json_by_joined_action(cls, aid):
-        items = cls.db_session.query(SysGroup).join(SysGroupAction).filter(
-            SysGroupAction.ACTION == aid).all()
-        return to_json(items)
+    def get_page_json_by_joined_action(cls, aid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysGroup.NAME
+        }
+        search_cols = (
+            SysGroup.NAME,
+        )
+        query = cls.db_session.query(SysGroup).join(SysGroupAction).filter(
+            SysGroupAction.ACTION == aid)
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page
 
     @classmethod
-    def get_json_by_unjoined_action(cls, aid):
+    def get_page_json_by_unjoined_action(cls, aid, key_word, start, end, sort_col, sort_dir):
+        sort_cols = {
+            u'1': SysGroup.NAME
+        }
+        search_cols = (
+            SysGroup.NAME,
+        )
         sub = cls.db_session.query(SysGroup.ID).join(SysGroupAction).filter(
             SysGroupAction.ACTION == aid).subquery()
-        items = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub)).all()
-        return to_json(items)
+        query = cls.db_session.query(SysGroup).filter(~SysGroup.ID.in_(sub))
+        page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
+                       **sort_cols)
+        page["data"] = to_json(page["data"])
+        return page

@@ -88,49 +88,29 @@ class CmsUser(InfoTableModel):
             return 1
 
     @classmethod
-    def get_by_code(cls, user_code):
-        item = cls.db_session.query(CmsUser).filter(CmsUser.CODE == user_code).first()
-        return item
-
-    @classmethod
-    def get_by_id(cls, id):
-        item = cls.db_session.query(CmsUser).filter(CmsUser.ID == id).first()
-        return item
-
-    @classmethod
-    def get_all(cls):
-        return cls.db_session.query(CmsUser).all()
-
-    @classmethod
-    def get_all_json(cls):
-        items = CmsUser.get_all()
-        return to_json(items)
-
-    @classmethod
-    def get_page(cls, key_word, start, end, sort_col, sort_dir):
+    def get_page_by_c_user(cls, c_user, key_word, start, end, sort_col, sort_dir):
         sort_cols = {
             u'1': CmsUser.CODE,
             u'2': CmsUser.NAME,
             u'3': CmsUser.STATUS,
-            u'4': CmsUser.C_USER,
-            u'5': CmsUser.C_DATE
+            u'4': CmsUser.C_DATE
         }
         search_cols = (
             CmsUser.CODE,
-            CmsUser.NAME,
-            CmsUser.C_USER
+            CmsUser.NAME
         )
-        return to_page(cls.db_session.query(CmsUser), key_word, start, end, sort_col, sort_dir, *search_cols,
+        return to_page(cls.db_session.query(CmsUser).filter(CmsUser.C_USER == c_user), key_word, start, end, sort_col,
+                       sort_dir, *search_cols,
                        **sort_cols)
 
     @classmethod
-    def get_page_json(cls, key_word, start, stop, sort_col, sort_dir):
-        page = CmsUser.get_page(key_word, start, stop, sort_col, sort_dir)
+    def get_page_json_by_c_user(cls, c_user, key_word, start, end, sort_col, sort_dir):
+        page = CmsUser.get_page_by_c_user(c_user, key_word, start, end, sort_col, sort_dir)
         page["data"] = to_json(page["data"])
         return page
 
     @classmethod
-    def get_page_json_by_joined_groupid(cls, gid, key_word, start, end, sort_col, sort_dir):
+    def get_page_json_by_joined_groupid_and_c_user(cls, gid, c_user, key_word, start, end, sort_col, sort_dir):
         sort_cols = {
             u'1': CmsUser.CODE,
             u'2': CmsUser.NAME
@@ -140,13 +120,14 @@ class CmsUser(InfoTableModel):
             CmsUser.NAME
         )
         query = cls.db_session.query(CmsUser).join(CmsGroupUser).filter(CmsGroupUser.GROUP == gid)
+        query = query.filter(CmsUser.C_USER == c_user)
         page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
                        **sort_cols)
         page["data"] = to_json(page["data"])
         return page
 
     @classmethod
-    def get_page_json_by_unjoined_groupid(cls, gid, key_word, start, end, sort_col, sort_dir):
+    def get_page_json_by_unjoined_groupid_and_c_user(cls, gid, c_user, key_word, start, end, sort_col, sort_dir):
         sort_cols = {
             u'1': CmsUser.CODE,
             u'2': CmsUser.NAME
@@ -157,6 +138,7 @@ class CmsUser(InfoTableModel):
         )
         sub = cls.db_session.query(CmsUser.ID).join(CmsGroupUser).filter(CmsGroupUser.GROUP == gid).subquery()
         query = cls.db_session.query(CmsUser).filter(~CmsUser.ID.in_(sub))
+        query = query.filter(CmsUser.C_USER == c_user)
         page = to_page(query, key_word, start, end, sort_col, sort_dir, *search_cols,
                        **sort_cols)
         page["data"] = to_json(page["data"])

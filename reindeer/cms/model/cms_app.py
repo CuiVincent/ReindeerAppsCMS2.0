@@ -53,8 +53,8 @@ class CmsApp(InfoTableModel):
         return item
 
     @classmethod
-    def get_tree(cls, base_url):
-        items = cls.db_session.query(CmsApp).all()
+    def get_tree_by_c_user(cls, base_url, c_user):
+        items = cls.db_session.query(CmsApp).filter(CmsApp.C_USER == c_user).all()
         apps = []
         for item in items:
             apps.append(
@@ -64,10 +64,10 @@ class CmsApp(InfoTableModel):
         return apps
 
     @classmethod
-    def get_all(cls):
-        return cls.db_session.query(CmsApp).order_by(
+    def get_all_by_c_user(cls, c_user):
+        return cls.db_session.query(CmsApp).filter(CmsApp.C_USER == c_user).order_by(
             CmsApp.C_DATE.desc()).all()
 
     @classmethod
-    def get_all_json(cls):
-        return to_json(CmsApp.get_all())
+    def get_all_json_by_c_user(cls, c_user):
+        return to_json(CmsApp.get_all_by_c_user(c_user))

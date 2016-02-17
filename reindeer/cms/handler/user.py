@@ -12,7 +12,7 @@ class UserListHandler(reindeer.base.base_handler.BaseHandler):
         self.render('cms/page/user/user_list.html')
 
     def post(self):
-        page = CmsUser.get_page_json(*self.get_page_arguments())
+        page = CmsUser.get_page_json_by_c_user(self.get_current_user_id(), *self.get_page_arguments())
         r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
@@ -21,7 +21,8 @@ class UserListHandler(reindeer.base.base_handler.BaseHandler):
 class UserListGroupJoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
-        page = CmsUser.get_page_json_by_joined_groupid(gid, *self.get_page_arguments())
+        page = CmsUser.get_page_json_by_joined_groupid_and_c_user(gid, self.get_current_user_id(),
+                                                                  *self.get_page_arguments())
         r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
@@ -30,7 +31,8 @@ class UserListGroupJoinedHandler(reindeer.base.base_handler.BaseHandler):
 class UserListGroupUnjoinedHandler(reindeer.base.base_handler.BaseHandler):
     def post(self):
         gid = self.get_argument('gid')
-        page = CmsUser.get_page_json_by_unjoined_groupid(gid, *self.get_page_arguments())
+        page = CmsUser.get_page_json_by_unjoined_groupid_and_c_user(gid, self.get_current_user_id(),
+                                                                    *self.get_page_arguments())
         r_json = self.get_page_result_json(page)
         print(r_json)
         return self.write(r_json)
@@ -41,7 +43,7 @@ class UserAddHandler(reindeer.base.base_handler.BaseHandler):
         code = self.get_argument('code')
         name = self.get_argument('name')
         status = self.get_argument('status') if self.get_argument('status') else 1
-        err_code = CmsUser.add(code, name, "111", status, self.get_current_user().CODE)
+        err_code = CmsUser.add(code, name, "111", status, self.get_current_user_id())
         if err_code == 0:
             return self.write(json_encode({'success': True}))
         else:
