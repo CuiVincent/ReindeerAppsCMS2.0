@@ -41,3 +41,23 @@ class AppDeleteHandler(reindeer.base.base_handler.BaseHandler):
             return self.write(json_encode({'success': True}))
         else:
             raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())
+
+
+class AppEditHandler(reindeer.base.base_handler.BaseHandler):
+    def get(self):
+        id = self.get_argument('id')
+        action = CmsApp.get_json_by_id(id)
+        if action:
+            return self.write(json_encode({'success': True, 'data': action}))
+        else:
+            raise CmsBusinessRuleException(11202).translate(self.get_browser_locale())
+
+    def post(self):
+        id = self.get_argument('aid')
+        name = self.get_argument('name')
+        des = self.get_argument('des')
+        err_code = CmsApp.update(id=id, name=name, des=des)
+        if err_code == 0:
+            return self.write(json_encode({'success': True}))
+        else:
+            raise CmsBusinessRuleException(err_code).translate(self.get_browser_locale())

@@ -1,0 +1,64 @@
+<script>
+
+    function doEdit(id) {
+        if (id) {
+            ajaxCommitWithGritter('GET', '/cms/app_edit', [
+                {name: 'id', value: id}
+            ], function (result) {
+                if (result.data) {
+                    var json = eval(result.data);
+                    if (json.length > 0) {
+                        $("#e_aid").attr("value", id);
+                        $("#e_name").attr("value", json[0].NAME);
+                        $("#e_des").attr("value", json[0].DES);
+                        showDialog('dialog_edit');
+                    }
+                }
+            });
+        }
+    }
+
+    function doEditOk() {
+        if (validate($("#form_edit")))//主动校验
+            ajaxCommitFormWithGritter($("#form_edit"), function () {
+                hideDialog('dialog_edit');
+                doRefresh();
+            });
+    }
+
+</script>
+<div id="dialog_edit" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal-title" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{_('Edit')}}</h4>
+            </div>
+
+            <form id="form_edit" action="/cms/app_edit" method="post" class="form-horizontal">
+                {% raw xsrf_form_html() %}
+                <input type="hidden" id="e_aid" name="aid" value=""/>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">{{_('APP name')}}</label>
+                        <input class="form-control" type="text" id="e_name" name="name"
+                               validate="{required:true,messages:{required:'{{_('Enter APP name')}}'}}"
+                               placeholder="{{_('Enter APP name')}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{{_('Description')}}</label>
+                        <input class="form-control " type="text" id="e_des" name="des"
+                               placeholder="{{_('Enter Description')}}"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-reindeer btn-sm" onclick="doEditOk();">{{_('Save')}}</a>
+                    <a data-dismiss="modal" class="btn btn-primary btn-sm">{{_('Cancel')}}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

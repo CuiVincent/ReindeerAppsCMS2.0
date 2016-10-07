@@ -55,7 +55,7 @@
     }
 
     function doEditOk() {
-        if (validate($("#form_edit")))//主动校验
+        if (validate($("#form_edit"))) // 主动校验
             ajaxCommitFormWithGritter($("#form_edit"), function () {
                 hideDialog('dialog_edit');
                 doRefresh();

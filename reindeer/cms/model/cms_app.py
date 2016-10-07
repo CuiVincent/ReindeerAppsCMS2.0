@@ -71,3 +71,24 @@ class CmsApp(InfoTableModel):
     @classmethod
     def get_all_json_by_c_user(cls, c_user):
         return to_json(CmsApp.get_all_by_c_user(c_user))
+
+    @classmethod
+    def get_json_by_id(cls, id):
+        return to_json(CmsApp.get_by_id(id))
+
+    @classmethod
+    def update(cls, id, name=None, des=None):
+        items = cls.db_session.query(CmsApp).filter(CmsApp.ID == id)
+        if items.count() < 1:
+            return 11202
+        update = {
+            CmsApp.NAME: name,
+            CmsApp.DES: des
+        }
+        items.update(update)
+        try:
+            cls.db_session.commit()
+            return 0
+        except:
+            cls.db_session.rollback()
+            return 1

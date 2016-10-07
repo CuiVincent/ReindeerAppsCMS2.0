@@ -51,7 +51,8 @@ cms_err_codes = {
     11154: ['Edit failed', 'The action does not exist'],
     11155: ['Permissions error', 'No permission for this page'],
     11156: ['Create failed', 'Each APP can only have one root node'],
-    11201: ['Delete failed', 'The APP does not exist']
+    11201: ['Delete failed', 'The APP does not exist'],
+    11202: ['Edit failed', 'This APP does not exist'],
 }
 
 cms_err_codes.update(err_codes)

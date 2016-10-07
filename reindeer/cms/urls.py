@@ -10,6 +10,7 @@ cms_urls = [
     (r'/cms/app', app.AppListHandler),
     (r'/cms/app_add', app.AppAddHandler),
     (r'/cms/app_delete', app.AppDeleteHandler),
+    (r'/cms/app_edit', app.AppEditHandler),
     (r'/cms/app/(.*)', action.ActionListHandler),
     (r'/cms/action_add', action.ActionAddHandler),
     (r'/cms/user', user.UserListHandler),

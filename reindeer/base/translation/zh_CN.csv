@@ -67,6 +67,7 @@ Permissions error,权限错误
 No permission for this page,无权查看此页面
 
 Each APP can only have one root node,每个APP只能存在一个根节点
+The APP does not exist,该APP限不存在
 
 Action management,操作权限管理
 Group management,组织管理
